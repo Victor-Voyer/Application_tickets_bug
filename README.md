@@ -8,11 +8,11 @@ Développer une application web en Symfony permettant aux développeurs de crée
 L’application doit permettre de commenter et collaborer facilement autour des bugs signalés.
 
 ## ⚙️ Fonctionnalités principales
-1. 🔐 Authentification
+### 🔐 Authentification
 
     -  Gestion des utilisateurs via Symfony Security.
 
-2. Fonctionnalités :
+### Fonctionnalités :
 
     -  Inscription
 
@@ -20,15 +20,15 @@ L’application doit permettre de commenter et collaborer facilement autour des 
 
     - Déconnexion
 
-3. Rôles possibles (optionnels) :
+### Rôles possibles (optionnels) :
 
     - Utilisateur : peut créer des tickets, commenter.
 
     - Développeur : peut prendre en charge et résoudre des tickets.
 
-## 🧾 Gestion des tickets
+### 🧾 Gestion des tickets
 
-### Un utilisateur connecté peut créer un ticket avec :
+#### Un utilisateur connecté peut créer un ticket avec :
 
     - Titre
 
