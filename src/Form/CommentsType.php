@@ -20,11 +20,7 @@ class CommentsType extends AbstractType
             ])
             ->add('updated_at', null, [
                 'widget' => 'single_text',
-            ])
-            ->add('user_id', EntityType::class, [
-                'class' => Users::class,
-                'choice_label' => 'id',
-            ])
+            ])            
         ;
     }
 
