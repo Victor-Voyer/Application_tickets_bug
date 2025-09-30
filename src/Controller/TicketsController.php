@@ -3,7 +3,9 @@
 namespace App\Controller;
 
 use App\Entity\Tickets;
+use App\Enum\Status as StatusEnum;
 use App\Form\TicketsType;
+use App\Repository\StatusRepository;
 use App\Repository\TicketsRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -23,13 +25,22 @@ final class TicketsController extends AbstractController
     }
 
     #[Route('/new', name: 'app_tickets_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, EntityManagerInterface $entityManager): Response
+    public function new(Request $request, EntityManagerInterface $entityManager, StatusRepository $statusRepo): Response
     {
+        // $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
         $ticket = new Tickets();
+
+        // status Open by defauly
+        $openStatus = $statusRepo->findOneBy(['status' => StatusEnum::OPEN]);
+
         $form = $this->createForm(TicketsType::class, $ticket);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $ticket->setUserId($this->getUser());
+            $ticket->setStatus($openStatus);
+            // $ticket->setCreatedAt(new \DateTimeImmutable());
+
             $entityManager->persist($ticket);
             $entityManager->flush();
 
@@ -71,7 +82,7 @@ final class TicketsController extends AbstractController
     #[Route('/{id}', name: 'app_tickets_delete', methods: ['POST'])]
     public function delete(Request $request, Tickets $ticket, EntityManagerInterface $entityManager): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$ticket->getId(), $request->getPayload()->getString('_token'))) {
+        if ($this->isCsrfTokenValid('delete' . $ticket->getId(), $request->getPayload()->getString('_token'))) {
             $entityManager->remove($ticket);
             $entityManager->flush();
         }

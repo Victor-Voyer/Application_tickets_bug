@@ -18,23 +18,8 @@ class TicketsType extends AbstractType
         $builder
             ->add('title')
             ->add('content')
-            ->add('created_at', null, [
-                'widget' => 'single_text',
-            ])
             ->add('stack')
             ->add('type')
-            ->add('status', EntityType::class, [
-                'class' => Status::class,
-                'choice_label' => 'id',
-            ])
-            ->add('user_id', EntityType::class, [
-                'class' => Users::class,
-                'choice_label' => 'id',
-            ])
-            ->add('comments', EntityType::class, [
-                'class' => Comments::class,
-                'choice_label' => 'id',
-            ])
         ;
     }
 

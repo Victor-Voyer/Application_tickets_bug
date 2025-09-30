@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Enum\Stacks;
 use App\Repository\TicketsRepository;
+use DateTimeImmutable;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
@@ -24,7 +25,15 @@ class Tickets
     private ?string $content = null;
 
     #[ORM\Column]
-    private ?\DateTimeImmutable $created_at = null;
+    private ?DateTimeImmutable $created_at = null;
+
+    #[ORM\PrePersist]
+    public function setCreatedAtValue()
+    {
+        if($this->created_at === null){
+            $this->created_at = new DateTimeImmutable();
+        }
+    }
 
     #[ORM\ManyToOne(inversedBy: 'tickets')]
     #[ORM\JoinColumn(nullable: false)]
