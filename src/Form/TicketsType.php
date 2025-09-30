@@ -5,7 +5,7 @@ namespace App\Form;
 use App\Entity\Comments;
 use App\Entity\Status;
 use App\Entity\Tickets;
-use App\Entity\users;
+use App\Entity\Users;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -28,7 +28,7 @@ class TicketsType extends AbstractType
                 'choice_label' => 'id',
             ])
             ->add('user_id', EntityType::class, [
-                'class' => users::class,
+                'class' => Users::class,
                 'choice_label' => 'id',
             ])
             ->add('comments', EntityType::class, [

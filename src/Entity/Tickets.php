@@ -32,7 +32,7 @@ class Tickets
 
     #[ORM\ManyToOne(inversedBy: 'tickets')]
     #[ORM\JoinColumn(nullable: false)]
-    private ?users $user_id = null;
+    private ?Users $user_id = null;
 
     #[ORM\Column(enumType: Stacks::class)]
     private ?Stacks $stack = null;
@@ -107,12 +107,12 @@ class Tickets
         return $this;
     }
 
-    public function getUserId(): ?users
+    public function getUserId(): ?Users
     {
         return $this->user_id;
     }
 
-    public function setUserId(?users $user_id): static
+    public function setUserId(?Users $user_id): static
     {
         $this->user_id = $user_id;
 
