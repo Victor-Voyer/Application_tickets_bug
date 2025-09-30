@@ -1,3 +1,51 @@
-body {
-    background-color: skyblue;
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Kwark', sans-serif,;
 }
+
+@font-face{
+    font-family: 'Kwark';
+    src: url('/assets/fonts/Kwark.ttf');
+}
+
+header{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 2rem;
+    background-color: black;
+    height: 15vh;
+    font-family: 'Roboto';
+    font-weight: bold;
+}
+
+h1{
+    font-family: 'Kwark';
+    color: green;
+    font-size: 3rem;
+    
+}
+
+h1 > em{
+    font-size: 2.3rem;
+}
+
+header > nav{
+    
+    > ul{
+        display: flex;
+        gap: 1rem;
+        list-style: none;
+        > li{
+            color: white;
+            > a{
+                text-decoration: none;
+                color: white;
+            }
+        }
+    }
+}
+
+
