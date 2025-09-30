@@ -26,8 +26,12 @@ class Comments
     private ?\DateTimeImmutable $updated_at = null;
 
     #[ORM\ManyToOne(inversedBy: 'comments')]
-    #[ORM\JoinColumn(nullable: false)]
+    #[ORM\JoinColumn(name: 'user_id', nullable: false)]
     private ?Users $user_id = null;
+
+    #[ORM\ManyToOne(inversedBy: 'comments')]
+    #[ORM\JoinColumn(name: 'ticket_id', referencedColumnName: 'id', nullable: false)]
+    private ?Tickets $ticket = null;
 
     /**
      * @var Collection<int, Images>
@@ -120,6 +124,17 @@ class Comments
             }
         }
 
+        return $this;
+    }
+
+    public function getTicket(): ?Tickets
+    {
+        return $this->ticket;
+    }
+
+    public function setTicket(?Tickets $ticket): static
+    {
+        $this->ticket = $ticket;
         return $this;
     }
 }

@@ -31,7 +31,7 @@ class Tickets
     private ?Status $status = null;
 
     #[ORM\ManyToOne(inversedBy: 'tickets')]
-    #[ORM\JoinColumn(nullable: false)]
+    #[ORM\JoinColumn(name: 'user_id', nullable: false)]
     private ?Users $user_id = null;
 
     #[ORM\Column(enumType: Stacks::class)]
@@ -40,8 +40,15 @@ class Tickets
     #[ORM\Column(enumType: Types::class)]
     private ?\App\Enum\Types $type = null;
 
-    #[ORM\ManyToOne(inversedBy: 'ticket')]
-    private ?Comments $comments = null;
+    // #[ORM\ManyToOne(inversedBy: 'ticket')]
+    // private ?Comments $comments = null;
+
+    /**
+     * @var Collection<int, Comments>
+     */
+
+    #[ORM\OneToMany(targetEntity: Comments::class, mappedBy: 'ticket', cascade: ['persist', 'remove'], orphanRemoval: true)]
+    private Collection $comments;
 
     /**
      * @var Collection<int, Images>
@@ -52,6 +59,7 @@ class Tickets
     public function __construct()
     {
         $this->images = new ArrayCollection();
+        $this->comments = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -143,15 +151,30 @@ class Tickets
         return $this;
     }
 
-    public function getComments(): ?Comments
+    /**
+     * @return Collection<int, Comments>
+     */
+
+    public function getComments(): ?Collection
     {
         return $this->comments;
     }
 
-    public function setComments(?Comments $comments): static
+    public function addComment(?Comments $comment): static
     {
-        $this->comments = $comments;
-
+        if (!$this->comments->contains($comment)) {
+            $this->comments->contains($comment);
+            $comment->setTicket(($this));
+        }
+        return $this;
+    }
+    public function removeComment(Comments $comment): static
+    {
+        if ($this->comments->removeElement($comment)) {
+            if ($comment->getTicket() === $this) {
+                $comment->setTicket(null);
+            }
+        }
         return $this;
     }
 
