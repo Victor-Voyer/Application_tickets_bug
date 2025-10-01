@@ -4,7 +4,16 @@
 
 {% block body %}
 
-
+            <ul style="display:flex; gap:1rem; list-style:none">
+                <li><a class="btn btn-warning" href="#">Home</a></li>
+                <li><a class="btn btn-secondary" href="#">About us</a></li>
+                <li><a class="btn btn-primary" href="#">New Ticket</a></li>
+                <li><a class="btn btn-danger" href="#">Profile</a></li>
+                <li><a class="btn btn-info" href="#">Dashboard</a></li>
+                <li><a class="btn btn-success" href="#">Login</a></li>
+                <li><a class="btn btn-outline-primary" href="#">Sign Up</a></li>
+                <li><a class="btn btn-outline-secondary" href="#">Logout</a></li>
+            </ul>
     
 
     <a href="{{ path('app_users_new') }}">Create new</a>
