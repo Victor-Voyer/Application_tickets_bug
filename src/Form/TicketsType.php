@@ -7,6 +7,7 @@ use App\Enum\Stacks;
 use App\Enum\Types;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\EnumType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -18,34 +19,41 @@ class TicketsType extends AbstractType
     {
         $builder
             ->add('title', TextType::class, [
-                'label' => 'Sujet : ',
+                'label' => 'Subject : ',
                 'required' => true,
                 'attr' => [
-                    'placeholder' => 'Décrire le sujet du ticket ...'
+                    'placeholder' => 'Describe the subject of the ticket ...'
                 ]
             ])
             ->add('content', TextareaType::class, [
                 'label' => 'Description : ',
                 'required' => true,
                 'attr' => [
-                    'placeholder' => 'Détails du problème ...'
+                    'placeholder' => 'Details of the problem ...'
                 ]
             ])
+            // ->add('image', FileType::class, [
+            //     'label' => 'Image : ',
+            //     'required' => false,
+            //     'attr' => [
+            //         'placeholder' => 'Uploader une image ...'
+            //     ]
+            // ])
             ->add('stack', EnumType::class, [
-                'label' => 'Techologie : ',
+                'label' => 'Technology : ',
                 'required' => true,
                 'class' => Stacks::class,
                 'choice_label' => fn(Stacks $e) => $e->value,
-                'placeholder' => 'Choisir une technologie',
+                'placeholder' => 'Choose a technology',
                 'expanded' => false,
                 'multiple' => false
             ])
             ->add('type', EnumType::class, [
-                'label' => 'Catégorie : ',
+                'label' => 'Category : ',
                 'required' => true,
                 'class' => Types::class,
                 'choice_label' => fn(Types $e) => $e->value,
-                'placeholder' => 'Choisir une catégorie',
+                'placeholder' => 'Choose a category',
                 'expanded' => false,
                 'multiple' => false
             ])
