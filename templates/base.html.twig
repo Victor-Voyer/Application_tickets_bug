@@ -13,27 +13,29 @@
             {% block importmap %}{{ importmap('app') }}{% endblock %}
         {% endblock %}
     </head>
+    <body>
     <header>
         <h1>BT<em>Crack</em></h1>
         <nav>
             <ul>
                 <li><a href="#">Home</a></li>
                 <li><a href="#">About us</a></li>
-                <li><a href="#">New Ticket</a></li>
-                <li><a href="#">Profile</a></li>
-                <li><a href="#">Dashboard</a></li-danger>
-                <li><a href="#">Login</a></li>
-                <li><a href="#">Sign Up</a></li>
-                <li><a href="#">Logout</a></li>
+                <li><a href="#">New ticket</a></li>
+                <li class="hidden"><a href="#">Profile</a></li>
+                <li class="hidden"><a href="#">Dashboard</a></li-danger>
+                <li class="hidden"><a href="#">Login</a></li>
+                <li class="hidden"><a href="#">Sign Up</a></li>
+                <li class="hidden"><a href="#">Logout</a></li>
             </ul>
         </nav>
     </header>
-    <body>
+    <main>
         {% block body %}
         
         {% endblock %}
+    </main>
     <footer>
-        <span>© All Rights Reserved - Sary & Victor - 2025</span>
+        <span>© All Rights Reserved - S&V - 2025</span>
         <span>Version 1.0.0</span>
     </footer>
     </body>

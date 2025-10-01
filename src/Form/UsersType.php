@@ -22,24 +22,24 @@ class UsersType extends AbstractType
     {
         $builder
             ->add('nickname', TextType::class, [
-                'label' => 'Pseudo : ',
+                'label' => 'Nickname : ',
                 'required' => true,
                 'attr' => [
-                    'placeholder' => 'Votre pseudo ...'
+                    'placeholder' => 'ex: Nickname...'
                 ]
             ])
             ->add('first_name', TextType::class, [
-                'label' => 'Nom : ',
+                'label' => 'First name : ',
                 'required' => true,
                 'attr' => [
-                    'placeholder' => 'Votre Nom ...'
+                    'placeholder' => 'ex: SMITH...'
                 ]
             ])
             ->add('last_name', TextType::class, [
-                'label' => 'Prénom : ',
+                'label' => 'Last name : ',
                 'required' => true,
                 'attr' => [
-                    'placeholder' => 'Votre Prénom ...'
+                    'placeholder' => 'ex: Jack...',
                 ]
             ])
             ->add('email', EmailType::class, [
@@ -61,28 +61,28 @@ class UsersType extends AbstractType
                 'mapped' => false,              
                 'required' => true,
                 'first_options'  => [
-                    'label' => 'Mot de passe : ',
+                    'label' => 'Password : ',
                     'attr' => [
                         'autocomplete' => 'new-password',
-                        'placeholder' => 'Au moins 8 caractères…',
+                        'placeholder' => 'At least 8 characters…',
                     ],
                 ],
                 'second_options' => [
-                    'label' => 'Confirmer le mot de passe : ',
+                    'label' => 'Confirm Password : ',
                     'attr' => [
                         'autocomplete' => 'new-password',
-                        'placeholder' => 'Confirmez le mot de passe ...'
+                        'placeholder' => 'Confirm password...'
                     ],
                 ],
-                'invalid_message' => 'Les deux mots de passe doivent être identiques.',
+                'invalid_message' => 'The two passwords must match.',
                 'constraints' => [
-                    new NotBlank(message: 'Veuillez saisir un mot de passe.'),
-                    new Length(min: 8, minMessage: 'Au moins {{ limit }} caractères.'),
+                    new NotBlank(message: 'Password is required.'),
+                    new Length(min: 8, minMessage: 'At least {{ limit }} characters.'),
                     new Regex(
                         pattern: '/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^A-Za-z0-9]).+$/',
-                        message: 'Doit contenir min. 1 minuscule, 1 majuscule, 1 chiffre et 1 caractère spécial.'
+                        message: 'Must contain at least 1 lowercase letter, 1 uppercase letter, 1 digit and 1 special character.'
                     ),
-                    new NotCompromisedPassword(message: 'Ce mot de passe a été compromis, choisissez-en un autre.'),
+                    new NotCompromisedPassword(message: 'This password has been compromised, please choose another one.'),
                 ],
                 'options' => [
                     'attr' => [
