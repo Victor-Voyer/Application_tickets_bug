@@ -301,8 +301,10 @@ main{
 /* Inputs */
 input[type="text"],
 input[type="email"],
-input[type="password"]
-{
+input[type="password"],
+input[type="file"],
+textarea,
+select{
     border-radius: var(--border-radius);
     border: solid 1px var(--color-green);
     margin: 0.5rem 0;
@@ -310,7 +312,8 @@ input[type="password"]
     width: 100%;
 }
 
-input::placeholder{
+input::placeholder,
+textarea::placeholder{
     font-style: italic;
 }
 
