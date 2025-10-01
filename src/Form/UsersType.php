@@ -7,6 +7,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -22,6 +23,7 @@ class UsersType extends AbstractType
     {
         $builder
             ->add('nickname', TextType::class, [
+<<<<<<< HEAD
                 'label' => 'Nickname : ',
                 'required' => true,
                 'attr' => [
@@ -40,6 +42,26 @@ class UsersType extends AbstractType
                 'required' => true,
                 'attr' => [
                     'placeholder' => 'ex: Jack...',
+=======
+                'label' => 'Username : ',
+                'required' => true,
+                'attr' => [
+                    'placeholder' => 'Your Username ...'
+                ]
+            ])
+            ->add('first_name', TextType::class, [
+                'label' => 'Last Name : ',
+                'required' => true,
+                'attr' => [
+                    'placeholder' => 'Your First Name ...'
+                ]
+            ])
+            ->add('last_name', TextType::class, [
+                'label' => 'First Name : ',
+                'required' => true,
+                'attr' => [
+                    'placeholder' => 'Your Last Name ...'
+>>>>>>> authentification
                 ]
             ])
             ->add('email', EmailType::class, [
@@ -55,12 +77,16 @@ class UsersType extends AbstractType
                 'attr' => [
                     'placeholder' => 'ex: user@example.com'
                 ],
-                ])
-            ->add('password',RepeatedType::class, [
+            ])
+            ->add('password', RepeatedType::class, [
                 'type' => PasswordType::class,
-                'mapped' => false,              
+                'mapped' => false,
                 'required' => true,
+<<<<<<< HEAD
                 'first_options'  => [
+=======
+                'first_options' => [
+>>>>>>> authentification
                     'label' => 'Password : ',
                     'attr' => [
                         'autocomplete' => 'new-password',
@@ -68,6 +94,7 @@ class UsersType extends AbstractType
                     ],
                 ],
                 'second_options' => [
+<<<<<<< HEAD
                     'label' => 'Confirm Password : ',
                     'attr' => [
                         'autocomplete' => 'new-password',
@@ -83,6 +110,23 @@ class UsersType extends AbstractType
                         message: 'Must contain at least 1 lowercase letter, 1 uppercase letter, 1 digit and 1 special character.'
                     ),
                     new NotCompromisedPassword(message: 'This password has been compromised, please choose another one.'),
+=======
+                    'label' => 'Confirm the password : ',
+                    'attr' => [
+                        'autocomplete' => 'new-password',
+                        'placeholder' => 'Confirm the password ...',
+                    ],
+                ],
+                'invalid_message' => 'The two passwords must be identical.',
+                'constraints' => [
+                    new NotBlank(message: 'Please enter a password.'),
+                    new Length(min: 8, minMessage: 'At least {{ limit }} characters.'),
+                    new Regex(
+                        pattern: '/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^A-Za-z0-9]).+$/',
+                        message: 'Must contain min. 1 lowercase, 1 uppercase, 1 digit and 1 special character.'
+                    ),
+                    new NotCompromisedPassword(message: 'This password has been compromised, choose another one.'),
+>>>>>>> authentification
                 ],
                 'options' => [
                     'attr' => [
@@ -90,8 +134,6 @@ class UsersType extends AbstractType
                     ],
                 ]
             ])
-            
-            
         ;
     }
 
