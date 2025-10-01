@@ -2,14 +2,19 @@
 
 namespace App\Entity;
 
-use App\Repository\RolesRepository;
+// use App\Repository\RolesRepository;
 use App\Repository\UsersRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 
 #[ORM\Entity(repositoryClass: UsersRepository::class)]
-class Users
+#[UniqueEntity(fields: ['email'], message: 'This email is already in use.')]
+#[UniqueEntity(fields: ['nickname'], message: 'This nickname is already taken.')]
+class Users implements UserInterface, PasswordAuthenticatedUserInterface
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -47,11 +52,10 @@ class Users
     #[ORM\OneToMany(targetEntity: Comments::class, mappedBy: 'user_id')]
     private Collection $comments;
 
-    public function __construct(RolesRepository $rolesRepository)
+    public function __construct()
     {
         $this->tickets = new ArrayCollection();
         $this->comments = new ArrayCollection();
-        $this->role = $rolesRepository->find(1);
     }
 
     public function getId(): ?int
@@ -196,9 +200,20 @@ class Users
         return (string) $this->email;
     }
 
-    public function getRoles(): string
+    public function getRoles(): array
     {
-        $role = $this->role->getTitle() ?? 'ROLE_USER';
-        return (string) $role;
+        $roleTitle = strtolower($this->role->getTitle() ?? 'user');
+
+        $roleMapping = [
+            'user' => 'ROLE_USER',
+            'admin' => 'ROLE_ADMIN',
+        ];
+
+        return array_unique([$roleMapping[$roleTitle] ?? 'ROLE_USER']);
+    }
+
+    public function eraseCredentials(): void
+    {
+        // TODO: Implement eraseCredentials() method.
     }
 }

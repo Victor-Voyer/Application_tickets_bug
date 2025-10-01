@@ -10,6 +10,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Attribute\Route;
 
 #[Route('/users')]
@@ -25,17 +26,18 @@ final class UsersController extends AbstractController
     }
     // Créer un user 
     #[Route('/new', name: 'app_users_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, EntityManagerInterface $entityManager, RolesRepository $rolesRepository): Response
+    public function new(Request $request, EntityManagerInterface $entityManager, RolesRepository $rolesRepository, UserPasswordHasherInterface $passwordHasher): Response
     {
-        $user = new Users($rolesRepository);
+        $user = new Users();
         $form = $this->createForm(UsersType::class, $user);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             // Password field is unmapped in the form, set it manually
-            $plainPassword = $form->get('password')->getData();
-            if ($plainPassword !== null && $plainPassword !== '') {
-                $user->setPassword(password_hash($plainPassword, PASSWORD_BCRYPT));
+            $password = $form->get('password')->getData();
+            $user->setRole($rolesRepository->findOneBy(['title' => 'user']));
+            if ($password !== null && $password !== '') {
+                $user->setPassword($passwordHasher->hashPassword($user, $password));
             }
             $entityManager->persist($user);
             $entityManager->flush();
@@ -60,16 +62,16 @@ final class UsersController extends AbstractController
 
     // Update user
     #[Route('/edit/{id}', name: 'app_users_edit', methods: ['GET', 'POST'])]
-    public function edit(Request $request, Users $user, EntityManagerInterface $entityManager): Response
+    public function edit(Request $request, Users $user, EntityManagerInterface $entityManager, UserPasswordHasherInterface $passwordHasher): Response
     {
         $form = $this->createForm(UsersType::class, $user);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             // Update password if provided (unmapped field)
-            $plainPassword = $form->get('password')->getData();
-            if ($plainPassword !== null && $plainPassword !== '') {
-                $user->setPassword(password_hash($plainPassword, PASSWORD_BCRYPT));
+            $password = $form->get('password')->getData();
+            if ($password !== null && $password !== '') {
+                $user->setPassword($passwordHasher->hashPassword($user, $password));
             }
             $entityManager->flush();
 
