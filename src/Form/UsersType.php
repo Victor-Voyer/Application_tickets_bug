@@ -28,15 +28,15 @@ class UsersType extends AbstractType
                     'placeholder' => 'ex: Nickname...'
                 ]
             ])
-            ->add('first_name', TextType::class, [
-                'label' => 'First name : ',
-                'required' => true,
-                'attr' => [
-                    'placeholder' => 'ex: SMITH...'
-                ]
-            ])
             ->add('last_name', TextType::class, [
                 'label' => 'Last name : ',
+                'required' => true,
+                'attr' => [
+                    'placeholder' => 'ex: SMITH...',
+                ]
+            ])
+            ->add('first_name', TextType::class, [
+                'label' => 'First name : ',
                 'required' => true,
                 'attr' => [
                     'placeholder' => 'ex: Jack...',
