@@ -51,6 +51,14 @@
     --transition-fast: 0.2s ease-in-out;
     --transition-normal: 0.4s ease-in-out;
   }
+  html, body{
+    height: 100%;
+  }
+  body{
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+  }
 
   /* ==========================================================================
    BUTTONS
@@ -275,6 +283,7 @@ header > nav{
    ========================================================================== */
 main{
     /* height: 75vh; */
+    flex: 1;
 }
 
 .form-section {
