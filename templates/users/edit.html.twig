@@ -7,7 +7,5 @@
 
     {{ include('users/_form.html.twig', {'button_label': 'Update'}) }}
 
-    <a href="{{ path('app_users_index') }}">back to list</a>
-
-    {{ include('users/_delete_form.html.twig') }}
-{% endblock %}
+    <a href="{{ path('app_users_show', {'id': user.id}) }}">Back to Profile</a>
+{% endblock %}  

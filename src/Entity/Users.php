@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use App\Repository\RolesRepository;
 use App\Repository\UsersRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -46,10 +47,11 @@ class Users
     #[ORM\OneToMany(targetEntity: Comments::class, mappedBy: 'user_id')]
     private Collection $comments;
 
-    public function __construct()
+    public function __construct(RolesRepository $rolesRepository)
     {
         $this->tickets = new ArrayCollection();
         $this->comments = new ArrayCollection();
+        $this->role = $rolesRepository->find(1);
     }
 
     public function getId(): ?int
@@ -187,5 +189,16 @@ class Users
         }
 
         return $this;
+    }
+
+    public function getUserIdentifier(): string
+    {
+        return (string) $this->email;
+    }
+
+    public function getRoles(): string
+    {
+        $role = $this->role->getTitle() ?? 'ROLE_USER';
+        return (string) $role;
     }
 }

@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Users;
 use App\Form\UsersType;
+use App\Repository\RolesRepository;
 use App\Repository\UsersRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -24,17 +25,22 @@ final class UsersController extends AbstractController
     }
     // Créer un user 
     #[Route('/new', name: 'app_users_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, EntityManagerInterface $entityManager): Response
+    public function new(Request $request, EntityManagerInterface $entityManager, RolesRepository $rolesRepository): Response
     {
-        $user = new Users();
+        $user = new Users($rolesRepository);
         $form = $this->createForm(UsersType::class, $user);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            // Password field is unmapped in the form, set it manually
+            $plainPassword = $form->get('password')->getData();
+            if ($plainPassword !== null && $plainPassword !== '') {
+                $user->setPassword(password_hash($plainPassword, PASSWORD_BCRYPT));
+            }
             $entityManager->persist($user);
             $entityManager->flush();
 
-            return $this->redirectToRoute('app_users_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_users_show', ['id' => $user->getId()], Response::HTTP_SEE_OTHER);
         }
 
         return $this->render('users/new.html.twig', [
@@ -42,25 +48,32 @@ final class UsersController extends AbstractController
             'form' => $form,
         ]);
     }
+    
     // Affichage par ID (user)
-    #[Route('/{id}', name: 'app_users_show', methods: ['GET'])]
+    #[Route('/profile/{id}', name: 'app_users_show', methods: ['GET'])]
     public function show(Users $user): Response
     {
         return $this->render('users/show.html.twig', [
             'user' => $user,
         ]);
     }
+
     // Update user
-    #[Route('/{id}/edit', name: 'app_users_edit', methods: ['GET', 'POST'])]
+    #[Route('/edit/{id}', name: 'app_users_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Users $user, EntityManagerInterface $entityManager): Response
     {
         $form = $this->createForm(UsersType::class, $user);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            // Update password if provided (unmapped field)
+            $plainPassword = $form->get('password')->getData();
+            if ($plainPassword !== null && $plainPassword !== '') {
+                $user->setPassword(password_hash($plainPassword, PASSWORD_BCRYPT));
+            }
             $entityManager->flush();
 
-            return $this->redirectToRoute('app_users_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_users_show', ['id' => $user->getId() ], Response::HTTP_SEE_OTHER);
         }
 
         return $this->render('users/edit.html.twig', [
@@ -68,8 +81,9 @@ final class UsersController extends AbstractController
             'form' => $form,
         ]);
     }
+    
     // Delete user
-    #[Route('/{id}', name: 'app_users_delete', methods: ['POST'])]
+    #[Route('/delete/{id}', name: 'app_users_delete', methods: ['POST'])]
     public function delete(Request $request, Users $user, EntityManagerInterface $entityManager): Response
     {
         if ($this->isCsrfTokenValid('delete'.$user->getId(), $request->getPayload()->getString('_token'))) {

@@ -7,6 +7,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -22,24 +23,24 @@ class UsersType extends AbstractType
     {
         $builder
             ->add('nickname', TextType::class, [
-                'label' => 'Pseudo : ',
+                'label' => 'Username : ',
                 'required' => true,
                 'attr' => [
-                    'placeholder' => 'Votre pseudo ...'
+                    'placeholder' => 'Your Username ...'
                 ]
             ])
             ->add('first_name', TextType::class, [
-                'label' => 'Nom : ',
+                'label' => 'Last Name : ',
                 'required' => true,
                 'attr' => [
-                    'placeholder' => 'Votre Nom ...'
+                    'placeholder' => 'Your First Name ...'
                 ]
             ])
             ->add('last_name', TextType::class, [
-                'label' => 'Prénom : ',
+                'label' => 'First Name : ',
                 'required' => true,
                 'attr' => [
-                    'placeholder' => 'Votre Prénom ...'
+                    'placeholder' => 'Your Last Name ...'
                 ]
             ])
             ->add('email', EmailType::class, [
@@ -55,34 +56,34 @@ class UsersType extends AbstractType
                 'attr' => [
                     'placeholder' => 'ex: user@example.com'
                 ],
-                ])
-            ->add('password',RepeatedType::class, [
+            ])
+            ->add('password', RepeatedType::class, [
                 'type' => PasswordType::class,
-                'mapped' => false,              
+                'mapped' => false,
                 'required' => true,
-                'first_options'  => [
-                    'label' => 'Mot de passe : ',
+                'first_options' => [
+                    'label' => 'Password : ',
                     'attr' => [
                         'autocomplete' => 'new-password',
-                        'placeholder' => 'Au moins 8 caractères…',
+                        'placeholder' => 'At least 8 characters…',
                     ],
                 ],
                 'second_options' => [
-                    'label' => 'Confirmer le mot de passe : ',
+                    'label' => 'Confirm the password : ',
                     'attr' => [
                         'autocomplete' => 'new-password',
-                        'placeholder' => 'Confirmez le mot de passe ...'
+                        'placeholder' => 'Confirm the password ...',
                     ],
                 ],
-                'invalid_message' => 'Les deux mots de passe doivent être identiques.',
+                'invalid_message' => 'The two passwords must be identical.',
                 'constraints' => [
-                    new NotBlank(message: 'Veuillez saisir un mot de passe.'),
-                    new Length(min: 8, minMessage: 'Au moins {{ limit }} caractères.'),
+                    new NotBlank(message: 'Please enter a password.'),
+                    new Length(min: 8, minMessage: 'At least {{ limit }} characters.'),
                     new Regex(
                         pattern: '/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^A-Za-z0-9]).+$/',
-                        message: 'Doit contenir min. 1 minuscule, 1 majuscule, 1 chiffre et 1 caractère spécial.'
+                        message: 'Must contain min. 1 lowercase, 1 uppercase, 1 digit and 1 special character.'
                     ),
-                    new NotCompromisedPassword(message: 'Ce mot de passe a été compromis, choisissez-en un autre.'),
+                    new NotCompromisedPassword(message: 'This password has been compromised, choose another one.'),
                 ],
                 'options' => [
                     'attr' => [
@@ -90,8 +91,6 @@ class UsersType extends AbstractType
                     ],
                 ]
             ])
-            
-            
         ;
     }
 
