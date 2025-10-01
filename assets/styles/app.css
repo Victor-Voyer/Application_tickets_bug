@@ -1,8 +1,12 @@
+/* ==========================================================================
+   CONFIG GENERAL
+   ========================================================================== */
+
 *{
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: 'Kwark', sans-serif,;
+    font-family: 'Roboto', sans-serif;
 }
 
 @font-face{
@@ -10,24 +14,64 @@
     src: url('/assets/fonts/Kwark.ttf');
 }
 
+:root {
+    /* ========== BASE COLORS ========== */
+    --color-black: #0a0a0a;
+    --color-white: #ffffff;
+    --color-green: #008000;
+  
+  
+    /* ========== THEME COLORS ========== */
+    --color-primary: var(--color-green-500);
+    --color-primary-dark: var(--color-green-700);
+    --color-primary-light: var(--color-green-300);
+  
+    --color-secondary: #1f1f1f;
+    --color-accent: #00ff88;
+  
+    /* Text */
+    --color-text-light: #f5f5f5;
+    --color-text-dark: #0a0a0a;
+  
+    /* Backgrounds */
+    --bg-dark: var(--color-black);
+    --bg-light: var(--color-white);
+    --bg-primary: var(--color-green-900);
+    --bg-secondary: var(--color-green-800);
+  
+    /* Borders & Shadows */
+    --border-radius: 6px;
+    --box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+  
+    /* Transitions */
+    --transition-fast: 0.2s ease-in-out;
+    --transition-normal: 0.4s ease-in-out;
+  }
+  
+
+/* ==========================================================================
+   HEADER
+   ========================================================================== */
+
 header{
     display: flex;
     align-items: center;
     justify-content: space-between;
     padding: 2rem;
-    background-color: black;
+    background-color: var(--color-black);
     height: 15vh;
     font-family: 'Roboto';
 }
 
 h1{
     font-family: 'Kwark';
-    color: green;
+    color: var(--color-green);
     font-size: 3rem;
     
 }
 
 h1 > em{
+    font-family: 'Kwark';
     font-size: 2.3rem;
 }
 
@@ -45,6 +89,20 @@ header > nav{
             }
         }
     }
+}
+
+/* ==========================================================================
+   FOOTER
+   ========================================================================== */
+
+footer{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 10vh;
+    background-color: black;
+    color: white;
 }
 
 
