@@ -3,7 +3,12 @@
 {% block title %}Login{% endblock %}
 
 {% block body %}
-    {{ form(form) }}
+<section class="form-section">
+    {{ form_start(form) }}
+    {{ form_widget(form) }}
+    
+    {{ form_end(form) }}
+</section>
 {% endblock %}
 
 {# {% block javascripts %}
