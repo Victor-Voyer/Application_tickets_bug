@@ -54,8 +54,7 @@ class LoginController extends AbstractController
       $form = $this->createForm(LoginType::class, [
          'forgot_password_url' => $this->generateUrl('app_forgot_password')
       ]);
-      $this->addFlash('info', 'Fonctionnalité de réinitialisation du mot de passe à implémenter.');
-      
+            
       return $this->render('users/login.html.twig', [
          'form' => $form
       ]);
