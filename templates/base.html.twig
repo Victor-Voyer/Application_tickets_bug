@@ -21,11 +21,14 @@
                 <li><a href="#">Home</a></li>
                 <li><a href="#">About us</a></li>
                 <li><a href="#">New ticket</a></li>
-                <li class="hidden"><a href="#">Profile</a></li>
-                <li class="hidden"><a href="#">Dashboard</a></li-danger>
-                <li class="hidden"><a href="#">Login</a></li>
-                <li class="hidden"><a href="#">Sign Up</a></li>
-                <li class="hidden"><a href="#">Logout</a></li>
+                {# Éléments pour utilisateurs connectés #}
+                <li class="auth-only hidden"><a href="#">Profile</a></li>
+                <li class="auth-only hidden"><a href="#">Dashboard</a></li>
+                <li class="auth-only hidden"><a href="{{ path('app_logout') }}">Logout</a></li>
+                
+                {# Éléments pour utilisateurs non connectés #}
+                <li class="guest-only hidden"><a href="{{ path('app_login') }}">Login</a></li>
+                <li class="guest-only hidden"><a href="#">Sign Up</a></li>
             </ul>
         </nav>
     </header>

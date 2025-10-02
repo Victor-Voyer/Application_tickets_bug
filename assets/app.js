@@ -8,3 +8,30 @@ import './bootstrap.js';
 import './styles/app.css';
 
 console.log('This log comes from assets/app.js - welcome to AssetMapper! 🎉');
+
+// Fonction pour gérer l'affichage des éléments selon l'état de connexion
+function toggleAuthElements() {
+    // Vérifier si l'utilisateur est connecté (vous devrez adapter cette logique)
+    const isAuthenticated = document.body.classList.contains('authenticated') || 
+                           document.cookie.includes('PHPSESSID') || 
+                           localStorage.getItem('isAuthenticated');
+    
+    const authElements = document.querySelectorAll('.auth-only');
+    const guestElements = document.querySelectorAll('.guest-only');
+    
+    if (isAuthenticated) {
+        // Utilisateur connecté : afficher les éléments auth-only, masquer les guest-only
+        authElements.forEach(el => el.classList.remove('hidden'));
+        guestElements.forEach(el => el.classList.add('hidden'));
+    } else {
+        // Utilisateur non connecté : masquer les éléments auth-only, afficher les guest-only
+        authElements.forEach(el => el.classList.add('hidden'));
+        guestElements.forEach(el => el.classList.remove('hidden'));
+    }
+}
+
+// Exécuter au chargement de la page
+document.addEventListener('DOMContentLoaded', toggleAuthElements);
+
+// Optionnel : écouter les changements d'état de connexion
+document.addEventListener('authStateChanged', toggleAuthElements);
