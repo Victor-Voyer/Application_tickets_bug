@@ -18,17 +18,17 @@
         <h1><a href="{{ path('app_tickets_index') }}">BT<em>Crack</em></a></h1>
         <nav>
             <ul>
-                <li><a href="#">Home</a></li>
-                <li><a href="#">About us</a></li>
-                <li><a href="#">New ticket</a></li>
+                <li><a href="{{ path('app_tickets_index') }}">Home</a></li>
+                <li><a href="{{ path('app_about') }}">About us</a></li>
+                <li><a href="{{ path('app_tickets_new') }}">New ticket</a></li>
                 {# Éléments pour utilisateurs connectés #}
-                <li class="auth-only hidden"><a href="#">Profile</a></li>
+                <li class="auth-only hidden"><a href="">Profile</a></li>
                 <li class="auth-only hidden"><a href="#">Dashboard</a></li>
                 <li class="auth-only hidden"><a href="{{ path('app_logout') }}">Logout</a></li>
                 
                 {# Éléments pour utilisateurs non connectés #}
                 <li class="guest-only hidden"><a href="{{ path('app_login') }}">Login</a></li>
-                <li class="guest-only hidden"><a href="#">Sign Up</a></li>
+                <li class="guest-only hidden"><a href="{{ path('app_users_new') }}">Sign Up</a></li>
             </ul>
         </nav>
     </header>

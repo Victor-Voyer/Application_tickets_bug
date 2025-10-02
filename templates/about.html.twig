@@ -1,0 +1,29 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}À propos{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('styles/about.css') }}">
+{% endblock %}
+
+{% block body %}
+    <section class="about-page">
+        <h2>À propos</h2>
+        <p>
+            Nous sommes <a href="https://github.com/SZ-Leaf" target="_blank" rel="noopener noreferrer"><strong>Sary</strong></a> et <a href="https://github.com/Victor-Voyer" target="_blank" rel="noopener noreferrer"><strong>Victor</strong></a>, deux développeurs en formation web et application mobile à
+            <a href="https://laplateforme.io/" target="_blank" rel="noopener noreferrer"><strong>La Plateforme</strong></a>. Dans le cadre de notre apprentissage et au sein de l'agence d'intérim
+            <a href="https://www.eureka-interim.fr/agences-2/#NouvelleAquitaine" target="_blank" rel="noopener noreferrer"><strong>Eureka</strong></a>, nous développons un site inspiré du fonctionnement de <em>Stack Overflow</em>,
+            pensé d'abord pour notre promotion.
+        </p>
+        <p>
+            Ce projet, proposé par notre professeur <a href="https://github.com/Atif-Zourgani" target="_blank" rel="noopener noreferrer"><strong>Atif</strong></a>, a pour objectif de favoriser l'entraide,
+            le partage de connaissances et l'amélioration continue entre étudiants via des questions, réponses et
+            discussions techniques.
+        </p>
+        <p>
+            À terme, nous souhaitons faire évoluer la plateforme au-delà de la formation afin qu'elle puisse
+            continuer à servir de référence et d'outil collaboratif pour notre communauté.
+        </p>
+    </section>
+{% endblock %}
