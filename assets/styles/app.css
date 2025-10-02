@@ -256,17 +256,18 @@ header{
     font-family: 'Roboto';
 }
 
-h1{
+h1 > a{
     font-family: 'Kwark';
     color: var(--color-green);
     font-size: 3rem;
-    
+    text-decoration: none;
+    color: var(--color-green);
+    > em{
+        font-family: 'Kwark';
+        font-size: 2.3rem;
+    }
 }
 
-h1 > em{
-    font-family: 'Kwark';
-    font-size: 2.3rem;
-}
 
 header > nav{
     
