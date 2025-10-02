@@ -6,6 +6,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\ButtonType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
@@ -46,6 +47,19 @@ class LoginType extends AbstractType
                'class' => 'btn btn-primary'
             ]
          ])
+         ->add('forgot_password', ButtonType::class, [
+            'label' => 'Mot de passe oublié ?',
+            'attr' => [
+               'class' => 'btn btn-link forgot-password',
+               'onclick' => 'window.location.href = "' . $options['forgot_password_url'] . '"'
+            ]
+         ])
       ;
+   }
+   public function configureOptions(\Symfony\Component\OptionsResolver\OptionsResolver $resolver): void
+   {
+      $resolver->setDefaults([
+         'forgot_password_url' => '/forgot-password'
+      ]);
    }
 }
