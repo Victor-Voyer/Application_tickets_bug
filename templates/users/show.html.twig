@@ -3,11 +3,18 @@
 {% block title %}Profile{% endblock %}
 
 {% block body %}
+
+    <section class="form-section">
+        <h2>Profile</h2>
+        <p>Name: {{ user.firstname }} {{ user.lastname }}</p>
+        <p>Email: {{ user.email }}</p>
+        
     
 
-    <a href="{{ path('app_users_index') }}">Back to Home</a>
-
-    <a href="{{ path('app_users_edit', {'id': user.id}) }}">Edit</a>
-
-    {{ include('users/_delete_form.html.twig') }}
+    <div class="form-buttons">
+        <button class="btn btn-secondary"><a href="{{ path('app_users_index') }}">Back to Home</a></button>
+        <button class="btn btn-info"><a href="{{ path('app_users_edit', {'id': user.id}) }}">Edit</a></button>
+        {{ include('users/_delete_form.html.twig') }}
+    </div>
+    </section>
 {% endblock %}

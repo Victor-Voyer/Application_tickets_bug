@@ -11,11 +11,7 @@ console.log('This log comes from assets/app.js - welcome to AssetMapper! 🎉');
 
 // Fonction pour gérer l'affichage des éléments selon l'état de connexion
 function toggleAuthElements() {
-    // Vérifier si l'utilisateur est connecté (vous devrez adapter cette logique)
-    const isAuthenticated = document.body.classList.contains('authenticated') || 
-                           document.cookie.includes('PHPSESSID') || 
-                           localStorage.getItem('isAuthenticated');
-    
+    const isAuthenticated = document.querySelector('form[action="/login"]');
     const authElements = document.querySelectorAll('.auth-only');
     const guestElements = document.querySelectorAll('.guest-only');
     
