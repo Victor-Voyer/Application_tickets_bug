@@ -1,11 +1,55 @@
 {% extends 'base.html.twig' %}
 
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('styles/tickets.css') }}">
+{% endblock %}
+
 {% block title %}Tickets index{% endblock %}
 
 {% block body %}
-
+    <section class="tickets-section">
+    <form class="tickets-filter-form tickets-filter-form" action="{{ path('app_tickets_index') }}" method="GET">
+            <select name="f_type" id="f_type">
+                <option value="">Type (all)</option>
+                {% set current = app.request.query.get('type') %}
+                {% for t in types %}
+                    <option value="{{ t.value }}" {{ current == t.value ? 'selected' }}>
+                        {{ t.value }}
+                    </option>
+                {% endfor %}
+            </select>
+        </form>
+        <form class="tickets-filter-form tickets-filter-form" action="{{ path('app_tickets_index') }}" method="GET">
+            <select name="f_stack" id="f_stack">
+                <option value="">Technology (all)</option>
+                {% set current = app.request.query.get('stack') %}
+                {% for s in stacks %}
+                    <option value="{{ s.value }}" {{ current == s.value ? 'selected' }}>
+                        {{ s.value }}
+                    </option>
+                {% endfor %}
+            </select>
+        </form>
+        <form class="tickets-filter-form tickets-filter-form" action="{{ path('app_tickets_index') }}" method="GET">
+            <select name="f_status" id="f_status">
+                <option value="">Status (all)</option>
+                {% set current = app.request.query.get('status') %}
+                {% for s in status %}
+                    <option value="{{ s.value }}" {{ current == s.value ? 'selected' }}>
+                        {{ s.value }}
+                    </option>
+                {% endfor %}
+            </select>
+        </form>
+        <form class="tickets-search-form" action="{{ path('app_tickets_index') }}" method="GET">
+            <input  type="text" name="q" placeholder="Search tickets">
+            <button class="btn btn-primary" type="submit">Search</button>
+        </form>
+        
+    </section>
 
     
 
-    <a href="{{ path('app_tickets_new') }}">Create new</a>
+
 {% endblock %}

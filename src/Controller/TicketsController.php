@@ -3,7 +3,9 @@
 namespace App\Controller;
 
 use App\Entity\Tickets;
+use App\Enum\Stacks;
 use App\Enum\Status as StatusEnum;
+use App\Enum\Types;
 use App\Form\TicketsType;
 use App\Repository\StatusRepository;
 use App\Repository\TicketsRepository;
@@ -21,6 +23,9 @@ final class TicketsController extends AbstractController
     {
         return $this->render('tickets/index.html.twig', [
             'tickets' => $ticketsRepository->findAll(),
+            'stacks' => Stacks::cases(),
+            'types' => Types::cases(),
+            'status' => StatusEnum::cases(),
         ]);
     }
 
