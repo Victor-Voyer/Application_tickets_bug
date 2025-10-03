@@ -91,28 +91,67 @@ final class UsersController extends AbstractController
     }
 
     // Update user
-    #[Route('/edit/{id}', name: 'app_users_edit', methods: ['GET', 'POST'])]
-    public function edit(Request $request, Users $user, EntityManagerInterface $entityManager, UserPasswordHasherInterface $passwordHasher): Response
-    {
-        $form = $this->createForm(UsersType::class, $user);
-        $form->handleRequest($request);
+#[Route('/edit/{id}', name: 'app_users_edit', methods: ['GET', 'POST'])]
+public function edit(Request $request, Users $user, EntityManagerInterface $entityManager, UserPasswordHasherInterface $passwordHasher): Response
+{
+    $form = $this->createForm(UsersType::class, $user);
+    $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            // Update password if provided (unmapped field)
-            $password = $form->get('password')->getData();
-            if ($password !== null && $password !== '') {
-                $user->setPassword($passwordHasher->hashPassword($user, $password));
-            }
-            $entityManager->flush();
-
-            return $this->redirectToRoute('app_users_show', ['id' => $user->getId() ], Response::HTTP_SEE_OTHER);
+    if ($form->isSubmitted() && $form->isValid()) {
+        // Update password if provided (unmapped field)
+        $password = $form->get('password')->getData();
+        if ($password !== null && $password !== '') {
+            $user->setPassword($passwordHasher->hashPassword($user, $password));
         }
 
-        return $this->render('users/edit.html.twig', [
-            'user' => $user,
-            'form' => $form,
-        ]);
+        // Gestion de l'upload d'avatar
+        $uploadedFile = $form->get('avatar')->getData();
+        
+        if ($uploadedFile) {
+            // Supprimer l'ancien avatar s'il existe
+            $oldAvatar = $user->getAvatar();
+            if ($oldAvatar) {
+                $oldAvatarPath = $this->getParameter('kernel.project_dir').'/public/uploads/users/'.$oldAvatar;
+                if (file_exists($oldAvatarPath)) {
+                    unlink($oldAvatarPath);
+                }
+            }
+
+            // Upload du nouveau avatar
+            $uploadDir = $this->getParameter('kernel.project_dir').'/public/uploads/users';
+
+            // Utilisation de l'extension de base (si possible)
+            $originalExt = pathinfo($uploadedFile->getClientOriginalName(), PATHINFO_EXTENSION);
+
+            // Recherche de l'extension si elle n'a pas été trouvée à l'étape d'avant
+            if (!$originalExt) {
+                $originalExt = $uploadedFile->getClientOriginalExtension()
+                    ?: $uploadedFile->guessExtension()
+                    ?: 'bin';
+            }
+
+            // Nettoyage du nom
+            $sanitizedName = preg_replace('/[^A-Za-z0-9_\-]/', '_', $user->getNickname());
+
+            // Nom final AVEC extension d'origine (ou celle par défaut : "bin")
+            $newFilename = $sanitizedName.'.'.$originalExt;
+
+            // Déplacement et sauvegarde du chemin public
+            $uploadedFile->move($uploadDir, $newFilename);
+            
+            $user->setAvatar($newFilename);
+        }
+
+        $entityManager->flush();
+
+        return $this->redirectToRoute('app_users_show', ['id' => $user->getId() ], Response::HTTP_SEE_OTHER);
     }
+
+    return $this->render('users/edit.html.twig', [
+        'user' => $user,
+        'form' => $form,
+    ]);
+}
     
     // Delete user
     #[Route('/delete/{id}', name: 'app_users_delete', methods: ['POST'])]
