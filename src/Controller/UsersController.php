@@ -36,13 +36,43 @@ final class UsersController extends AbstractController
             // Password field is unmapped in the form, set it manually
             $password = $form->get('password')->getData();
             $user->setRole($rolesRepository->findOneBy(['title' => 'user']));
+
+            // Set password
             if ($password !== null && $password !== '') {
                 $user->setPassword($passwordHasher->hashPassword($user, $password));
             }
+
+            // Upload avatar
+            $uploadedFile = $form->get('avatar')->getData();
+            $uploadDir = $this->getParameter('kernel.project_dir').'/public/uploads/users';
+
+            // Utilisation de l'extension de base (si possible)
+            $originalExt = pathinfo($uploadedFile->getClientOriginalName(), PATHINFO_EXTENSION);
+
+            // Recherche de l'extension si elle n'a pas été trouvée à l'étape d'avant
+            // Dans un premier temps on va obtenir une méthode propre à Symfony
+            // Et si même là ça échoue, alors on met l'extension générique "bin" par défault
+            if (!$originalExt) {
+                $originalExt = $uploadedFile->getClientOriginalExtension()
+                    ?: $uploadedFile->guessExtension()
+                    ?: 'bin';
+            }
+
+            // Nettoyage du nom
+            $sanitizedName = preg_replace('/[^A-Za-z0-9_\-]/', '_', $form->get('nickname')->getData());
+
+            // Nom final AVEC extension d’origine (ou celle par défault : "bin")
+            $newFilename = $sanitizedName.'.'.$originalExt;
+
+            // Déplacement et sauvegarde du chemin public
+            $uploadedFile->move($uploadDir, $newFilename);
+            
+            $user->setAvatar($newFilename);
             $entityManager->persist($user);
             $entityManager->flush();
-
+            // Retourner sur la page de tous mes Pokémons
             return $this->redirectToRoute('app_users_show', ['id' => $user->getId()], Response::HTTP_SEE_OTHER);
+
         }
 
         return $this->render('users/new.html.twig', [

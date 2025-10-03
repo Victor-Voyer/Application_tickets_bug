@@ -3,9 +3,11 @@
 {% block title %}Edit Users{% endblock %}
 
 {% block body %}
-    
+    <section class="form-section">
+
 
     {{ include('users/_form.html.twig', {'button_label': 'Update'}) }}
 
-    <a href="{{ path('app_users_show', {'id': user.id}) }}">Back to Profile</a>
+
+    </section>
 {% endblock %}  

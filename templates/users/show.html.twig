@@ -12,8 +12,8 @@
     
 
     <div class="form-buttons">
-        <button class="btn btn-secondary"><a href="{{ path('app_users_index') }}">Back to Home</a></button>
-        <button class="btn btn-info"><a href="{{ path('app_users_edit', {'id': user.id}) }}">Edit</a></button>
+        <a href="{{ path('app_tickets_index') }}"><button class="btn btn-secondary">Back to Home</button></a>
+        <a href="{{ path('app_users_edit', {'id': user.id}) }}"><button class="btn btn-info">Edit</button></a>
         {{ include('users/_delete_form.html.twig') }}
     </div>
     </section>
