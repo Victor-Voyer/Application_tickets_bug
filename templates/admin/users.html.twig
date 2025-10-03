@@ -1,9 +1,128 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Users{% endblock %}
+{% block title %}User Management - Admin{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('styles/admin.css') }}">
+{% endblock %}
 
 {% block body %}
-    <section class="form-section">
-        <h2>Users</h2>
-    </section>
+<div class="admin-container">
+    <div class="admin-header">
+        <h1 class="admin-title">User Management</h1>
+        <p class="admin-subtitle">Manage and monitor all application users</p>
+        <a href="{{ path('app_admin_index') }}" class="btn btn-secondary">
+            <i class="fas fa-arrow-left"></i> Back to Dashboard
+        </a>
+    </div>
+
+    <div class="admin-content">
+        {% if users is empty %}
+            <div class="empty-state">
+                <div class="empty-state-icon">
+                    <i class="fas fa-users"></i>
+                </div>
+                <h3>No users found</h3>
+                <p>There are currently no users in the system.</p>
+            </div>
+        {% else %}
+            <div class="users-stats">
+                <div class="stat-card">
+                    <div class="stat-number">{{ users|length }}</div>
+                    <div class="stat-label">Total Users</div>
+                </div>
+            </div>
+
+            <div class="users-table-container">
+                <table class="users-table">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Avatar</th>
+                            <th>User Info</th>
+                            <th>Contact</th>
+                            <th>Role</th>
+                            <th>Tickets</th>
+                            <th>Comments</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for user in users %}
+                            <tr class="user-row">
+                                <td class="user-id">#{{ user.id }}</td>
+                                <td class="user-avatar">
+                                    {% if user.avatar %}
+                                        <img src="{{ asset('uploads/users/' ~ user.avatar) }}" 
+                                             alt="{{ user.nickname }}" 
+                                             class="avatar-img">
+                                    {% else %}
+                                        <div class="avatar-placeholder">
+                                            <i class="fas fa-user"></i>
+                                        </div>
+                                    {% endif %}
+                                </td>
+                                <td class="user-info">
+                                    <div class="user-details">
+                                        <div class="user-name">{{ user.firstName }} {{ user.lastName }}</div>
+                                        <div class="user-nickname">@{{ user.nickname }}</div>
+                                    </div>
+                                </td>
+                                <td class="user-contact">
+                                    <div class="contact-info">
+                                        <div class="user-email">{{ user.email }}</div>
+                                    </div>
+                                </td>
+                                <td class="user-role">
+                                    <span class="role-badge role-{{ user.role.title|lower }}">
+                                        {{ user.role.title }}
+                                    </span>
+                                </td>
+                                <td class="user-tickets">
+                                    <span class="tickets-count">
+                                        <i class="fas fa-ticket-alt"></i>
+                                        {{ user.tickets|length }}
+                                    </span>
+                                </td>
+                                <td class="user-comments">
+                                    <span class="comments-count">
+                                        <i class="fas fa-comments"></i>
+                                        {{ user.comments|length }}
+                                    </span>
+                                </td>
+                                <td class="user-actions">
+                                    <div class="action-buttons">
+                                        <a href="{{ path('app_users_show', {'id': user.id}) }}" 
+                                           class="btn btn-sm btn-info" 
+                                           title="View User">
+                                            <i class="fas fa-eye">View</i>
+                                        </a>
+                                        <a href="{{ path('app_users_edit', {'id': user.id}) }}" 
+                                           class="btn btn-sm btn-warning" 
+                                           title="Edit User">
+                                            <i class="fas fa-edit">Edit</i>
+                                        </a>
+                                        <a href="{{ path('app_users_delete', {'id': user.id}) }}" 
+                                           class="btn btn-sm btn-danger" 
+                                           title="Delete User">
+                                            <i class="fas fa-trash">Delete</i>
+                                        </a>
+                                        {% if user.tickets|length > 0 %}
+                                            <a href="{{ path('app_admin_tickets') }}?user={{ user.id }}" 
+                                               class="btn btn-sm btn-primary" 
+                                               title="View User Tickets">
+                                                <i class="fas fa-ticket-alt"></i>
+                                            </a>
+                                        {% endif %}
+                                    </div>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        {% endif %}
+    </div>
+</div>
 {% endblock %}

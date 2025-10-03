@@ -1,4 +1,12 @@
-/* Dashboard Admin Styles */
+/* ========================================
+   ADMIN PANEL STYLES
+   ======================================== */
+
+/* ========================================
+   1. BASE LAYOUT & CONTAINERS
+   ======================================== */
+
+/* Admin Dashboard Container */
 .admin-dashboard {
     margin: 0 auto;
     padding: 2rem 5rem;
@@ -7,6 +15,23 @@
     font-family: 'Roboto', sans-serif;
 }
 
+/* Admin Container (for tickets/users pages) */
+.admin-container {
+    margin: 0 auto;
+    padding: 2rem 5rem;
+    background-color: var(--color-black);
+    min-height: 100vh;
+    font-family: 'Roboto', sans-serif;
+}
+
+.admin-content {
+    margin-top: 2rem;
+}
+
+/* ========================================
+   2. HEADER & TITLES
+   ======================================== */
+
 .admin-header {
     text-align: center;
     margin-bottom: 3rem;
@@ -14,9 +39,8 @@
 
 .admin-title {
     color: var(--color-green);
-
     font-size: 2.5rem;
-    font-weight: 300;
+    font-weight: bold;
     margin-bottom: 0.5rem;
     text-shadow: 0 2px 4px rgba(0,0,0,0.3);
 }
@@ -25,18 +49,12 @@
     color: var(--color-text-light);
     font-size: 1.1rem;
     font-weight: 300;
+    margin-bottom: 1rem;
 }
 
-.admin-card-icon {
-    width: 100%;
-    height: 40%;
-}
-
-.admin-card-icon-img {
-    width: 30%;
-    height: 100%;
-    object-fit: contain;
-}
+/* ========================================
+   3. DASHBOARD CARDS
+   ======================================== */
 
 .admin-actions {
     display: grid;
@@ -44,7 +62,6 @@
     gap: 2rem;
     margin-top: 2rem;
 }
-
 
 .admin-card {
     background: white;
@@ -55,6 +72,11 @@
     text-align: center;
     position: relative;
     overflow: hidden;
+    animation: fadeInUp 0.6s ease-out;
+}
+
+.admin-card:nth-child(2) {
+    animation-delay: 0.2s;
 }
 
 .admin-card::before {
@@ -72,17 +94,17 @@
 }
 
 .admin-card-icon {
+    width: 100%;
+    height: 40%;
     font-size: 3rem;
     margin-bottom: 1rem;
     display: block;
 }
 
-.users-icon {
-    color: var(--color-green);
-}
-
-.tickets-icon {
-    color: var(--color-accent);
+.admin-card-icon-img {
+    width: 30%;
+    height: 100%;
+    object-fit: contain;
 }
 
 .admin-card h3 {
@@ -98,10 +120,445 @@
     line-height: 1.6;
 }
 
+/* Icon Colors */
+.users-icon {
+    color: var(--color-green);
+}
 
-/* Responsive Design */
+.tickets-icon {
+    color: var(--color-accent);
+}
+
+/* ========================================
+   4. STATISTICS CARDS
+   ======================================== */
+
+.tickets-stats,
+.users-stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+.stat-card {
+    background: rgba(255, 255, 255, 0.1);
+    padding: 1.5rem;
+    border-radius: 10px;
+    text-align: center;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.stat-number {
+    font-size: 2.5rem;
+    font-weight: bold;
+    color: var(--color-green);
+    margin-bottom: 0.5rem;
+}
+
+.stat-label {
+    color: var(--color-text-light);
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+/* ========================================
+   5. EMPTY STATES
+   ======================================== */
+
+.empty-state {
+    text-align: center;
+    padding: 4rem 2rem;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 10px;
+    margin-top: 2rem;
+}
+
+.empty-state-icon {
+    font-size: 4rem;
+    color: var(--color-green);
+    margin-bottom: 1rem;
+}
+
+.empty-state h3 {
+    color: var(--color-green);
+    font-size: 1.5rem;
+    margin-bottom: 0.5rem;
+}
+
+.empty-state p {
+    color: var(--color-text-light);
+    font-size: 1rem;
+}
+
+/* ========================================
+   6. TABLES
+   ======================================== */
+
+/* Table Containers */
+.tickets-table-container,
+.users-table-container {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 10px;
+    overflow: hidden;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Table Base Styles */
+.tickets-table,
+.users-table {
+    width: 100%;
+    border-collapse: collapse;
+    color: var(--color-text-light);
+}
+
+.tickets-table thead,
+.users-table thead {
+    background: rgba(0, 0, 0, 0.3);
+}
+
+.tickets-table th,
+.users-table th {
+    padding: 1rem;
+    text-align: left;
+    font-weight: 600;
+    color: var(--color-green);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    text-transform: uppercase;
+    font-size: 0.85rem;
+    letter-spacing: 1px;
+}
+
+.tickets-table td,
+.users-table td {
+    padding: 1rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    vertical-align: middle;
+}
+
+.ticket-row:hover,
+.user-row:hover {
+    background: rgba(255, 255, 255, 0.03);
+}
+
+/* ========================================
+   7. TICKET SPECIFIC STYLES
+   ======================================== */
+
+.ticket-id {
+    font-weight: bold;
+    color: var(--color-green);
+    font-size: 0.9rem;
+}
+
+.title-content {
+    max-width: 300px;
+}
+
+.title-content strong {
+    color: white;
+    display: block;
+    margin-bottom: 0.25rem;
+}
+
+.content-preview {
+    color: var(--color-text-light);
+    font-size: 0.85rem;
+    line-height: 1.4;
+    opacity: 0.8;
+}
+
+.ticket-created {
+    font-size: 0.9rem;
+    color: var(--color-text-light);
+}
+
+/* ========================================
+   8. USER SPECIFIC STYLES
+   ======================================== */
+
+.user-id {
+    font-weight: bold;
+    color: var(--color-green);
+    font-size: 0.9rem;
+}
+
+/* Avatar Styles */
+.user-avatar {
+    text-align: center;
+}
+
+.avatar-img {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid rgba(255, 255, 255, 0.1);
+}
+
+.avatar-placeholder {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 2px solid rgba(255, 255, 255, 0.1);
+    color: var(--color-text-light);
+    font-size: 1.2rem;
+}
+
+/* User Info Styles */
+.user-details,
+.user-info {
+    font-size: 0.9rem;
+}
+
+.user-name {
+    color: white;
+    font-weight: 500;
+    margin-bottom: 0.25rem;
+}
+
+.user-nickname {
+    color: var(--color-green);
+    font-size: 0.85rem;
+    font-weight: 500;
+}
+
+/* Contact Info Styles */
+.contact-info {
+    font-size: 0.9rem;
+}
+
+.user-email {
+    color: var(--color-text-light);
+    font-size: 0.9rem;
+    margin-bottom: 0.1rem;
+}
+
+/* ========================================
+   9. BADGES
+   ======================================== */
+
+/* Base Badge Styles */
+.status-badge,
+.type-badge,
+.stack-badge,
+.role-badge {
+    display: inline-block;
+    padding: 0.25rem 0.75rem;
+    border-radius: 15px;
+    font-size: 0.8rem;
+    font-weight: 500;
+}
+
+.status-badge {
+    border-radius: 20px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.role-badge {
+    border-radius: 20px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+/* Status Badges */
+.status-open {
+    background: rgba(220, 53, 69, 0.2);
+    color: #dc3545;
+    border: 1px solid rgba(220, 53, 69, 0.3);
+}
+
+.status-in-progress {
+    background: rgba(255, 193, 7, 0.2);
+    color: #ffc107;
+    border: 1px solid rgba(255, 193, 7, 0.3);
+}
+
+.status-resolved {
+    background: rgba(40, 167, 69, 0.2);
+    color: #28a745;
+    border: 1px solid rgba(40, 167, 69, 0.3);
+}
+
+/* Type Badges */
+.type-badge {
+    background: rgba(108, 117, 125, 0.2);
+    color: #6c757d;
+    border: 1px solid rgba(108, 117, 125, 0.3);
+}
+
+.type-technical {
+    background: rgba(0, 123, 255, 0.2);
+    color: #007bff;
+    border: 1px solid rgba(0, 123, 255, 0.3);
+}
+
+.type-debug {
+    background: rgba(220, 53, 69, 0.2);
+    color: #dc3545;
+    border: 1px solid rgba(220, 53, 69, 0.3);
+}
+
+.type-theory {
+    background: rgba(102, 16, 242, 0.2);
+    color: #6610f2;
+    border: 1px solid rgba(102, 16, 242, 0.3);
+}
+
+/* Stack Badges */
+.stack-badge {
+    background: rgba(255, 255, 255, 0.1);
+    color: var(--color-text-light);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+/* Role Badges */
+.role-admin {
+    background: rgba(220, 53, 69, 0.2);
+    color: #dc3545;
+    border: 1px solid rgba(220, 53, 69, 0.3);
+}
+
+.role-user {
+    background: rgba(40, 167, 69, 0.2);
+    color: #28a745;
+    border: 1px solid rgba(40, 167, 69, 0.3);
+}
+
+/* ========================================
+   10. COUNTERS & ICONS
+   ======================================== */
+
+.comments-count,
+.tickets-count {
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+    color: var(--color-text-light);
+    font-size: 0.9rem;
+}
+
+.comments-count i,
+.tickets-count i {
+    color: var(--color-green);
+}
+
+/* ========================================
+   11. BUTTONS & ACTIONS
+   ======================================== */
+
+.action-buttons {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.5rem;
+    border: none;
+    border-radius: 5px;
+    text-decoration: none;
+    font-size: 0.85rem;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.btn-sm {
+    padding: 0.375rem 0.5rem;
+    font-size: 0.8rem;
+}
+
+.btn-secondary {
+    background: rgba(108, 117, 125, 0.2);
+    color: #6c757d;
+    border: 1px solid rgba(108, 117, 125, 0.3);
+    padding: 0.75rem 1.5rem;
+    margin-bottom: 1rem;
+}
+
+.btn-secondary:hover {
+    background: rgba(108, 117, 125, 0.3);
+    transform: translateY(-1px);
+}
+
+.btn-info {
+    background: rgba(23, 162, 184, 0.2);
+    color: #17a2b8;
+    border: 1px solid rgba(23, 162, 184, 0.3);
+}
+
+.btn-info:hover {
+    background: rgba(23, 162, 184, 0.3);
+    transform: translateY(-1px);
+}
+
+.btn-warning {
+    background: rgba(255, 193, 7, 0.2);
+    color: #ffc107;
+    border: 1px solid rgba(255, 193, 7, 0.3);
+}
+
+.btn-warning:hover {
+    background: rgba(255, 193, 7, 0.3);
+    transform: translateY(-1px);
+}
+
+.btn-primary {
+    background: rgba(0, 123, 255, 0.2);
+    color: #007bff;
+    border: 1px solid rgba(0, 123, 255, 0.3);
+}
+
+.btn-primary:hover {
+    background: rgba(0, 123, 255, 0.3);
+    transform: translateY(-1px);
+}
+
+.btn-danger {
+    background: rgba(220, 53, 69, 0.2);
+    color: #dc3545;
+    border: 1px solid rgba(220, 53, 69, 0.3);
+}
+
+.btn-danger:hover {
+    background: rgba(220, 53, 69, 0.3);
+    transform: translateY(-1px);
+}
+
+/* ========================================
+   12. ANIMATIONS
+   ======================================== */
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* ========================================
+   13. RESPONSIVE DESIGN
+   ======================================== */
+
+/* Tablet Styles */
 @media (max-width: 768px) {
-    .admin-dashboard {
+    .admin-dashboard,
+    .admin-container {
         padding: 1rem;
     }
     
@@ -117,24 +574,51 @@
     .admin-card {
         padding: 1.5rem;
     }
-}
-
-/* Animation d'entrée */
-@keyframes fadeInUp {
-    from {
-        opacity: 0;
-        transform: translateY(30px);
+    
+    .tickets-stats,
+    .users-stats {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1rem;
     }
-    to {
-        opacity: 1;
-        transform: translateY(0);
+    
+    .tickets-table-container,
+    .users-table-container {
+        overflow-x: auto;
+    }
+    
+    .tickets-table {
+        min-width: 800px;
+    }
+    
+    .users-table {
+        min-width: 900px;
+    }
+    
+    .title-content {
+        max-width: 200px;
+    }
+    
+    .avatar-img,
+    .avatar-placeholder {
+        width: 40px;
+        height: 40px;
+    }
+    
+    .action-buttons,
+    .user-actions .action-buttons {
+        flex-direction: column;
+        gap: 0.25rem;
     }
 }
 
-.admin-card {
-    animation: fadeInUp 0.6s ease-out;
-}
-
-.admin-card:nth-child(2) {
-    animation-delay: 0.2s;
+/* Mobile Styles */
+@media (max-width: 480px) {
+    .tickets-stats,
+    .users-stats {
+        grid-template-columns: 1fr;
+    }
+    
+    .admin-title {
+        font-size: 2rem;
+    }
 }
