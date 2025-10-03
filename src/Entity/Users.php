@@ -52,6 +52,9 @@ class Users implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(targetEntity: Comments::class, mappedBy: 'user_id')]
     private Collection $comments;
 
+    #[ORM\Column(length: 500, nullable: true)]
+    private ?string $avatar = null;
+
     public function __construct()
     {
         $this->tickets = new ArrayCollection();
@@ -215,5 +218,17 @@ class Users implements UserInterface, PasswordAuthenticatedUserInterface
     public function eraseCredentials(): void
     {
         // TODO: Implement eraseCredentials() method.
+    }
+
+    public function getAvatar(): ?string
+    {
+        return $this->avatar;
+    }
+
+    public function setAvatar(?string $avatar): static
+    {
+        $this->avatar = $avatar;
+
+        return $this;
     }
 }
