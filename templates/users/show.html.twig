@@ -6,6 +6,9 @@
 
     <section class="form-section">
         <h2>Profile</h2>
+        <div class="avatar-container">
+            <img class="avatar" src="{{ asset('uploads/users/' ~ user.avatar) }}" alt="Avatar">
+        </div>
         <p>Name: {{ user.firstname }} {{ user.lastname }}</p>
         <p>Email: {{ user.email }}</p>
         
