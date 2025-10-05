@@ -1,0 +1,16 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit your profile{% endblock %}
+
+{% block body %}
+    <section class="form-section">
+        <h1>Edit your profile</h1>
+        
+        {{ include('users/_profile_form.html.twig', {'button_label': 'Update'}) }}
+        
+        <div class="form-actions mt-4">
+            <a class="btn btn-secondary" href="{{ path('app_users_show', {'id': user.id}) }}">Back to profile</a>
+            <a class="btn btn-warning" href="{{ path('app_users_change_password', {'id': user.id}) }}">Change password</a>
+        </div>
+    </section>
+{% endblock %}

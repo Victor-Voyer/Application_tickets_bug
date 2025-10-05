@@ -1,0 +1,12 @@
+{{ form_start(form) }}
+    {{ form_row(form.avatar) }}
+    {{ form_row(form.nickname) }}
+    {{ form_row(form.first_name) }}
+    {{ form_row(form.last_name) }}
+    {{ form_row(form.email) }}
+    
+    <div class="form-buttons">
+        <button class="btn btn-primary">{{ button_label|default('Submit') }}</button>
+        <a class="btn btn-secondary" href="{{ path('app_users_show', {'id': form.vars.value.id}) }}">Cancel</a>
+    </div>
+{{ form_end(form) }}
