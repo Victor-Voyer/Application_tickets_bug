@@ -22,9 +22,9 @@
         </div>
         
         <div class="form-buttons">
-            <a href="{{ path('app_tickets_index') }}"><button class="btn btn-secondary">Back to Home</button></a>
-            <a href="{{ path('app_users_profile_edit', {'id': user.id}) }}"><button class="btn btn-info">Edit Profile</button></a>
-            <a href="{{ path('app_users_change_password', {'id': user.id}) }}"><button class="btn btn-warning">Change Password</button></a>
+            <a href="{{ path('app_tickets_index') }}" class="btn btn-secondary">Back to Home</a>
+            <a href="{{ path('app_users_profile_edit', {'id': user.id}) }}" class="btn btn-info">Edit Profile</a>
+            <a href="{{ path('app_users_change_password', {'id': user.id}) }}" class="btn btn-warning">Change Password</a>
             {{ include('users/_delete_form.html.twig') }}
         </div>
     </section>
