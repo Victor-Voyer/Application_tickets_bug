@@ -15,7 +15,34 @@
 				{{ importmap('app') }}
 			{% endblock %}
 		{% endblock %}
-		
+		<script src="https://cdn.ckeditor.com/ckeditor5/41.4.2/classic/ckeditor.js"></script>
+		<script>
+			function initCkeditors() {
+				document.querySelectorAll('textarea.js-ckeditor').forEach((el) => {
+					if (el.classList.contains('ck-editor-initialized')) return;
+					el.classList.add('ck-editor-initialized');
+
+					ClassicEditor.create(el, {
+						toolbar: [
+							'bold', 'italic', 'link', '|',
+							'bulletedList', 'numberedList', '|',
+							'indent', 'outdent', '|',
+							'code', 'blockQuote', 'undo', 'redo'
+						],
+						placeholder: el.getAttribute('placeholder') || 'Write your description...',
+						language: 'en'
+					}).then(editor => {
+						el.closest('form').addEventListener('submit', () => {
+							el.value = editor.getData();
+						});
+					}).catch(console.error);
+				});
+			}
+
+			document.addEventListener('DOMContentLoaded', initCkeditors);
+			document.addEventListener('turbo:load', initCkeditors);
+		</script>
+
 	</head>
 	<body>
 		<header>
@@ -62,33 +89,5 @@
 			<span>© All Rights Reserved - S&V - 2025</span>
 			<span>Version 1.0.0</span>
 		</footer>
-
-        <script src="https://cdn.ckeditor.com/ckeditor5/41.4.2/classic/ckeditor.js"></script>
-		<script>
-			document.addEventListener('DOMContentLoaded', () => {
-                document.querySelectorAll('textarea.js-ckeditor').forEach((el) => {
-                ClassicEditor.create(el ,{
-                    toolbar: [
-                        'bold',
-                        'italic',
-                        'link',
-                        '|',
-                        'bulletedList',
-                        'numberedList',
-                        '|',
-                        'indent',
-                        'outdent',
-                        '|',
-                        'code',
-                        'blockQuote',
-                        'undo',
-                        'redo',
-                    ],
-                    placeholder: el.getAttribute('placeholder') || 'Write your description...',
-                    language: 'en'
-                }).catch(console.error);
-                });
-            });
-		</script>
 	</body>
 </html>

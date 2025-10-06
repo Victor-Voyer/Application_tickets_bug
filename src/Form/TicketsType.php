@@ -28,7 +28,7 @@ class TicketsType extends AbstractType
             ])
             ->add('content', TextareaType::class, [
                 'label' => 'Description : ',
-                // 'required' => true,
+                'required' => false,
                 'constraints' => [
                     new NotBlank(message: 'Please write a description.'),
                 ],
