@@ -7,6 +7,5 @@
     
     <div class="form-buttons">
         <button class="btn btn-primary">{{ button_label|default('Submit') }}</button>
-        <a class="btn btn-secondary" href="{{ path('app_users_show', {'id': form.vars.value.id}) }}">Cancel</a>
     </div>
 {{ form_end(form) }}
