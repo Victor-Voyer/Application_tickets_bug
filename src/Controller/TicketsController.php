@@ -44,7 +44,7 @@ final class TicketsController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $ticket->setUserId($this->getUser());
             $ticket->setStatus($openStatus);
-            // $ticket->setCreatedAt(new \DateTimeImmutable());
+            $ticket->setCreatedAt(new \DateTimeImmutable());
 
             $entityManager->persist($ticket);
             $entityManager->flush();

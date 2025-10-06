@@ -12,6 +12,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\NotBlank;
 
 class TicketsType extends AbstractType
 {
@@ -27,9 +28,12 @@ class TicketsType extends AbstractType
             ])
             ->add('content', TextareaType::class, [
                 'label' => 'Description : ',
-                'required' => true,
+                'required' => false,
+                'constraints' => [
+                    new NotBlank(message: 'Please write a description.'),
+                ],
                 'attr' => [
-                    'placeholder' => 'Details of the problem ...'
+                    'class' => 'js-ckeditor'
                 ]
             ])
             // ->add('image', FileType::class, [

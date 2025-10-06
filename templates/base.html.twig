@@ -1,52 +1,93 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="UTF-8">
-        <title>{% block title %}BTCrack{% endblock %}</title>
-        <link rel="preconnect" href="https://fonts.googleapis.com">
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-        <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
-        {% block stylesheets %}
-        {% endblock %}
+	<head>
+		<meta charset="UTF-8">
+		<title>
+			{% block title %}BTCrack
+			{% endblock %}
+		</title>
+		<link rel="preconnect" href="https://fonts.googleapis.com">
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+		<link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet"> {% block stylesheets %}{% endblock %}
 
-        {% block javascripts %}
-            {% block importmap %}{{ importmap('app') }}{% endblock %}
-        {% endblock %}
-    </head>
-    <body>
-    <header>
-        <h1><a href="{{ path('app_tickets_index') }}">BT<em>Crack</em></a></h1>
-        <nav>
-            <ul>
-                <li><a href="{{ path('app_tickets_index') }}">Home</a></li>
-                <li><a href="{{ path('app_about') }}">About us</a></li>
-                <li><a href="{{ path('app_tickets_new') }}">New ticket</a></li>
-                {# Éléments pour utilisateurs connectés #}
-                <li class="auth-only hidden"><a href="">Profile</a></li>
-                <li class="auth-only hidden"><a href="#">Dashboard</a></li>
-                <li class="auth-only hidden"><a href="{{ path('app_logout') }}">Logout</a></li>
-                
-                {# Éléments pour utilisateurs non connectés #}
-                <li class="guest-only hidden"><a href="{{ path('app_login') }}">Login</a></li>
-                <li class="guest-only hidden"><a href="{{ path('app_users_new') }}">Sign Up</a></li>
-            </ul>
-        </nav>
-    </header>
-    <main>
-        {# Messages flash #}
-        {% for label, messages in app.flashes %}
-            {% for message in messages %}
-                <div class="alert alert-{{ label }}">{{ message }}</div>
-            {% endfor %}
-        {% endfor %}
-        
-        {% block body %}
-        
-        {% endblock %}
-    </main>
-    <footer>
-        <span>© All Rights Reserved - S&V - 2025</span>
-        <span>Version 1.0.0</span>
-    </footer>
-    </body>
+		{% block javascripts %}
+			{% block importmap %}
+				{{ importmap('app') }}
+			{% endblock %}
+		{% endblock %}
+		<script src="https://cdn.ckeditor.com/ckeditor5/41.4.2/classic/ckeditor.js"></script>
+		<script>
+			function initCkeditors() {
+				document.querySelectorAll('textarea.js-ckeditor').forEach((el) => {
+					if (el.classList.contains('ck-editor-initialized')) return;
+					el.classList.add('ck-editor-initialized');
+
+					ClassicEditor.create(el, {
+						toolbar: [
+							'bold', 'italic', 'link', '|',
+							'bulletedList', 'numberedList', '|',
+							'indent', 'outdent', '|',
+							'code', 'blockQuote', 'undo', 'redo'
+						],
+						placeholder: el.getAttribute('placeholder') || 'Write your description...',
+						language: 'en'
+					}).then(editor => {
+						el.closest('form').addEventListener('submit', () => {
+							el.value = editor.getData();
+						});
+					}).catch(console.error);
+				});
+			}
+
+			document.addEventListener('DOMContentLoaded', initCkeditors);
+			document.addEventListener('turbo:load', initCkeditors);
+		</script>
+
+	</head>
+	<body>
+		<header>
+			<h1>
+				<a href="{{ path('app_tickets_index') }}">BT<em>Crack</em>
+				</a>
+			</h1>
+			<nav>
+				<ul>
+					<li>
+						<a href="{{ path('app_tickets_index') }}">Home</a>
+					</li>
+					<li>
+						<a href="{{ path('app_about') }}">About us</a>
+					</li>
+					<li>
+						<a href="{{ path('app_tickets_new') }}">New ticket</a>
+					</li>
+					{# Éléments pour utilisateurs connectés #}
+					<li class="auth-only hidden">
+						<a href="">Profile</a>
+					</li>
+					<li class="auth-only hidden">
+						<a href="#">Dashboard</a>
+					</li>
+					<li class="auth-only hidden">
+						<a href="{{ path('app_logout') }}">Logout</a>
+					</li>
+
+					{# Éléments pour utilisateurs non connectés #}
+					<li class="guest-only hidden">
+						<a href="{{ path('app_login') }}">Login</a>
+					</li>
+					<li class="guest-only hidden">
+						<a href="{{ path('app_users_new') }}">Sign Up</a>
+					</li>
+				</ul>
+			</nav>
+		</header>
+		<main>
+			{% block body %}{% endblock %}
+		</main>
+		<footer>
+			<span>© All Rights Reserved - S&V - 2025</span>
+			<span>Version 1.0.0</span>
+		</footer>
+	</body>
 </html>
