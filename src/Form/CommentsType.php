@@ -14,13 +14,14 @@ class CommentsType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('content')
-            ->add('created_at', null, [
-                'widget' => 'single_text',
+            ->add('content', null, [
+                'label' => 'Votre commentaire',
+                'attr' => [
+                    'class' => 'js-ckeditor',
+                    'rows' => 5,
+                    'placeholder' => 'Écrivez votre commentaire ici...'
+                ]
             ])
-            ->add('updated_at', null, [
-                'widget' => 'single_text',
-            ])            
         ;
     }
 

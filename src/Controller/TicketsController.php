@@ -2,10 +2,12 @@
 
 namespace App\Controller;
 
+use App\Entity\Comments;
 use App\Entity\Tickets;
 use App\Enum\Stacks;
 use App\Enum\Status as StatusEnum;
 use App\Enum\Types;
+use App\Form\CommentsType;
 use App\Form\TicketsType;
 use App\Repository\StatusRepository;
 use App\Repository\TicketsRepository;
@@ -76,11 +78,33 @@ final class TicketsController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}', name: 'app_tickets_show', methods: ['GET'])]
-    public function show(Tickets $ticket): Response
+    #[Route('/{id}', name: 'app_tickets_show', methods: ['GET', 'POST'])]
+    public function show(Request $request, Tickets $ticket, EntityManagerInterface $entityManager): Response
     {
+        // Créer un nouveau commentaire
+        $comment = new Comments();
+        $form = $this->createForm(CommentsType::class, $comment);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            // Associer le commentaire au ticket et à l'utilisateur
+            $comment->setTicket($ticket);
+            $comment->setUserId($this->getUser());
+            $comment->setCreatedAt(new \DateTimeImmutable());
+
+            $entityManager->persist($comment);
+            $entityManager->flush();
+
+            // Message de confirmation
+            $this->addFlash('success', 'Commentaire ajouté avec succès !');
+
+            // Rediriger vers la même page pour éviter la resoumission du formulaire
+            return $this->redirectToRoute('app_tickets_show', ['id' => $ticket->getId()], Response::HTTP_SEE_OTHER);
+        }
+
         return $this->render('tickets/show.html.twig', [
             'ticket' => $ticket,
+            'commentForm' => $form,
         ]);
     }
 

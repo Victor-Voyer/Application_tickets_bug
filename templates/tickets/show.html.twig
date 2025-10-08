@@ -6,8 +6,40 @@
     <link rel="stylesheet" href="{{ asset('styles/ticket-show.css') }}">
 {% endblock %}
 
+{% block javascripts %}
+    {{ parent() }}
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const form = document.querySelector('.add-comment-form form');
+            if (form) {
+                form.addEventListener('submit', function(e) {
+                    // Forcer la synchronisation de tous les CKEditor avant soumission
+                    document.querySelectorAll('.ck-editor').forEach((editorElement) => {
+                        const textarea = editorElement.previousElementSibling;
+                        if (textarea && textarea.tagName === 'TEXTAREA') {
+                            const editorInstance = textarea.ckeditorInstance;
+                            if (editorInstance) {
+                                textarea.value = editorInstance.getData();
+                            }
+                        }
+                    });
+                });
+            }
+        });
+    </script>
+{% endblock %}
+
 {% block body %}
     <div class="ticket-show-container">
+        {# Messages flash #}
+        {% for label, messages in app.flashes %}
+            {% for message in messages %}
+                <div class="alert alert-{{ label }}">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endfor %}
+
         {# Navigation #}
         <div class="ticket-navigation">
             <a href="{{ path('app_tickets_index') }}">← Retour à la liste</a>
@@ -99,8 +131,15 @@
                 <p>Aucun commentaire pour le moment.</p>
             {% endif %}
             
-            <div class="add-comment">
-                <a href="#">+ Ajouter un commentaire</a>
+            {# Formulaire d'ajout de commentaire #}
+            <div class="add-comment-form">
+                <h3>Ajouter un commentaire</h3>
+                {# attr novalidate pour desactiver la validation HTML5, ça désactive la validation des champs qui est de base "required" #}
+                {{ form_start(commentForm, {'attr': {'novalidate': 'novalidate'}}) }}
+                    {{ form_errors(commentForm) }}
+                    {{ form_row(commentForm.content) }}
+                    <button type="submit" class="btn btn-primary">+ Ajouter un commentaire</button>
+                {{ form_end(commentForm) }}
             </div>
         </div>
 

@@ -20,27 +20,31 @@
 		{% endblock %}
 		<script src="https://cdn.ckeditor.com/ckeditor5/41.4.2/classic/ckeditor.js"></script>
 		<script>
-			function initCkeditors() {
-				document.querySelectorAll('textarea.js-ckeditor').forEach((el) => {
-					if (el.classList.contains('ck-editor-initialized')) return;
-					el.classList.add('ck-editor-initialized');
+		function initCkeditors() {
+			document.querySelectorAll('textarea.js-ckeditor').forEach((el) => {
+				if (el.classList.contains('ck-editor-initialized')) return;
+				el.classList.add('ck-editor-initialized');
 
-					ClassicEditor.create(el, {
-						toolbar: [
-							'bold', 'italic', 'link', '|',
-							'bulletedList', 'numberedList', '|',
-							'indent', 'outdent', '|',
-							'code', 'blockQuote', 'undo', 'redo'
-						],
-						placeholder: el.getAttribute('placeholder') || 'Write your description...',
-						language: 'en'
-					}).then(editor => {
-						el.closest('form').addEventListener('submit', () => {
-							el.value = editor.getData();
-						});
-					}).catch(console.error);
-				});
-			}
+				ClassicEditor.create(el, {
+					toolbar: [
+						'bold', 'italic', 'link', '|',
+						'bulletedList', 'numberedList', '|',
+						'indent', 'outdent', '|',
+						'code', 'blockQuote', 'undo', 'redo'
+					],
+					placeholder: el.getAttribute('placeholder') || 'Write your description...',
+					language: 'en'
+				}).then(editor => {
+					// Stocker l'instance de l'éditeur sur le textarea
+					el.ckeditorInstance = editor;
+					
+					// Synchroniser les données avant la soumission
+					el.closest('form').addEventListener('submit', () => {
+						el.value = editor.getData();
+					});
+				}).catch(console.error);
+			});
+		}
 
 			document.addEventListener('DOMContentLoaded', initCkeditors);
 			document.addEventListener('turbo:load', initCkeditors);
