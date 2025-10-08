@@ -88,9 +88,12 @@
 		<main>
 			{% block body %}{% endblock %}
 		</main>
-		<footer>
-			<span>© All Rights Reserved - S&V - 2025</span>
-			<span>Version 1.0.0</span>
-		</footer>
+	<footer>
+		<span>© All Rights Reserved - S&V - 2025</span>
+		<div>
+			<span><a href="{{ path('app_terms') }}" style="color: inherit; text-decoration: none;">Terms of Use</a></span>
+			<span> - Version 1.0.0</span>
+		</div>
+	</footer>
 	</body>
 </html>
