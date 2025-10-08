@@ -23,7 +23,7 @@ final class TicketsController extends AbstractController
     public function index(Request $request, TicketsRepository $ticketsRepository): Response
     {
         $page = $request->query->getInt('page', 1);
-        $limit = 20;
+        $limit = 10;
         
         $paginator = $ticketsRepository->findPaginated($page, $limit);
         $total = count($paginator);
