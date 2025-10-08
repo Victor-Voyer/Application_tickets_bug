@@ -9,132 +9,138 @@
 
 {% block body %}
     <section class="tickets-section">
-    <form class="tickets-filter-form tickets-filter-form" action="{{ path('app_tickets_index') }}" method="GET">
-            <select name="f_type" id="f_type">
+        <form class="tickets-filter-form" action="{{ path('app_tickets_index') }}" method="GET">
+            <select name="type" id="type" onchange="this.form.submit()">
                 <option value="">Type (all)</option>
-                {% set current = app.request.query.get('type') %}
                 {% for t in types %}
-                    <option value="{{ t.value }}" {{ current == t.value ? 'selected' }}>
+                    <option value="{{ t.value }}" {{ filters.type == t.value ? 'selected' }}>
                         {{ t.value }}
                     </option>
                 {% endfor %}
             </select>
+            <input type="hidden" name="stack" value="{{ filters.stack }}">
+            <input type="hidden" name="status" value="{{ filters.status }}">
+            <input type="hidden" name="search" value="{{ filters.search }}">
         </form>
-        <form class="tickets-filter-form tickets-filter-form" action="{{ path('app_tickets_index') }}" method="GET">
-            <select name="f_stack" id="f_stack">
+        <form class="tickets-filter-form" action="{{ path('app_tickets_index') }}" method="GET">
+            <select name="stack" id="stack" onchange="this.form.submit()">
                 <option value="">Technology (all)</option>
-                {% set current = app.request.query.get('stack') %}
                 {% for s in stacks %}
-                    <option value="{{ s.value }}" {{ current == s.value ? 'selected' }}>
+                    <option value="{{ s.value }}" {{ filters.stack == s.value ? 'selected' }}>
                         {{ s.value }}
                     </option>
                 {% endfor %}
             </select>
+            <input type="hidden" name="type" value="{{ filters.type }}">
+            <input type="hidden" name="status" value="{{ filters.status }}">
+            <input type="hidden" name="search" value="{{ filters.search }}">
         </form>
-        <form class="tickets-filter-form tickets-filter-form" action="{{ path('app_tickets_index') }}" method="GET">
-            <select name="f_status" id="f_status">
+        <form class="tickets-filter-form" action="{{ path('app_tickets_index') }}" method="GET">
+            <select name="status" id="status" onchange="this.form.submit()">
                 <option value="">Status (all)</option>
-                {% set current = app.request.query.get('status') %}
                 {% for s in status %}
-                    <option value="{{ s.value }}" {{ current == s.value ? 'selected' }}>
+                    <option value="{{ s.value }}" {{ filters.status == s.value ? 'selected' }}>
                         {{ s.value }}
                     </option>
                 {% endfor %}
             </select>
+            <input type="hidden" name="type" value="{{ filters.type }}">
+            <input type="hidden" name="stack" value="{{ filters.stack }}">
+            <input type="hidden" name="search" value="{{ filters.search }}">
         </form>
         <form class="tickets-search-form" action="{{ path('app_tickets_index') }}" method="GET">
-            <input  type="text" name="q" placeholder="Search tickets">
+            <input type="text" name="search" placeholder="Search tickets" value="{{ filters.search }}">
             <button class="btn btn-primary" type="submit">Search</button>
+            <input type="hidden" name="type" value="{{ filters.type }}">
+            <input type="hidden" name="stack" value="{{ filters.stack }}">
+            <input type="hidden" name="status" value="{{ filters.status }}">
         </form>
-        
     </section>
 
-    <section class="tickets-list">
-        <h1>Liste des Tickets</h1>
-        
-        {% if tickets|length > 0 %}
-            <div class="tickets-container">
-                {% for ticket in tickets %}
-                    <div class="ticket-card">
-                        <div class="ticket-card-header">
-                            <h2>
-                                <a href="{{ path('app_tickets_show', {'id': ticket.id}) }}">
-                                    {{ ticket.title }}
+        <section class="tickets-list">
+            <h1>Liste des Tickets</h1>
+            
+            {% if tickets|length > 0 %}
+                <div class="tickets-container">
+                    {% for ticket in tickets %}
+                        <div class="ticket-card">
+                            <div class="ticket-card-header">
+                                <h2>
+                                    <a href="{{ path('app_tickets_show', {'id': ticket.id}) }}">
+                                        {{ ticket.title }}
+                                    </a>
+                                </h2>
+                                <span class="ticket-id">#{{ ticket.id }}</span>
+                            </div>
+                            
+                            <div class="ticket-card-meta">
+                                <span class="badge badge-status">{{ ticket.status.status.value }}</span>
+                                <span class="badge badge-type">{{ ticket.type.value }}</span>
+                                <span class="badge badge-stack">{{ ticket.stack.value }}</span>
+                            </div>
+                            
+                            {# <div class="ticket-card-content">
+                                <h3>Description :</h3>
+                                <p>{{ticket.content|length > 200 ? ticket.content|slice(0, 200) ~ '...' : ticket.content }}</p>
+                            </div> #}
+                            
+                            <div class="ticket-card-footer">
+                                <div class="ticket-author">
+                                    <strong>Créé par :</strong> 
+                                    {{ ticket.userId.firstName }} {{ ticket.userId.lastName }}
+                                </div>
+                                <div class="ticket-date">
+                                    <strong>Le :</strong> 
+                                    {{ ticket.createdAt|date('d/m/Y à H:i') }}
+                                </div>
+                            </div>
+                            
+                            <div class="ticket-card-actions">
+                                <a href="{{ path('app_tickets_show', {'id': ticket.id}) }}" class="btn-tickets btn-primary">Voir détails</a>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            {% else %}
+                <p class="no-tickets">Aucun ticket n'a été créé pour le moment.</p>
+            {% endif %}
+        </section>
+
+        <section class="pagination-section">    
+            {% if totalPages > 1 %}
+                <nav class="pagination-nav" aria-label="Pagination">
+                    <ul class="pagination">
+                        {% if currentPage > 1 %}
+                            <li class="page-item">
+                                <a class="page-link" href="{{ path('app_tickets_index', filters|merge({'page': currentPage - 1})) }}">
+                                    &laquo; Précédent
                                 </a>
-                            </h2>
-                            <span class="ticket-id">#{{ ticket.id }}</span>
-                        </div>
-                        
-                        <div class="ticket-card-meta">
-                            <span class="badge badge-status">{{ ticket.status.status.value }}</span>
-                            <span class="badge badge-type">{{ ticket.type.value }}</span>
-                            <span class="badge badge-stack">{{ ticket.stack.value }}</span>
-                        </div>
-                        
-                        {# <div class="ticket-card-content">
-                            <h3>Description :</h3>
-                            <p>{{ticket.content|length > 200 ? ticket.content|slice(0, 200) ~ '...' : ticket.content }}</p>
-                        </div> #}
-                        
-                        <div class="ticket-card-footer">
-                            <div class="ticket-author">
-                                <strong>Créé par :</strong> 
-                                {{ ticket.userId.firstName }} {{ ticket.userId.lastName }}
-                            </div>
-                            <div class="ticket-date">
-                                <strong>Le :</strong> 
-                                {{ ticket.createdAt|date('d/m/Y à H:i') }}
-                            </div>
-                        </div>
-                        
-                        <div class="ticket-card-actions">
-                            <a href="{{ path('app_tickets_show', {'id': ticket.id}) }}" class="btn-tickets btn-primary">Voir détails</a>
-                        </div>
-                    </div>
-                {% endfor %}
-            </div>
-        {% else %}
-            <p class="no-tickets">Aucun ticket n'a été créé pour le moment.</p>
-        {% endif %}
-    </section>
-
-    <section class="pagination-section">
-
-    
-    {% if totalPages > 1 %}
-        <nav class="pagination-nav" aria-label="Pagination">
-            <ul class="pagination">
-                {% if currentPage > 1 %}
-                    <li class="page-item">
-                        <a class="page-link" href="{{ path('app_tickets_index', {'page': currentPage - 1}) }}">
-                            &laquo; Précédent
-                        </a>
-                    </li>
-                {% endif %}
-                {% for page in 1..totalPages %}
-                    {% if page == currentPage %}
-                        <li class="page-item active">
-                            <span class="page-link">{{ page }}</span>
-                        </li>
-                    {% elseif page >= currentPage - 2 and page <= currentPage + 2 %}
-                        <li class="page-item">
-                            <a class="page-link" href="{{ path('app_tickets_index', {'page': page}) }}">
-                                {{ page }}
-                            </a>
-                        </li>
-                    {% endif %}
-                {% endfor %}
-                {% if currentPage < totalPages %}
-                    <li class="page-item">
-                        <a class="page-link" href="{{ path('app_tickets_index', {'page': currentPage + 1}) }}">
-                            Suivant &raquo;
-                        </a>
-                    </li>
-                {% endif %}
-            </ul>
-        </nav>
-    {% endif %}
-    </section>
+                            </li>
+                        {% endif %}
+                        {% for page in 1..totalPages %}
+                            {% if page == currentPage %}
+                                <li class="page-item active">
+                                    <span class="page-link">{{ page }}</span>
+                                </li>
+                            {% elseif page >= currentPage - 2 and page <= currentPage + 2 %}
+                                <li class="page-item">
+                                    <a class="page-link" href="{{ path('app_tickets_index', filters|merge({'page': page})) }}">
+                                        {{ page }}
+                                    </a>
+                                </li>
+                            {% endif %}
+                        {% endfor %}
+                        {% if currentPage < totalPages %}
+                            <li class="page-item">
+                                <a class="page-link" href="{{ path('app_tickets_index', filters|merge({'page': currentPage + 1})) }}">
+                                    Suivant &raquo;
+                                </a>
+                            </li>
+                        {% endif %}
+                    </ul>
+                </nav>
+            {% endif %}
+        </section>
 
 
 {% endblock %}

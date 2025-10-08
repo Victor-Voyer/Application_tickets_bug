@@ -24,8 +24,15 @@ final class TicketsController extends AbstractController
     {
         $page = $request->query->getInt('page', 1);
         $limit = 10;
+
+        $filters = [
+            'type' => $request->query->get('type'),
+            'stack' => $request->query->get('stack'),
+            'status' => $request->query->get('status'),
+            'search' => $request->query->get('search'),
+        ];
         
-        $paginator = $ticketsRepository->findPaginated($page, $limit);
+        $paginator = $ticketsRepository->findPaginated($page, $limit, $filters);
         $total = count($paginator);
         $totalPages = ceil($total / $limit);
         
@@ -36,6 +43,7 @@ final class TicketsController extends AbstractController
             'stacks' => Stacks::cases(),
             'types' => Types::cases(),
             'status' => StatusEnum::cases(),
+            'filters' => $filters,
         ]);
     }
 
