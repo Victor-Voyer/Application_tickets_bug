@@ -15,14 +15,24 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
+
 #[Route('/tickets')]
 final class TicketsController extends AbstractController
 {
     #[Route(name: 'app_tickets_index', methods: ['GET'])]
-    public function index(TicketsRepository $ticketsRepository): Response
+    public function index(Request $request, TicketsRepository $ticketsRepository): Response
     {
+        $page = $request->query->getInt('page', 1);
+        $limit = 20;
+        
+        $paginator = $ticketsRepository->findPaginated($page, $limit);
+        $total = count($paginator);
+        $totalPages = ceil($total / $limit);
+        
         return $this->render('tickets/index.html.twig', [
-            'tickets' => $ticketsRepository->findAll(),
+            'tickets' => $paginator,
+            'currentPage' => $page,
+            'totalPages' => $totalPages,
             'stacks' => Stacks::cases(),
             'types' => Types::cases(),
             'status' => StatusEnum::cases(),

@@ -5,6 +5,7 @@ namespace App\Repository;
 use App\Entity\Tickets;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use Doctrine\ORM\Tools\Pagination\Paginator;
 
 /**
  * @extends ServiceEntityRepository<Tickets>
@@ -40,4 +41,18 @@ class TicketsRepository extends ServiceEntityRepository
     //            ->getOneOrNullResult()
     //        ;
     //    }
+
+    /**
+     * @return Paginator
+     */
+    public function findPaginated(int $page = 1, int $limit = 20): Paginator
+    {
+        $query = $this->createQueryBuilder('t')
+            ->orderBy('t.created_at', 'DESC')
+            ->setFirstResult(($page - 1) * $limit)
+            ->setMaxResults($limit)
+            ->getQuery();
+
+        return new Paginator($query);
+    }
 }

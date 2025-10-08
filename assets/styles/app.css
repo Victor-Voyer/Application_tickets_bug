@@ -356,6 +356,46 @@ textarea::placeholder{
     width: 50%;
 }
 
+/* Pagination */
+.pagination-nav {
+    display: flex;
+    justify-content: center;
+    margin: 2rem 0;
+}
+
+.pagination {
+    display: flex;
+    list-style: none;
+    gap: 0.5rem;
+    padding: 0;
+}
+
+.page-item {
+    display: inline-block;
+}
+
+.page-link {
+    display: block;
+    padding: 0.5rem 1rem;
+    text-decoration: none;
+    background-color: #fff;
+    border: 1px solid #dee2e6;
+    border-radius: 0.25rem;
+    transition: all 0.3s ease;
+}
+
+.page-link:hover {
+    background-color: #e9ecef;
+    color: #0056b3;
+}
+
+.page-item.active .page-link {
+    background-color: var(--color-green);
+    color: white;
+    border-color: var(--color-green);
+    cursor: default;
+}
+
 
 /* ==========================================================================
    FOOTER
