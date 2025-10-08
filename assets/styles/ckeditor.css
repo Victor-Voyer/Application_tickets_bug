@@ -1,0 +1,14 @@
+/* Conteneur principal de CKEditor */
+.ck.ck-editor {
+    margin-top: 1rem !important;
+}
+
+/* Zone éditable */
+.ck.ck-editor__editable {
+    min-height: 200px;
+}
+
+/* Toolbar */
+.ck.ck-toolbar {
+    border-radius: 4px 4px 0 0;
+}

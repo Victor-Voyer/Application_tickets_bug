@@ -26,16 +26,7 @@ class TicketsType extends AbstractType
                     'placeholder' => 'Describe the subject of the ticket ...'
                 ]
             ])
-            ->add('content', TextareaType::class, [
-                'label' => 'Description : ',
-                'required' => false,
-                'constraints' => [
-                    new NotBlank(message: 'Please write a description.'),
-                ],
-                'attr' => [
-                    'class' => 'js-ckeditor'
-                ]
-            ])
+            
             // ->add('image', FileType::class, [
             //     'label' => 'Image : ',
             //     'required' => false,
@@ -60,6 +51,17 @@ class TicketsType extends AbstractType
                 'placeholder' => 'Choose a category',
                 'expanded' => false,
                 'multiple' => false
+            ])
+            ->add('content', TextareaType::class, [
+                'label' => 'Description : ',
+                'required' => false,
+                'constraints' => [
+                    new NotBlank(message: 'Please write a description.'),
+                ],
+                'attr' => [
+                    'class' => 'js-ckeditor',
+                    
+                ]
             ])
         ;
     }
