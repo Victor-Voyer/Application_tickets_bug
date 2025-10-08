@@ -12,7 +12,7 @@
     <div class="admin-header">
         <h1 class="admin-title">Ticket Management</h1>
         <p class="admin-subtitle">Manage and monitor all support tickets</p>
-        <a href="{{ path('app_admin_index') }}" class="btn btn-secondary">
+        <a href="{{ path('app_admin_index') }}" class="btn-admin btn-secondary">
             <i class="fas fa-arrow-left"></i> Back to Dashboard
         </a>
     </div>
@@ -103,12 +103,12 @@
                                 <td class="ticket-actions">
                                     <div class="action-buttons">
                                         <a href="{{ path('app_tickets_show', {'id': ticket.id}) }}" 
-                                           class="btn btn-info" 
+                                           class="btn-admin btn-info" 
                                            title="View Ticket">
                                             <i class="fas fa-eye">View</i>
                                         </a>                                        
                                         <a href="{{ path('app_comments_index', {'ticket_id': ticket.id}) }}" 
-                                           class="btn btn-danger" 
+                                           class="btn-admin btn-danger" 
                                            title="Delete">
                                             <i class="fas fa-comments">Delete</i>
                                         </a>
