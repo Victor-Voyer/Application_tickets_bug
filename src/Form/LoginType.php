@@ -62,4 +62,10 @@ class LoginType extends AbstractType
          'forgot_password_url' => '/forgot-password'
       ]);
    }
+
+   public function getBlockPrefix(): string
+   {
+      return 'login';
+   }
+
 }

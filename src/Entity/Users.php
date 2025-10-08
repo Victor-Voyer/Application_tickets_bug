@@ -205,14 +205,14 @@ class Users implements UserInterface, PasswordAuthenticatedUserInterface
 
     public function getRoles(): array
     {
-        $roleTitle = strtolower($this->role->getTitle() ?? 'user');
+        $roleTitle = strtolower($this->role?->getTitle() ?? 'user');
 
         $roleMapping = [
             'user' => 'ROLE_USER',
             'admin' => 'ROLE_ADMIN',
         ];
 
-        return array_unique([$roleMapping[$roleTitle] ?? 'ROLE_USER']);
+        return [$roleMapping[$roleTitle] ?? 'ROLE_USER'];
     }
 
     public function eraseCredentials(): void

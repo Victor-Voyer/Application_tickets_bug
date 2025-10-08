@@ -8,7 +8,7 @@
 		</title>
 		<link rel="preconnect" href="https://fonts.googleapis.com">
 		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-
+		{% use "components/nav.html.twig" %}
 		<link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
 		<link rel="stylesheet" href="{{ asset('styles/ckeditor.css') }}">
 		 {% block stylesheets %}{% endblock %}
@@ -53,37 +53,7 @@
 				<a href="{{ path('app_tickets_index') }}">BT<em>Crack</em>
 				</a>
 			</h1>
-			<nav>
-				<ul>
-					<li>
-						<a href="{{ path('app_tickets_index') }}">Home</a>
-					</li>
-					<li>
-						<a href="{{ path('app_about') }}">About us</a>
-					</li>
-					<li>
-						<a href="{{ path('app_tickets_new') }}">New ticket</a>
-					</li>
-					{# Éléments pour utilisateurs connectés #}
-					<li class="auth-only hidden">
-						<a href="">Profile</a>
-					</li>
-					<li class="auth-only hidden">
-						<a href="#">Dashboard</a>
-					</li>
-					<li class="auth-only hidden">
-						<a href="{{ path('app_logout') }}">Logout</a>
-					</li>
-
-					{# Éléments pour utilisateurs non connectés #}
-					<li class="guest-only hidden">
-						<a href="{{ path('app_login') }}">Login</a>
-					</li>
-					<li class="guest-only hidden">
-						<a href="{{ path('app_users_new') }}">Sign Up</a>
-					</li>
-				</ul>
-			</nav>
+			{{block('nav')}}
 		</header>
 		<main>
 			{% block body %}{% endblock %}
