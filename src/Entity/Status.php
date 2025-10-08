@@ -37,9 +37,15 @@ class Status
         return $this->id;
     }
 
-    public function getStatus($status): ?string
+    public function getStatus(): StatusEnum
     {
-        return $this->$status;
+        return $this->status;
+    }
+
+    public function setStatus(StatusEnum $status): static
+    {
+        $this->status = $status;
+        return $this;
     }
 
     /**

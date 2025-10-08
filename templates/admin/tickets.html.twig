@@ -68,14 +68,14 @@
                                 <td class="ticket-title">
                                     <div class="title-content">
                                         <strong>{{ ticket.title }}</strong>
-                                        <small class="content-preview">{{ ticket.content|length > 100 ? ticket.content|slice(0, 100) ~ '...' : ticket.content }}</small>
+                                        
                                     </div>
                                 </td>
                                 <td class="ticket-user">
                                     <div class="user-info">
-                                        <div class="user-name">{{ ticket.user_id.firstName }} {{ ticket.user_id.lastName }}</div>
-                                        <div class="user-email">{{ ticket.user_id.email }}</div>
-                                        <div class="user-nickname">@{{ ticket.user_id.nickname }}</div>
+                                        <div class="user-name">{{ ticket.userId.firstName }} {{ ticket.userId.lastName }}</div>
+                                        <div class="user-email">{{ ticket.userId.email }}</div>
+                                        <div class="user-nickname">@{{ ticket.userId.nickname }}</div>
                                     </div>
                                 </td>
                                 <td class="ticket-status">
@@ -103,19 +103,14 @@
                                 <td class="ticket-actions">
                                     <div class="action-buttons">
                                         <a href="{{ path('app_tickets_show', {'id': ticket.id}) }}" 
-                                           class="btn btn-sm btn-info" 
+                                           class="btn btn-info" 
                                            title="View Ticket">
-                                            <i class="fas fa-eye"></i>
-                                        </a>
-                                        <a href="{{ path('app_tickets_edit', {'id': ticket.id}) }}" 
-                                           class="btn btn-sm btn-warning" 
-                                           title="Edit Ticket">
-                                            <i class="fas fa-edit"></i>
-                                        </a>
+                                            <i class="fas fa-eye">View</i>
+                                        </a>                                        
                                         <a href="{{ path('app_comments_index', {'ticket_id': ticket.id}) }}" 
-                                           class="btn btn-sm btn-primary" 
-                                           title="View Comments">
-                                            <i class="fas fa-comments"></i>
+                                           class="btn btn-danger" 
+                                           title="Delete">
+                                            <i class="fas fa-comments">Delete</i>
                                         </a>
                                     </div>
                                 </td>

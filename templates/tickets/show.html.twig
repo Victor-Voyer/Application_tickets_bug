@@ -1,13 +1,113 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Tickets{% endblock %}
+{% block title %}{{ ticket.title }} - Ticket #{{ ticket.id }}{% endblock %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('styles/ticket-show.css') }}">
+{% endblock %}
 
 {% block body %}
-    
+    <div class="ticket-show-container">
+        {# Navigation #}
+        <div class="ticket-navigation">
+            <a href="{{ path('app_tickets_index') }}">← Retour à la liste</a>
+        </div>
 
-    <a href="{{ path('app_tickets_index') }}">back to list</a>
+        {# En-tête du ticket #}
+        <div class="ticket-header">
+            <h1>{{ ticket.title }}</h1>
+            <div class="ticket-meta">
+                <span class="ticket-id">Ticket #{{ ticket.id }}</span>
+                <span class="ticket-status">Statut : {{ ticket.status.status.value }}</span>
+                <span class="ticket-type">Type : {{ ticket.type.value }}</span>
+                <span class="ticket-stack">Stack : {{ ticket.stack.value }}</span>
+            </div>
+        </div>
 
-    <a href="{{ path('app_tickets_edit', {'id': ticket.id}) }}">edit</a>
+        {# Informations principales #}
+        <div class="ticket-main">
+            <div class="ticket-content">
+                <h2>Description</h2>
+                <div class="content-text">
+                    {{ ticket.content|raw }}
+                </div>
+            </div>
 
-    {{ include('tickets/_delete_form.html.twig') }}
+            <div class="ticket-info">
+                <h3>Informations</h3>
+                <dl>
+                    <dt>Créé le :</dt>
+                    <dd>{{ ticket.createdAt|date('d/m/Y à H:i') }}</dd>
+                    
+                    <dt>Créé par :</dt>
+                    <dd>
+                        {{ ticket.userId.firstName }} {{ ticket.userId.lastName }} 
+                        ({{ ticket.userId.nickname }})
+                    </dd>
+                    
+                    <dt>Email :</dt>
+                    <dd>{{ ticket.userId.email }}</dd>
+                </dl>
+            </div>
+        </div>
+
+        {# Images attachées #}
+        {% if ticket.images|length > 0 %}
+            <div class="ticket-images">
+                <h2>Images jointes ({{ ticket.images|length }})</h2>
+                <div class="images-grid">
+                    {% for image in ticket.images %}
+                        <div class="image-item">
+                            <img src="{{ asset('uploads/' ~ image.url) }}" alt="Image du ticket">
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        {% endif %}
+
+        {# Section commentaires #}
+        <div class="ticket-comments">
+            <h2>Commentaires ({{ ticket.comments|length }})</h2>
+            
+            {% if ticket.comments|length > 0 %}
+                <div class="comments-list">
+                    {% for comment in ticket.comments %}
+                        <div class="comment-item">
+                            <div class="comment-header">
+                                <strong>{{ comment.userId.firstName }} {{ comment.userId.lastName }}</strong>
+                                <span class="comment-date">{{ comment.createdAt|date('d/m/Y à H:i') }}</span>
+                                {% if comment.updatedAt %}
+                                    <span class="comment-edited">(modifié le {{ comment.updatedAt|date('d/m/Y à H:i') }})</span>
+                                {% endif %}
+                            </div>
+                            <div class="comment-content">
+                                {{ comment.content|raw }}
+                            </div>
+                            
+                            {# Images du commentaire #}
+                            {% if comment.images|length > 0 %}
+                                <div class="comment-images">
+                                    {% for image in comment.images %}
+                                        <img src="{{ asset('uploads/' ~ image.url) }}" alt="Image du commentaire" style="max-width: 200px;">
+                                    {% endfor %}
+                                </div>
+                            {% endif %}
+                        </div>
+                    {% endfor %}
+                </div>
+            {% else %}
+                <p>Aucun commentaire pour le moment.</p>
+            {% endif %}
+            
+            <div class="add-comment">
+                <a href="#">+ Ajouter un commentaire</a>
+            </div>
+        </div>
+
+        {# Actions #}
+        <div class="ticket-actions">
+            
+            {{ include('tickets/_delete_form.html.twig') }}
+        </div>
+    </div>
 {% endblock %}
