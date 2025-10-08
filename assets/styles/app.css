@@ -292,7 +292,7 @@ header > nav{
    MAIN
    ========================================================================== */
 main{
-    /* height: 75vh; */
+    /* background-color: var(--color-black); */
     flex: 1;
 }
 

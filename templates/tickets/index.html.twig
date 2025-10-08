@@ -49,7 +49,54 @@
         
     </section>
 
-    
+    <section class="tickets-list">
+        <h1>Liste des Tickets</h1>
+        
+        {% if tickets|length > 0 %}
+            <div class="tickets-container">
+                {% for ticket in tickets %}
+                    <div class="ticket-card">
+                        <div class="ticket-card-header">
+                            <h2>
+                                <a href="{{ path('app_tickets_show', {'id': ticket.id}) }}">
+                                    {{ ticket.title }}
+                                </a>
+                            </h2>
+                            <span class="ticket-id">#{{ ticket.id }}</span>
+                        </div>
+                        
+                        <div class="ticket-card-meta">
+                            <span class="badge badge-status">{{ ticket.status.status.value }}</span>
+                            <span class="badge badge-type">{{ ticket.type.value }}</span>
+                            <span class="badge badge-stack">{{ ticket.stack.value }}</span>
+                        </div>
+                        
+                        <div class="ticket-card-content">
+                            <h3>Description :</h3>
+                            <p>{{ ticket.content|length > 200 ? ticket.content|slice(0, 200) ~ '...' : ticket.content }}</p>
+                        </div>
+                        
+                        <div class="ticket-card-footer">
+                            <div class="ticket-author">
+                                <strong>Créé par :</strong> 
+                                {{ ticket.userId.firstName }} {{ ticket.userId.lastName }}
+                            </div>
+                            <div class="ticket-date">
+                                <strong>Le :</strong> 
+                                {{ ticket.createdAt|date('d/m/Y à H:i') }}
+                            </div>
+                        </div>
+                        
+                        <div class="ticket-card-actions">
+                            <a href="{{ path('app_tickets_show', {'id': ticket.id}) }}" class="btn-tickets btn-primary">Voir détails</a>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <p class="no-tickets">Aucun ticket n'a été créé pour le moment.</p>
+        {% endif %}
+    </section>
 
 
 {% endblock %}
