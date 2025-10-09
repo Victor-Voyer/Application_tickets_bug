@@ -750,33 +750,143 @@
         vertical-align: top;
     }
     
-    /* Layout pour les tickets (mode bloc) */
-    .tickets-table td::before {
-        content: attr(class);
+    /* Layout pour les tickets (similaire aux users) */
+    .ticket-row {
+        display: block;
+    }
+    
+    /* Ligne 1 : ID + Title */
+    .ticket-row .ticket-id,
+    .ticket-row .ticket-title {
         display: inline-block;
+        vertical-align: middle;
+        margin: 0;
+        padding: 0;
+    }
+    
+    .ticket-row .ticket-id {
+        font-size: 0.95rem;
         font-weight: bold;
         color: var(--color-green);
+        margin-right: 0.75rem;
+    }
+    
+    .ticket-row .ticket-title .title-content strong {
+        color: white;
+        font-weight: 500;
+        font-size: 1rem;
+    }
+    
+    /* Ligne 2 : User Info */
+    .ticket-row .ticket-user {
+        display: block;
+        padding: 0.75rem 0;
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
+        margin-top: 0.5rem;
+    }
+    
+    .ticket-row .ticket-user::before {
+        content: 'User: ';
+        color: var(--color-green);
+        font-weight: bold;
         margin-right: 0.5rem;
-        text-transform: capitalize;
-        min-width: 100px;
     }
     
-    .ticket-id::before {
-        content: 'ID: ';
-        min-width: auto;
+    .ticket-row .ticket-user .user-info .user-name {
+        color: white;
+        margin-right: 0.5rem;
     }
     
-    .ticket-actions::before {
+    .ticket-row .ticket-user .user-info .user-nickname {
+        color: var(--color-green);
+        font-size: 0.85rem;
+    }
+    
+    /* Ligne 3 : Status + Type + Stack */
+    .ticket-row .ticket-status,
+    .ticket-row .ticket-type,
+    .ticket-row .ticket-stack {
+        display: inline-block;
+        padding: 0.75rem 0;
+        margin-right: 1.5rem;
+    }
+    
+    .ticket-row .ticket-status {
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    
+    .ticket-row .ticket-type {
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    
+    .ticket-row .ticket-stack {
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
+        margin-right: 0;
+    }
+    
+    .ticket-row .ticket-status::before {
+        content: 'Status: ';
+        color: var(--color-green);
+        font-weight: bold;
+        margin-right: 0.5rem;
+    }
+    
+    .ticket-row .ticket-type::before {
+        content: 'Type: ';
+        color: var(--color-green);
+        font-weight: bold;
+        margin-right: 0.5rem;
+    }
+    
+    .ticket-row .ticket-stack::before {
+        content: 'Stack: ';
+        color: var(--color-green);
+        font-weight: bold;
+        margin-right: 0.5rem;
+    }
+    
+    /* Ligne 4 : Created + Comments */
+    .ticket-row .ticket-created,
+    .ticket-row .ticket-comments {
+        display: inline-block;
+        padding: 0.75rem 0;
+        margin-right: 1.5rem;
+    }
+    
+    .ticket-row .ticket-created {
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    
+    .ticket-row .ticket-comments {
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
+        margin-right: 0;
+    }
+    
+    .ticket-row .ticket-created::before {
+        content: 'Created: ';
+        color: var(--color-green);
+        font-weight: bold;
+        margin-right: 0.5rem;
+    }
+    
+    .ticket-row .ticket-comments .comments-count::before {
+        content: 'Comments: ';
+        color: var(--color-green);
+        font-weight: bold;
+        margin-right: 0.25rem;
+    }
+    
+    /* Ligne 5 : Actions */
+    .ticket-row .ticket-actions {
+        display: block;
+        padding: 0.75rem 0;
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
+        margin-top: 0;
+    }
+    
+    /* Masquer les ::before par défaut */
+    .tickets-table td::before {
         display: none;
-    }
-    
-    .title-content {
-        max-width: 100%;
-    }
-    
-    .title-content strong {
-        font-size: 1.1rem;
-        margin-bottom: 0.5rem;
     }
     
     .action-buttons {
@@ -940,20 +1050,59 @@
         height: 50px;
     }
     
-    .tickets-table td {
+    /* Layout tickets pour petit mobile */
+    .ticket-row .ticket-id,
+    .ticket-row .ticket-title {
         padding: 0.4rem 0;
-        font-size: 0.9rem;
     }
     
-    .tickets-table td::before {
-        display: block;
-        margin-bottom: 0.25rem;
-        font-size: 0.8rem;
-    }
-    
-    .ticket-id {
+    .ticket-row .ticket-id {
         font-size: 0.85rem;
-        margin-bottom: 0.5rem;
+    }
+    
+    .ticket-row .ticket-title .title-content strong {
+        font-size: 0.95rem;
+    }
+    
+    .ticket-row .ticket-user {
+        font-size: 0.85rem;
+        padding: 0.6rem 0;
+    }
+    
+    /* Ligne 3 et 4 en mode colonne pour petit mobile */
+    .ticket-row .ticket-status,
+    .ticket-row .ticket-type,
+    .ticket-row .ticket-stack,
+    .ticket-row .ticket-created,
+    .ticket-row .ticket-comments {
+        display: block;
+        padding: 0.5rem 0;
+        margin-right: 0;
+    }
+    
+    .ticket-row .ticket-status {
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
+        padding-top: 0.6rem;
+    }
+    
+    .ticket-row .ticket-type,
+    .ticket-row .ticket-stack {
+        border-top: none;
+        padding-top: 0.3rem;
+    }
+    
+    .ticket-row .ticket-created {
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
+        padding-top: 0.6rem;
+    }
+    
+    .ticket-row .ticket-comments {
+        border-top: none;
+        padding-top: 0.3rem;
+    }
+    
+    .ticket-row .ticket-actions {
+        padding: 0.6rem 0;
     }
     
     .status-badge,
