@@ -6,6 +6,19 @@
 /* Zone éditable */
 .ck.ck-editor__editable {
     min-height: 200px;
+    text-align: left !important;
+    vertical-align: top !important;
+}
+
+/* Contenu à l'intérieur de la zone éditable */
+.ck.ck-editor__editable .ck-content {
+    text-align: left !important;
+}
+
+/* Paragraphes par défaut */
+.ck.ck-editor__editable p {
+    text-align: left !important;
+    margin-top: 0 !important;
 }
 
 /* Toolbar */
