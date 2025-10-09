@@ -480,24 +480,32 @@
    13. RESPONSIVE DESIGN
    ======================================== */
 
-/* Tablet Styles */
-@media (max-width: 768px) {
+/* Tablette (768px - 1024px) */
+@media screen and (max-width: 1024px) {
     .admin-dashboard,
     .admin-container {
-        padding: 1rem;
+        padding: 1.5rem 2rem;
     }
     
     .admin-title {
-        font-size: 2rem;
+        font-size: 2.2rem;
+    }
+    
+    .admin-subtitle {
+        font-size: 1rem;
     }
     
     .admin-actions {
-        grid-template-columns: 1fr;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
         gap: 1.5rem;
     }
     
     .admin-card {
         padding: 1.5rem;
+    }
+    
+    .admin-card h3 {
+        font-size: 1.3rem;
     }
     
     .tickets-stats,
@@ -506,43 +514,503 @@
         gap: 1rem;
     }
     
-    .tickets-table-container,
-    .users-table-container {
-        overflow-x: auto;
-    }
-    
-    .tickets-table {
-        min-width: 800px;
-    }
-    
-    .users-table {
-        min-width: 900px;
-    }
-    
-    .title-content {
-        max-width: 200px;
-    }
-    
-    .avatar-img {
-        width: 40px;
-        height: 40px;
-    }
-    
-    .action-buttons,
-    .user-actions .action-buttons {
-        flex-direction: column;
-        gap: 0.25rem;
+    .stat-number {
+        font-size: 2rem;
     }
 }
 
-/* Mobile Styles */
-@media (max-width: 480px) {
-    .tickets-stats,
-    .users-stats {
-        grid-template-columns: 1fr;
+/* Mobile (< 768px) */
+@media screen and (max-width: 768px) {
+    .admin-dashboard,
+    .admin-container {
+        padding: 1rem;
+        background-color: var(--color-black);
+    }
+    
+    .admin-header {
+        margin-bottom: 2rem;
     }
     
     .admin-title {
+        font-size: 1.75rem;
+    }
+    
+    .admin-subtitle {
+        font-size: 0.95rem;
+    }
+    
+    /* Dashboard Cards */
+    .admin-actions {
+        grid-template-columns: 1fr;
+        gap: 1.25rem;
+    }
+    
+    .admin-card {
+        padding: 1.5rem;
+    }
+    
+    .admin-card-icon {
+        font-size: 2.5rem;
+    }
+    
+    .admin-card h3 {
+        font-size: 1.25rem;
+    }
+    
+    .admin-card p {
+        font-size: 0.9rem;
+    }
+    
+    /* Stats Cards */
+    .tickets-stats,
+    .users-stats {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 0.75rem;
+    }
+    
+    .stat-card {
+        padding: 1rem;
+    }
+    
+    .stat-number {
+        font-size: 1.75rem;
+    }
+    
+    .stat-label {
+        font-size: 0.8rem;
+    }
+    
+    /* Tables - Mode carte pour mobile */
+    .tickets-table-container,
+    .users-table-container {
+        background: transparent;
+        border: none;
+        overflow: visible;
+    }
+    
+    .tickets-table,
+    .users-table {
+        display: block;
+    }
+    
+    .tickets-table thead,
+    .users-table thead {
+        display: none;
+    }
+    
+    .tickets-table tbody,
+    .users-table tbody {
+        display: block;
+    }
+    
+    .ticket-row,
+    .user-row {
+        display: block;
+        background: rgba(255, 255, 255, 0.05);
+        margin-bottom: 1rem;
+        padding: 1rem;
+        border-radius: 10px;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    
+    .ticket-row:hover,
+    .user-row:hover {
+        background: rgba(255, 255, 255, 0.08);
+    }
+    
+    .tickets-table td,
+    .users-table td {
+        display: block;
+        padding: 0.5rem 0;
+        border: none;
+        text-align: left;
+    }
+    
+    /* Layout spécifique pour les users */
+    .user-row {
+        display: block;
+    }
+    
+    /* Ligne 1 : Avatar + ID + Name + Nickname */
+    .user-row .user-avatar,
+    .user-row .user-id,
+    .user-row .user-info {
+        display: inline-block;
+        vertical-align: middle;
+        margin: 0;
+        padding: 0;
+    }
+    
+    .user-row .user-avatar {
+        margin-right: 0.75rem;
+    }
+    
+    .user-row .user-id {
+        font-size: 0.95rem;
+        font-weight: bold;
+        color: var(--color-green);
+        margin-right: 0.75rem;
+    }
+    
+    .user-row .user-info .user-details {
+        display: inline;
+    }
+    
+    .user-row .user-info .user-name {
+        color: white;
+        font-weight: 500;
+        margin-right: 0.5rem;
+        display: inline;
+    }
+    
+    .user-row .user-info .user-nickname {
+        color: var(--color-green);
+        font-size: 0.85rem;
+        display: inline;
+    }
+    
+    /* Ligne 2 : Email */
+    .user-row .user-contact {
+        display: block;
+        padding: 0.75rem 0;
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
+        margin-top: 0.5rem;
+    }
+    
+    .user-row .user-contact::before {
+        content: 'Email: ';
+        color: var(--color-green);
+        font-weight: bold;
+        margin-right: 0.5rem;
+    }
+    
+    .user-row .user-contact .user-email {
+        color: var(--color-text-light);
+    }
+    
+    /* Ligne 3 : Role + Tickets + Comments */
+    .user-row .user-role,
+    .user-row .user-tickets,
+    .user-row .user-comments {
+        display: inline-block;
+        padding: 0.75rem 0;
+        margin-right: 1.5rem;
+    }
+    
+    .user-row .user-role {
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
+        margin-top: 0;
+    }
+    
+    .user-row .user-tickets {
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    
+    .user-row .user-comments {
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
+        margin-right: 0;
+    }
+    
+    .user-row .user-role::before {
+        color: var(--color-green);
+        font-weight: bold;
+        margin-right: 0.5rem;
+    }
+    
+    .user-row .user-tickets .tickets-count::before {
+        content: 'Tickets: ';
+        color: var(--color-green);
+        font-weight: bold;
+        margin-right: 0.25rem;
+    }
+    
+    .user-row .user-comments .comments-count::before {
+        content: 'Comments: ';
+        color: var(--color-green);
+        font-weight: bold;
+        margin-right: 0.25rem;
+    }
+    
+    /* Ligne 4 : Actions */
+    .user-row .user-actions {
+        display: block;
+        padding: 0.75rem 0;
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
+        margin-top: 0;
+    }
+    
+    /* Masquer les ::before pour users */
+    .users-table td::before {
+        display: none;
+    }
+    
+    .avatar-img {
+        width: 60px;
+        height: 60px;
+        vertical-align: top;
+    }
+    
+    /* Layout pour les tickets (mode bloc) */
+    .tickets-table td::before {
+        content: attr(class);
+        display: inline-block;
+        font-weight: bold;
+        color: var(--color-green);
+        margin-right: 0.5rem;
+        text-transform: capitalize;
+        min-width: 100px;
+    }
+    
+    .ticket-id::before {
+        content: 'ID: ';
+        min-width: auto;
+    }
+    
+    .ticket-actions::before {
+        display: none;
+    }
+    
+    .title-content {
+        max-width: 100%;
+    }
+    
+    .title-content strong {
+        font-size: 1.1rem;
+        margin-bottom: 0.5rem;
+    }
+    
+    .action-buttons {
+        flex-direction: row;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+        margin-top: 0.75rem;
+        justify-content: center;
+    }
+    
+    .btn-admin {
+        flex: 1;
+        min-width: 80px;
+        padding: 0.6rem 0.5rem;
+        font-size: 0.8rem;
+    }
+    
+    /* Empty State */
+    .empty-state {
+        padding: 3rem 1.5rem;
+    }
+    
+    .empty-state-icon {
+        font-size: 3rem;
+    }
+    
+    .empty-state h3 {
+        font-size: 1.3rem;
+    }
+    
+    .empty-state p {
+        font-size: 0.9rem;
+    }
+}
+
+/* Très petit mobile (< 480px) */
+@media screen and (max-width: 480px) {
+    .admin-dashboard,
+    .admin-container {
+        padding: 0.75rem;
+    }
+    
+    .admin-header {
+        margin-bottom: 1.5rem;
+    }
+    
+    .admin-title {
+        font-size: 1.5rem;
+    }
+    
+    .admin-subtitle {
+        font-size: 0.85rem;
+    }
+    
+    /* Dashboard Cards */
+    .admin-card {
+        padding: 1.25rem;
+    }
+    
+    .admin-card-icon {
         font-size: 2rem;
+        margin-bottom: 0.75rem;
+    }
+    
+    .admin-card-icon-img {
+        width: 40%;
+    }
+    
+    .admin-card h3 {
+        font-size: 1.1rem;
+    }
+    
+    .admin-card p {
+        font-size: 0.85rem;
+        margin-bottom: 1rem;
+    }
+    
+    /* Stats en une seule colonne */
+    .tickets-stats,
+    .users-stats {
+        grid-template-columns: 1fr;
+        gap: 0.75rem;
+    }
+    
+    .stat-card {
+        padding: 1rem;
+    }
+    
+    .stat-number {
+        font-size: 2rem;
+    }
+    
+    .stat-label {
+        font-size: 0.75rem;
+    }
+    
+    /* Cards pour tickets et users */
+    .ticket-row,
+    .user-row {
+        padding: 0.875rem;
+        margin-bottom: 0.875rem;
+    }
+    
+    /* Layout users pour petit mobile */
+    .user-row .user-avatar,
+    .user-row .user-id,
+    .user-row .user-info {
+        padding: 0.4rem 0;
+    }
+    
+    .user-row .user-id {
+        font-size: 0.85rem;
+    }
+    
+    .user-row .user-info {
+        font-size: 0.9rem;
+    }
+    
+    .user-row .user-info .user-name {
+        font-size: 0.9rem;
+    }
+    
+    .user-row .user-info .user-nickname {
+        font-size: 0.8rem;
+    }
+    
+    .user-row .user-contact {
+        font-size: 0.85rem;
+        padding: 0.6rem 0;
+    }
+    
+    /* Ligne 3 en mode colonne pour petit mobile */
+    .user-row .user-role,
+    .user-row .user-tickets,
+    .user-row .user-comments {
+        display: block;
+        padding: 0.5rem 0;
+        margin-right: 0;
+    }
+    
+    .user-row .user-role {
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
+        padding-top: 0.6rem;
+    }
+    
+    .user-row .user-tickets {
+        border-top: none;
+        padding-top: 0.3rem;
+    }
+    
+    .user-row .user-comments {
+        padding-top: 0.3rem;
+    }
+    
+    .user-row .user-actions {
+        padding: 0.6rem 0;
+    }
+    
+    .avatar-img {
+        width: 50px;
+        height: 50px;
+    }
+    
+    .tickets-table td {
+        padding: 0.4rem 0;
+        font-size: 0.9rem;
+    }
+    
+    .tickets-table td::before {
+        display: block;
+        margin-bottom: 0.25rem;
+        font-size: 0.8rem;
+    }
+    
+    .ticket-id {
+        font-size: 0.85rem;
+        margin-bottom: 0.5rem;
+    }
+    
+    .status-badge,
+    .type-badge,
+    .stack-badge,
+    .role-badge {
+        font-size: 0.75rem;
+        padding: 0.2rem 0.6rem;
+    }
+    
+    .action-buttons {
+        flex-direction: column;
+        gap: 0.4rem;
+    }
+    
+    .btn-admin {
+        width: 100%;
+        min-width: auto;
+        padding: 0.65rem;
+        font-size: 0.85rem;
+    }
+    
+    /* Empty State */
+    .empty-state {
+        padding: 2.5rem 1rem;
+    }
+    
+    .empty-state-icon {
+        font-size: 2.5rem;
+    }
+    
+    .empty-state h3 {
+        font-size: 1.2rem;
+    }
+    
+    .empty-state p {
+        font-size: 0.85rem;
+    }
+    
+    /* User/Ticket Info plus compact */
+    .user-info,
+    .contact-info {
+        font-size: 0.85rem;
+    }
+    
+    .user-name,
+    .title-content strong {
+        font-size: 1rem;
+    }
+    
+    .user-email,
+    .user-nickname {
+        font-size: 0.8rem;
+    }
+    
+    .comments-count,
+    .tickets-count {
+        font-size: 0.85rem;
     }
 }
