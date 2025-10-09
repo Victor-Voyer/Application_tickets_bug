@@ -11,7 +11,7 @@
 
 @font-face{
     font-family: 'Kwark';
-    src: url('..    /fonts/Kwark.ttf');
+    src: url('../fonts/Kwark.ttf');
 }
 
 .hidden{
