@@ -14,6 +14,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 #[Route('/users')]
 final class UsersController extends AbstractController
@@ -93,72 +94,73 @@ final class UsersController extends AbstractController
     }
 
     // Update user
-    #[Route('/edit/{id}', name: 'app_users_edit', methods: ['GET', 'POST'])]
-    public function edit(Request $request, Users $user, EntityManagerInterface $entityManager, UserPasswordHasherInterface $passwordHasher): Response
-    {
-        $form = $this->createForm(UsersType::class, $user);
-        $form->handleRequest($request);
+    // #[Route('/edit/{id}', name: 'app_users_edit', methods: ['GET', 'POST'])]
+    // public function edit(Request $request, Users $user, EntityManagerInterface $entityManager, UserPasswordHasherInterface $passwordHasher): Response
+    // {
+    //     $form = $this->createForm(UsersType::class, $user);
+    //     $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            // Update password if provided (unmapped field)
-            $password = $form->get('password')->getData();
-            if ($password !== null && $password !== '') {
-                $user->setPassword($passwordHasher->hashPassword($user, $password));
-            }
+    //     if ($form->isSubmitted() && $form->isValid()) {
+    //         // Update password if provided (unmapped field)
+    //         $password = $form->get('password')->getData();
+    //         if ($password !== null && $password !== '') {
+    //             $user->setPassword($passwordHasher->hashPassword($user, $password));
+    //         }
 
-            // Gestion de l'upload d'avatar
-            $uploadedFile = $form->get('avatar')->getData();
+    //         // Gestion de l'upload d'avatar
+    //         $uploadedFile = $form->get('avatar')->getData();
             
-            if ($uploadedFile) {
-                // Supprimer l'ancien avatar s'il existe
-                $oldAvatar = $user->getAvatar();
-                if ($oldAvatar) {
-                    $oldAvatarPath = $this->getParameter('kernel.project_dir').'/public/uploads/users/'.$oldAvatar;
-                    if (file_exists($oldAvatarPath)) {
-                        unlink($oldAvatarPath);
-                    }
-                }
+    //         if ($uploadedFile) {
+    //             // Supprimer l'ancien avatar s'il existe
+    //             $oldAvatar = $user->getAvatar();
+    //             if ($oldAvatar) {
+    //                 $oldAvatarPath = $this->getParameter('kernel.project_dir').'/public/uploads/users/'.$oldAvatar;
+    //                 if (file_exists($oldAvatarPath)) {
+    //                     unlink($oldAvatarPath);
+    //                 }
+    //             }
 
-                // Upload du nouveau avatar
-                $uploadDir = $this->getParameter('kernel.project_dir').'/public/uploads/users';
+    //             // Upload du nouveau avatar
+    //             $uploadDir = $this->getParameter('kernel.project_dir').'/public/uploads/users';
 
-                // Utilisation de l'extension de base (si possible)
-                $originalExt = pathinfo($uploadedFile->getClientOriginalName(), PATHINFO_EXTENSION);
+    //             // Utilisation de l'extension de base (si possible)
+    //             $originalExt = pathinfo($uploadedFile->getClientOriginalName(), PATHINFO_EXTENSION);
 
-                // Recherche de l'extension si elle n'a pas été trouvée à l'étape d'avant
-                if (!$originalExt) {
-                    $originalExt = $uploadedFile->getClientOriginalExtension()
-                        ?: $uploadedFile->guessExtension()
-                        ?: 'bin';
-                }
+    //             // Recherche de l'extension si elle n'a pas été trouvée à l'étape d'avant
+    //             if (!$originalExt) {
+    //                 $originalExt = $uploadedFile->getClientOriginalExtension()
+    //                     ?: $uploadedFile->guessExtension()
+    //                     ?: 'bin';
+    //             }
 
-                // Nettoyage du nom
-                $sanitizedName = preg_replace('/[^A-Za-z0-9_\-]/', '_', $user->getNickname());
+    //             // Nettoyage du nom
+    //             $sanitizedName = preg_replace('/[^A-Za-z0-9_\-]/', '_', $user->getNickname());
 
-                // Nom final AVEC extension d'origine (ou celle par défaut : "bin")
-                $newFilename = $sanitizedName.'.'.$originalExt;
+    //             // Nom final AVEC extension d'origine (ou celle par défaut : "bin")
+    //             $newFilename = $sanitizedName.'.'.$originalExt;
 
-                // Déplacement et sauvegarde du chemin public
-                $uploadedFile->move($uploadDir, $newFilename);
+    //             // Déplacement et sauvegarde du chemin public
+    //             $uploadedFile->move($uploadDir, $newFilename);
                 
-                $user->setAvatar($newFilename);
-            }
+    //             $user->setAvatar($newFilename);
+    //         }
 
-            $entityManager->flush();
+    //         $entityManager->flush();
 
-            return $this->redirectToRoute('app_users_show', ['id' => $user->getId() ], Response::HTTP_SEE_OTHER);
-        }
+    //         return $this->redirectToRoute('app_users_show', ['id' => $user->getId() ], Response::HTTP_SEE_OTHER);
+    //     }
 
-        return $this->render('users/edit.html.twig', [
-            'user' => $user,
-            'form' => $form,
-        ]);
-    }
+    //     return $this->render('users/edit.html.twig', [
+    //         'user' => $user,
+    //         'form' => $form,
+    //     ]);
+    // }
 
     // Update user profile (sans mot de passe)
     #[Route('/profile/edit/{id}', name: 'app_users_profile_edit', methods: ['GET', 'POST'])]
     public function editProfile(Request $request, Users $user, EntityManagerInterface $entityManager): Response
     {
+        $this->denyAccessUnlessGranted('ROLE_USER', $user);
         $form = $this->createForm(ProfileEditType::class, $user);
         $form->handleRequest($request);
 
@@ -217,6 +219,7 @@ final class UsersController extends AbstractController
     #[Route('/change-password/{id}', name: 'app_users_change_password', methods: ['GET', 'POST'])]
     public function changePassword(Request $request, Users $user, EntityManagerInterface $entityManager, UserPasswordHasherInterface $passwordHasher): Response
     {
+        $this->denyAccessUnlessGranted('ROLE_USER', $user);
         $form = $this->createForm(ChangePasswordType::class);
         $form->handleRequest($request);
 
@@ -251,6 +254,7 @@ final class UsersController extends AbstractController
     #[Route('/delete/{id}', name: 'app_users_delete', methods: ['POST'])]
     public function delete(Request $request, Users $user, EntityManagerInterface $entityManager): Response
     {
+        $this->denyAccessUnlessGranted('ROLE_USER', $user);
         if ($this->isCsrfTokenValid('delete'.$user->getId(), $request->getPayload()->getString('_token'))) {
             $entityManager->remove($user);
             $entityManager->flush();

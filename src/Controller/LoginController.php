@@ -35,6 +35,11 @@ class LoginController extends AbstractController
    #[Route('/login', name: 'app_login')]
    public function login(AuthenticationUtils $authenticationUtils): Response
    {
+      $checkLoggedIn = $this->getUser();
+      if($checkLoggedIn){
+         return $this->redirectToRoute('app_tickets_index');
+      }
+      
       $error = $authenticationUtils->getLastAuthenticationError();
       $lastUsername = $authenticationUtils->getLastUsername();
 
@@ -50,6 +55,10 @@ class LoginController extends AbstractController
    #[Route('/forgot-password', name: 'app_forgot_password')]
    public function forgotPassword(): Response
    {
+      $checkLoggedIn = $this->getUser();
+      if(!$checkLoggedIn){
+         return $this->redirectToRoute('app_login');
+      }
       // Logique de réinitialisation du mot de passe
       $form = $this->createForm(LoginType::class, [
          'forgot_password_url' => $this->generateUrl('app_forgot_password')
