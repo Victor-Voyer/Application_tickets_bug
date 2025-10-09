@@ -99,7 +99,7 @@
 
         {# Section commentaires #}
         <div class="ticket-comments">
-            <h2>Commentaires ({{ ticket.comments|length }})</h2>
+            <h2>Comments ({{ ticket.comments|length }})</h2>
             
             {% if ticket.comments|length > 0 %}
                 <div class="comments-list">
@@ -128,17 +128,17 @@
                     {% endfor %}
                 </div>
             {% else %}
-                <p>Aucun commentaire pour le moment.</p>
+                <p>No comment for the moment.</p>
             {% endif %}
             
             {# Formulaire d'ajout de commentaire #}
             <div class="add-comment-form">
-                <h3>Ajouter un commentaire</h3>
+                <h3>Add a comment</h3>
                 {# attr novalidate pour desactiver la validation HTML5, ça désactive la validation des champs qui est de base "required" #}
                 {{ form_start(commentForm, {'attr': {'novalidate': 'novalidate'}}) }}
                     {{ form_errors(commentForm) }}
                     {{ form_row(commentForm.content) }}
-                    <button type="submit" class="btn btn-primary">+ Ajouter un commentaire</button>
+                    <button type="submit" class="btn btn-primary">+ Add a comment</button>
                 {{ form_end(commentForm) }}
             </div>
         </div>

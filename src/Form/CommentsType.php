@@ -15,11 +15,11 @@ class CommentsType extends AbstractType
     {
         $builder
             ->add('content', null, [
-                'label' => 'Votre commentaire',
+                'label' => 'Your comment',
                 'attr' => [
                     'class' => 'js-ckeditor',
                     'rows' => 5,
-                    'placeholder' => 'Écrivez votre commentaire ici...'
+                    'placeholder' => 'Write your comment here...'
                 ]
             ])
         ;
