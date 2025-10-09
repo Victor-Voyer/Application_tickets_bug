@@ -15,9 +15,11 @@
 				<li class="user-only ">
 					<a href="{{ path('app_users_show', {'id': app.user.id}) }}">Profile</a>
 				</li>
-				<li class="user-only ">
-					<a href="{{ path('app_admin_index') }}">Dashboard</a>
-				</li>
+				{% if is_granted('ROLE_ADMIN') %}
+					<li class="user-only ">
+						<a href="{{ path('app_admin_index') }}">Dashboard</a>
+					</li>
+				{% endif %}
 				<li class="user-only ">
 					<a href="{{ path('app_logout') }}">Logout</a>
 				</li>

@@ -47,30 +47,35 @@ final class UsersController extends AbstractController
 
             // Upload avatar
             $uploadedFile = $form->get('avatar')->getData();
-            $uploadDir = $this->getParameter('kernel.project_dir').'/public/uploads/users';
 
-            // Utilisation de l'extension de base (si possible)
-            $originalExt = pathinfo($uploadedFile->getClientOriginalName(), PATHINFO_EXTENSION);
+            if ($uploadedFile) {
 
-            // Recherche de l'extension si elle n'a pas été trouvée à l'étape d'avant
-            // Dans un premier temps on va obtenir une méthode propre à Symfony
-            // Et si même là ça échoue, alors on met l'extension générique "bin" par défault
-            if (!$originalExt) {
-                $originalExt = $uploadedFile->getClientOriginalExtension()
-                    ?: $uploadedFile->guessExtension()
-                    ?: 'bin';
+                $uploadDir = $this->getParameter('kernel.project_dir') . '/public/uploads/users';
+
+                // Utilisation de l'extension de base (si possible)
+                $originalExt = pathinfo($uploadedFile->getClientOriginalName(), PATHINFO_EXTENSION);
+
+                // Recherche de l'extension si elle n'a pas été trouvée à l'étape d'avant
+                // Dans un premier temps on va obtenir une méthode propre à Symfony
+                // Et si même là ça échoue, alors on met l'extension générique "bin" par défault
+                if (!$originalExt) {
+                    $originalExt = $uploadedFile->getClientOriginalExtension()
+                        ?: $uploadedFile->guessExtension()
+                        ?: 'bin';
+                }
+
+                // Nettoyage du nom
+                $sanitizedName = preg_replace('/[^A-Za-z0-9_\-]/', '_', $form->get('nickname')->getData());
+
+                // Nom final AVEC extension d’origine (ou celle par défault : "bin")
+                $newFilename = $sanitizedName . '.' . $originalExt;
+
+                // Déplacement et sauvegarde du chemin public
+                $uploadedFile->move($uploadDir, $newFilename);
+
+                $user->setAvatar($newFilename);
             }
 
-            // Nettoyage du nom
-            $sanitizedName = preg_replace('/[^A-Za-z0-9_\-]/', '_', $form->get('nickname')->getData());
-
-            // Nom final AVEC extension d’origine (ou celle par défault : "bin")
-            $newFilename = $sanitizedName.'.'.$originalExt;
-
-            // Déplacement et sauvegarde du chemin public
-            $uploadedFile->move($uploadDir, $newFilename);
-            
-            $user->setAvatar($newFilename);
             $entityManager->persist($user);
             $entityManager->flush();
             // Retourner sur la page de tous mes Pokémons
@@ -83,7 +88,7 @@ final class UsersController extends AbstractController
             'form' => $form,
         ]);
     }
-    
+
     // Affichage par ID (user)
     #[Route('/profile/{id}', name: 'app_users_show', methods: ['GET'])]
     public function show(Users $user): Response
@@ -109,7 +114,7 @@ final class UsersController extends AbstractController
 
     //         // Gestion de l'upload d'avatar
     //         $uploadedFile = $form->get('avatar')->getData();
-            
+
     //         if ($uploadedFile) {
     //             // Supprimer l'ancien avatar s'il existe
     //             $oldAvatar = $user->getAvatar();
@@ -141,7 +146,7 @@ final class UsersController extends AbstractController
 
     //             // Déplacement et sauvegarde du chemin public
     //             $uploadedFile->move($uploadDir, $newFilename);
-                
+
     //             $user->setAvatar($newFilename);
     //         }
 
@@ -167,19 +172,19 @@ final class UsersController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             // Gestion de l'upload d'avatar
             $uploadedFile = $form->get('avatar')->getData();
-            
+
             if ($uploadedFile) {
                 // Supprimer l'ancien avatar s'il existe
                 $oldAvatar = $user->getAvatar();
                 if ($oldAvatar) {
-                    $oldAvatarPath = $this->getParameter('kernel.project_dir').'/public/uploads/users/'.$oldAvatar;
+                    $oldAvatarPath = $this->getParameter('kernel.project_dir') . '/public/uploads/users/' . $oldAvatar;
                     if (file_exists($oldAvatarPath)) {
                         unlink($oldAvatarPath);
                     }
                 }
 
                 // Upload du nouveau avatar
-                $uploadDir = $this->getParameter('kernel.project_dir').'/public/uploads/users';
+                $uploadDir = $this->getParameter('kernel.project_dir') . '/public/uploads/users';
 
                 // Utilisation de l'extension de base (si possible)
                 $originalExt = pathinfo($uploadedFile->getClientOriginalName(), PATHINFO_EXTENSION);
@@ -195,11 +200,11 @@ final class UsersController extends AbstractController
                 $sanitizedName = preg_replace('/[^A-Za-z0-9_\-]/', '_', $user->getNickname());
 
                 // Nom final AVEC extension d'origine (ou celle par défaut : "bin")
-                $newFilename = $sanitizedName.'.'.$originalExt;
+                $newFilename = $sanitizedName . '.' . $originalExt;
 
                 // Déplacement et sauvegarde du chemin public
                 $uploadedFile->move($uploadDir, $newFilename);
-                
+
                 $user->setAvatar($newFilename);
             }
 
@@ -249,13 +254,13 @@ final class UsersController extends AbstractController
             'form' => $form,
         ]);
     }
-    
+
     // Delete user
     #[Route('/delete/{id}', name: 'app_users_delete', methods: ['POST'])]
     public function delete(Request $request, Users $user, EntityManagerInterface $entityManager): Response
     {
         $this->denyAccessUnlessGranted('ROLE_USER', $user);
-        if ($this->isCsrfTokenValid('delete'.$user->getId(), $request->getPayload()->getString('_token'))) {
+        if ($this->isCsrfTokenValid('delete' . $user->getId(), $request->getPayload()->getString('_token'))) {
             $entityManager->remove($user);
             $entityManager->flush();
         }
