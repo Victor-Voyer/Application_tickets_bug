@@ -6,15 +6,19 @@ let burgerInitialized = false;
 let burgerMenu, mainNav, body;
 
 function toggleMenu() {
-    burgerMenu.classList.toggle('active');
-    mainNav.classList.toggle('active');
-    body.classList.toggle('menu-open');
+    if (burgerMenu && mainNav && body) {
+        burgerMenu.classList.toggle('active');
+        mainNav.classList.toggle('active');
+        body.classList.toggle('menu-open');
+    }
 }
 
 function closeMenu() {
-    burgerMenu.classList.remove('active');
-    mainNav.classList.remove('active');
-    body.classList.remove('menu-open');
+    if (burgerMenu && mainNav && body) {
+        burgerMenu.classList.remove('active');
+        mainNav.classList.remove('active');
+        body.classList.remove('menu-open');
+    }
 }
 
 function handleBurgerClick(e) {
@@ -23,19 +27,15 @@ function handleBurgerClick(e) {
 }
 
 function handleBodyClick(e) {
-    if (body.classList.contains('menu-open') && 
-        !mainNav.contains(e.target) && 
-        !burgerMenu.contains(e.target)) {
+    if (body && body.classList.contains('menu-open') && 
+        mainNav && !mainNav.contains(e.target) && 
+        burgerMenu && !burgerMenu.contains(e.target)) {
         closeMenu();
     }
 }
 
-function handleNavLinkClick() {
-    closeMenu();
-}
-
 function handleEscapeKey(e) {
-    if (e.key === 'Escape' && body.classList.contains('menu-open')) {
+    if (e.key === 'Escape' && body && body.classList.contains('menu-open')) {
         closeMenu();
     }
 }
@@ -44,41 +44,60 @@ let resizeTimer;
 function handleResize() {
     clearTimeout(resizeTimer);
     resizeTimer = setTimeout(function() {
-        if (window.innerWidth > 768 && body.classList.contains('menu-open')) {
+        if (window.innerWidth > 768 && body && body.classList.contains('menu-open')) {
             closeMenu();
         }
     }, 250);
 }
 
-function initBurgerMenu() {
+function updateDOMReferences() {
+    // Mettre à jour les références DOM à chaque navigation
     burgerMenu = document.getElementById('burgerMenu');
     mainNav = document.getElementById('mainNav');
     body = document.body;
+}
+
+function initBurgerMenu() {
+    updateDOMReferences();
 
     if (!burgerMenu || !mainNav) {
         return;
     }
 
-    // N'initialiser qu'une seule fois
-    if (burgerInitialized) {
-        return;
+    // Initialiser les event listeners globaux une seule fois
+    if (!burgerInitialized) {
+        burgerInitialized = true;
+        
+        // Event listeners sur les éléments qui ne changent pas
+        document.addEventListener('click', function(e) {
+            // Vérifier si c'est le bouton burger
+            if (e.target.closest('#burgerMenu')) {
+                e.stopPropagation();
+                toggleMenu();
+            }
+            // Fermer le menu si clic en dehors
+            else if (body.classList.contains('menu-open') && 
+                     !e.target.closest('#mainNav')) {
+                closeMenu();
+            }
+        });
+
+        document.addEventListener('keydown', handleEscapeKey);
+        window.addEventListener('resize', handleResize);
     }
-    burgerInitialized = true;
 
-    // Ajouter les event listeners
-    burgerMenu.addEventListener('click', handleBurgerClick);
-    body.addEventListener('click', handleBodyClick);
-    document.addEventListener('keydown', handleEscapeKey);
-    window.addEventListener('resize', handleResize);
-
-    // Fermer le menu au clic sur un lien
-    const navLinks = mainNav.querySelectorAll('a');
-    navLinks.forEach(link => {
-        link.addEventListener('click', handleNavLinkClick);
-    });
+    // Fermer le menu au clic sur un lien de navigation (à chaque turbo:load)
+    if (mainNav) {
+        const navLinks = mainNav.querySelectorAll('a');
+        navLinks.forEach(link => {
+            link.addEventListener('click', function() {
+                closeMenu();
+            });
+        });
+    }
 }
 
-// Initialiser au chargement de la page
+// Initialiser au chargement de la page et lors des navigations Turbo
 document.addEventListener('DOMContentLoaded', initBurgerMenu);
 document.addEventListener('turbo:load', initBurgerMenu);
 
