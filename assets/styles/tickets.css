@@ -88,7 +88,7 @@
 }
 
 .ticket-id {
-    background: var(--color-green);
+    background: var(--color-dark);
     padding: 0.25rem 0.5rem;
     border-radius: 4px;
     font-size: 0.9rem;
