@@ -141,4 +141,33 @@ final class TicketsController extends AbstractController
 
         return $this->redirectToRoute('app_tickets_index', [], Response::HTTP_SEE_OTHER);
     }
+
+    #[Route('/status/{id}', name: 'app_tickets_update_status', methods: ['POST'])]
+    public function updateStatus(Request $request, Tickets $ticket, EntityManagerInterface $entityManager, StatusRepository $statusRepository): Response
+    {
+        $this->denyAccessUnlessGranted('TICKET_UPDATE_STATUS', $ticket);
+        if ($this->isCsrfTokenValid('update_status' . $ticket->getId(), $request->getPayload()->getString('_token'))) {
+            $submittedStatus = $request->getPayload()->get('status');
+
+            $enum = match ($submittedStatus) {
+                'Open', 'open', 'OPEN' => StatusEnum::OPEN,
+                'In Progress', 'in progress', 'IN_PROGRESS' => StatusEnum::IN_PROGRESS,
+                'Resolved', 'resolved', 'RESOLVED' => StatusEnum::RESOLVED,
+            };
+
+            if ($enum){
+                if ($status = $statusRepository->findOneBy(['status' => $enum])){
+                    $ticket->setStatus($status);
+                    $entityManager->flush();
+                    $this->addFlash('success', 'Status updated successfully');
+                } else {
+                    $this->addFlash('error', 'Invalid status');
+                }
+            } else {
+                $this->addFlash('error', 'Invalid status');
+            }
+        }
+
+        return $this->redirectToRoute('app_tickets_show', ['id' => $ticket->getId()], Response::HTTP_SEE_OTHER);
+    }
 }

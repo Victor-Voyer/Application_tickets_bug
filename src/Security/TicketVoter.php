@@ -11,14 +11,15 @@ use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 class TicketVoter extends Voter
 {
    public const DELETE = 'TICKET_DELETE';
-
+   public const UPDATE_STATUS = 'TICKET_UPDATE_STATUS';
    public function __construct(private AuthorizationCheckerInterface $auth)
    {
    }
 
    protected function supports(string $attribute, mixed $subject): bool
    {
-      return $attribute === self::DELETE && $subject instanceof Tickets;
+      return in_array($attribute, [self::DELETE, self::UPDATE_STATUS], true)
+         && $subject instanceof Tickets;
    }
 
    protected function voteOnAttribute(string $attribute, mixed $subject, TokenInterface $token): bool
