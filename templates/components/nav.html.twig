@@ -1,5 +1,11 @@
 {% block nav %}
-	<nav>
+	<button class="burger-menu" id="burgerMenu" aria-label="Menu">
+		<span class="burger-line"></span>
+		<span class="burger-line"></span>
+		<span class="burger-line"></span>
+	</button>
+	
+	<nav id="mainNav" class="main-nav">
 		<ul>
 			<li>
 				<a href="{{ path('app_tickets_index') }}">Home</a>
