@@ -31,9 +31,6 @@ a{
   
   
     /* ========== THEME COLORS ========== */
-    --color-primary: var(--color-green-500);
-    --color-primary-dark: var(--color-green-700);
-    --color-primary-light: var(--color-green-300);
   
     --color-secondary: #1f1f1f;
     --color-accent: #00ff88;
