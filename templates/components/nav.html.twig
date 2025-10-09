@@ -11,37 +11,27 @@
 				<a href="{{ path('app_tickets_new') }}">New ticket</a>
 			</li>
 			{# Éléments pour utilisateurs connectés #}
-			<li class="user-only hidden">
-				<a href="">Profile</a>
-			</li>
-			<li class="user-only hidden">
-				<a href="#">Dashboard</a>
-			</li>
-			<li class="user-only hidden">
-				<a href="{{ path('app_logout') }}">Logout</a>
-			</li>
+			{% if app.user %}
+				<li class="user-only ">
+					<a href="{{ path('app_users_show', {'id': app.user.id}) }}">Profile</a>
+				</li>
+				<li class="user-only ">
+					<a href="{{ path('app_admin_index') }}">Dashboard</a>
+				</li>
+				<li class="user-only ">
+					<a href="{{ path('app_logout') }}">Logout</a>
+				</li>
+			{% endif %}
 
 			{# Éléments pour utilisateurs non connectés #}
-			<li class="guest-only hidden">
-				<a href="{{ path('app_login') }}">Login</a>
-			</li>
-			<li class="guest-only hidden">
-				<a href="{{ path('app_users_new') }}">Sign Up</a>
-			</li>
+			{% if not app.user %}
+				<li class="guest-only ">
+					<a href="{{ path('app_login') }}">Login</a>
+				</li>
+				<li class="guest-only ">
+					<a href="{{ path('app_users_new') }}">Sign Up</a>
+				</li>
+			{% endif %}
 		</ul>
 	</nav>
-   <script>
-      const nav = document.querySelector('nav');
-      const userOnly = nav.querySelectorAll('.user-only');
-      const guestOnly = nav.querySelectorAll('.guest-only');
-      const user = {{ app.user|json_encode|raw }};
-      if (user) {
-         userOnly.forEach(item => item.classList.remove('hidden'));
-         guestOnly.forEach(item => item.classList.add('hidden'));
-      }
-      if (!user) {
-         guestOnly.forEach(item => item.classList.remove('hidden'));
-         userOnly.forEach(item => item.classList.add('hidden'));
-      }
-   </script>
 {% endblock %}
