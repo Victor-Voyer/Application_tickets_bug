@@ -25,8 +25,8 @@ security:
         enable_csrf: true
         csrf_parameter: login[_token]
         csrf_token_id: login
-        username_parameter: email
-        password_parameter: password
+        username_parameter: login[email]
+        password_parameter: login[password]
         default_target_path: /tickets
       logout:
         path: app_logout
