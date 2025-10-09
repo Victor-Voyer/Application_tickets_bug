@@ -84,11 +84,11 @@
 }
 
 .ticket-card-header h2 a:hover {
-    color: #3498db;
+    color: var(--color-green);
 }
 
 .ticket-id {
-    background: #ecf0f1;
+    background: var(--color-green);
     padding: 0.25rem 0.5rem;
     border-radius: 4px;
     font-size: 0.9rem;
@@ -111,18 +111,14 @@
 }
 
 .badge-status {
-    background: #3498db;
+    background: var(--color-green);
     color: white;
 }
 
-.badge-type {
-    background: #9b59b6;
-    color: white;
-}
-
+.badge-type,
 .badge-stack {
-    background: #e74c3c;
-    color: white;
+    background: lightgray;
+    color: var(--color-black);
 }
 
 .ticket-card-content {
@@ -178,24 +174,6 @@
     cursor: pointer;
     text-align: center;
     width: 50%;
-}
-
-.btn-primary {
-    background: #3498db;
-    color: white;
-}
-
-.btn-primary:hover {
-    background: #2980b9;
-}
-
-.btn-secondary {
-    background: #95a5a6;
-    color: white;
-}
-
-.btn-secondary:hover {
-    background: #7f8c8d;
 }
 
 .no-tickets {

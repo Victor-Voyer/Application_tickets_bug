@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Profil de {{ user.nickname }}{% endblock %}
+{% block title %}{{ user.nickname }}'s Profile{% endblock %}
 
 {% block body %}
     <section class="form-section">
@@ -8,17 +8,17 @@
         
         <div class="avatar-container">
             {% if user.avatar %}
-                <img class="avatar" src="{{ asset('uploads/users/' ~ user.avatar) }}" alt="Avatar de {{ user.nickname }}">
+                <img class="avatar" src="{{ asset('uploads/users/' ~ user.avatar) }}" alt="{{ user.nickname }}'s avatar">
             {% else %}
                 <div class="avatar-placeholder">No avatar</div>
             {% endif %}
         </div>
         
         <div class="profile-details">
-            <p><strong>Nickname :</strong> {{ user.nickname }}</p>
-            <p><strong>First Name :</strong> {{ user.firstName }}</p>
-            <p><strong>Last Name :</strong> {{ user.lastName }}</p>
-            <p><strong>Email :</strong> {{ user.email }}</p>
+            <p><strong>Nickname:</strong> {{ user.nickname }}</p>
+            <p><strong>First Name:</strong> {{ user.firstName }}</p>
+            <p><strong>Last Name:</strong> {{ user.lastName }}</p>
+            <p><strong>Email:</strong> {{ user.email }}</p>
         </div>
         
         <div class="form-buttons">

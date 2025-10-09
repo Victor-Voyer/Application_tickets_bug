@@ -47,13 +47,13 @@ class LoginType extends AbstractType
                'class' => 'btn btn-primary'
             ]
          ])
-         ->add('forgot_password', ButtonType::class, [
-            'label' => 'Mot de passe oublié ?',
-            'attr' => [
-               'class' => 'btn btn-link forgot-password',
-               'onclick' => 'window.location.href = "' . $options['forgot_password_url'] . '"'
-            ]
-         ])
+         // ->add('forgot_password', ButtonType::class, [
+         //    'label' => 'Forgot password?',
+         //    'attr' => [
+         //       'class' => 'btn btn-link forgot-password',
+         //       'onclick' => 'window.location.href = "' . $options['forgot_password_url'] . '"'
+         //    ]
+         // ])
       ;
    }
    public function configureOptions(\Symfony\Component\OptionsResolver\OptionsResolver $resolver): void

@@ -299,19 +299,6 @@
     border: 2px solid rgba(255, 255, 255, 0.1);
 }
 
-.avatar-placeholder {
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
-    background: rgba(255, 255, 255, 0.1);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border: 2px solid rgba(255, 255, 255, 0.1);
-    color: var(--color-text-light);
-    font-size: 1.2rem;
-}
-
 /* User Info Styles */
 .user-details,
 .user-info {
@@ -396,8 +383,8 @@
 }
 
 .type-technical {
-    background: rgba(0, 123, 255, 0.2);
-    color: #007bff;
+    background: var(--color-green);
+    color: var(--color-green);
     border: 1px solid rgba(0, 123, 255, 0.3);
 }
 
@@ -474,64 +461,6 @@
     cursor: pointer;
 }
 
-
-.btn-secondary {
-    background: rgba(108, 117, 125, 0.2);
-    color: #6c757d;
-    border: 1px solid rgba(108, 117, 125, 0.3);
-    padding: 0.75rem 1.5rem;
-    margin-bottom: 1rem;
-}
-
-.btn-secondary:hover {
-    background: rgba(108, 117, 125, 0.3);
-    transform: translateY(-1px);
-}
-
-.btn-info {
-    background: rgba(23, 162, 184, 0.2);
-    color: #17a2b8;
-    border: 1px solid rgba(23, 162, 184, 0.3);
-}
-
-.btn-info:hover {
-    background: rgba(23, 162, 184, 0.3);
-    transform: translateY(-1px);
-}
-
-.btn-warning {
-    background: rgba(255, 193, 7, 0.2);
-    color: #ffc107;
-    border: 1px solid rgba(255, 193, 7, 0.3);
-}
-
-.btn-warning:hover {
-    background: rgba(255, 193, 7, 0.3);
-    transform: translateY(-1px);
-}
-
-.btn-primary {
-    background: rgba(0, 123, 255, 0.2);
-    color: #007bff;
-    border: 1px solid rgba(0, 123, 255, 0.3);
-}
-
-.btn-primary:hover {
-    background: rgba(0, 123, 255, 0.3);
-    transform: translateY(-1px);
-}
-
-.btn-danger {
-    background: rgba(220, 53, 69, 0.2);
-    color: #dc3545;
-    border: 1px solid rgba(220, 53, 69, 0.3);
-}
-
-.btn-danger:hover {
-    background: rgba(220, 53, 69, 0.3);
-    transform: translateY(-1px);
-}
-
 /* ========================================
    12. ANIMATIONS
    ======================================== */
@@ -594,8 +523,7 @@
         max-width: 200px;
     }
     
-    .avatar-img,
-    .avatar-placeholder {
+    .avatar-img {
         width: 40px;
         height: 40px;
     }

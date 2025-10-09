@@ -31,7 +31,7 @@
 
 {% block body %}
     <div class="ticket-show-container">
-        {# Messages flash #}
+        {# Flash messages #}
         {% for label, messages in app.flashes %}
             {% for message in messages %}
                 <div class="alert alert-{{ label }}">
@@ -42,21 +42,21 @@
 
         {# Navigation #}
         <div class="ticket-navigation">
-            <a href="{{ path('app_tickets_index') }}">← Retour à la liste</a>
+            <a href="{{ path('app_tickets_index') }}">← Back to list</a>
         </div>
 
-        {# En-tête du ticket #}
+        {# Ticket header #}
         <div class="ticket-header">
             <h1>{{ ticket.title }}</h1>
             <div class="ticket-meta">
                 <span class="ticket-id">Ticket #{{ ticket.id }}</span>
-                <span class="ticket-status">Statut : {{ ticket.status.status.value }}</span>
-                <span class="ticket-type">Type : {{ ticket.type.value }}</span>
-                <span class="ticket-stack">Stack : {{ ticket.stack.value }}</span>
+                <span class="ticket-status">Status: {{ ticket.status.status.value }}</span>
+                <span class="ticket-type">Type: {{ ticket.type.value }}</span>
+                <span class="ticket-stack">Stack: {{ ticket.stack.value }}</span>
             </div>
         </div>
 
-        {# Informations principales #}
+        {# Main information #}
         <div class="ticket-main">
             <div class="ticket-content">
                 <h2>Description</h2>
@@ -66,38 +66,38 @@
             </div>
 
             <div class="ticket-info">
-                <h3>Informations</h3>
+                <h3>Information</h3>
                 <dl>
-                    <dt>Créé le :</dt>
+                    <dt>Created on:</dt>
                     <dd>{{ ticket.createdAt|date('d/m/Y à H:i') }}</dd>
                     
-                    <dt>Créé par :</dt>
+                    <dt>Created by:</dt>
                     <dd>
                         {{ ticket.userId.firstName }} {{ ticket.userId.lastName }} 
                         ({{ ticket.userId.nickname }})
                     </dd>
                     
-                    <dt>Email :</dt>
+                    <dt>Email:</dt>
                     <dd>{{ ticket.userId.email }}</dd>
                 </dl>
             </div>
         </div>
 
-        {# Images attachées #}
+        {# Attached images #}
         {% if ticket.images|length > 0 %}
             <div class="ticket-images">
-                <h2>Images jointes ({{ ticket.images|length }})</h2>
+                <h2>Attached images ({{ ticket.images|length }})</h2>
                 <div class="images-grid">
                     {% for image in ticket.images %}
                         <div class="image-item">
-                            <img src="{{ asset('uploads/' ~ image.url) }}" alt="Image du ticket">
+                            <img src="{{ asset('uploads/' ~ image.url) }}" alt="Ticket image">
                         </div>
                     {% endfor %}
                 </div>
             </div>
         {% endif %}
 
-        {# Section commentaires #}
+        {# Comments section #}
         <div class="ticket-comments">
             <h2>Comments ({{ ticket.comments|length }})</h2>
             
@@ -109,18 +109,18 @@
                                 <strong>{{ comment.userId.firstName }} {{ comment.userId.lastName }}</strong>
                                 <span class="comment-date">{{ comment.createdAt|date('d/m/Y à H:i') }}</span>
                                 {% if comment.updatedAt %}
-                                    <span class="comment-edited">(modifié le {{ comment.updatedAt|date('d/m/Y à H:i') }})</span>
+                                    <span class="comment-edited">(edited on {{ comment.updatedAt|date('d/m/Y à H:i') }})</span>
                                 {% endif %}
                             </div>
                             <div class="comment-content">
                                 {{ comment.content|raw }}
                             </div>
                             
-                            {# Images du commentaire #}
+                            {# Comment images #}
                             {% if comment.images|length > 0 %}
                                 <div class="comment-images">
                                     {% for image in comment.images %}
-                                        <img src="{{ asset('uploads/' ~ image.url) }}" alt="Image du commentaire" style="max-width: 200px;">
+                                        <img src="{{ asset('uploads/' ~ image.url) }}" alt="Comment image" style="max-width: 200px;">
                                     {% endfor %}
                                 </div>
                             {% endif %}
@@ -128,13 +128,13 @@
                     {% endfor %}
                 </div>
             {% else %}
-                <p>No comment for the moment.</p>
+                <p>No comments yet.</p>
             {% endif %}
             
-            {# Formulaire d'ajout de commentaire #}
+            {# Add comment form #}
             <div class="add-comment-form">
                 <h3>Add a comment</h3>
-                {# attr novalidate pour desactiver la validation HTML5, ça désactive la validation des champs qui est de base "required" #}
+                {# attr novalidate to disable HTML5 validation, it disables the validation of fields that are "required" by default #}
                 {{ form_start(commentForm, {'attr': {'novalidate': 'novalidate'}}) }}
                     {{ form_errors(commentForm) }}
                     {{ form_row(commentForm.content) }}

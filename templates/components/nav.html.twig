@@ -10,7 +10,7 @@
 			<li>
 				<a href="{{ path('app_tickets_new') }}">New ticket</a>
 			</li>
-			{# Éléments pour utilisateurs connectés #}
+			{# Elements for logged in users #}
 			{% if app.user %}
 				<li class="user-only ">
 					<a href="{{ path('app_users_show', {'id': app.user.id}) }}">Profile</a>
@@ -25,7 +25,7 @@
 				</li>
 			{% endif %}
 
-			{# Éléments pour utilisateurs non connectés #}
+			{# Elements for guests #}
 			{% if not app.user %}
 				<li class="guest-only ">
 					<a href="{{ path('app_login') }}">Login</a>

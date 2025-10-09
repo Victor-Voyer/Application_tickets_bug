@@ -115,10 +115,10 @@ a{
 
 /* Secondary Button - Darkgray */
 .btn-secondary {
-    background-color: var(--color-secondary);
+    background-color: var(--color-black);
     color: var(--color-white);
-    border: 2px solid var(--color-secondary);
-}
+    border: 2px solid var(--color-black);
+}   
 
 .btn-secondary:hover {
     background-color: #2a2a2a;
@@ -377,10 +377,10 @@ textarea::placeholder{
     transition: all 0.3s ease;
 }
 
-.page-link:hover {
+/* .page-link:hover {
     background-color: #e9ecef;
     color: #0056b3;
-}
+} */
 
 .page-item.active .page-link {
     background-color: var(--color-green);

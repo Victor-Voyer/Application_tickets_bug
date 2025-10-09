@@ -63,7 +63,7 @@
     </section>
 
     <section class="tickets-list">
-        <h1>Liste des Tickets</h1>
+        <h1>Tickets List</h1>
         
         {% if tickets|length > 0 %}
             <div class="tickets-container">
@@ -91,23 +91,23 @@
                         
                         <div class="ticket-card-footer">
                             <div class="ticket-author">
-                                <strong>Créé par :</strong> 
+                                <strong>Created by:</strong> 
                                 {{ ticket.userId.firstName }} {{ ticket.userId.lastName }}
                             </div>
                             <div class="ticket-date">
-                                <strong>Le :</strong> 
+                                <strong>On:</strong> 
                                 {{ ticket.createdAt|date('d/m/Y à H:i') }}
                             </div>
                         </div>
                         
                         <div class="ticket-card-actions">
-                            <a href="{{ path('app_tickets_show', {'id': ticket.id}) }}" class="btn-tickets btn-primary">Voir détails</a>
+                            <a href="{{ path('app_tickets_show', {'id': ticket.id}) }}" class="btn-tickets btn-primary">View details</a>
                         </div>
                     </div>
                 {% endfor %}
             </div>
         {% else %}
-            <p class="no-tickets">Aucun ticket n'a été créé pour le moment.</p>
+            <p class="no-tickets">No tickets have been created yet.</p>
         {% endif %}
     </section>
 
@@ -118,7 +118,7 @@
                     {% if currentPage > 1 %}
                         <li class="page-item">
                             <a class="page-link" href="{{ path('app_tickets_index', filters|merge({'page': currentPage - 1})) }}">
-                                &laquo; Précédent
+                                &laquo; Previous
                             </a>
                         </li>
                     {% endif %}
@@ -138,7 +138,7 @@
                     {% if currentPage < totalPages %}
                         <li class="page-item">
                             <a class="page-link" href="{{ path('app_tickets_index', filters|merge({'page': currentPage + 1})) }}">
-                                Suivant &raquo;
+                                Next &raquo;
                             </a>
                         </li>
                     {% endif %}
