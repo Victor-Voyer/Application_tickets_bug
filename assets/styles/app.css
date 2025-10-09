@@ -23,6 +23,10 @@ a{
     color: var(--color-white);
 }
 
+h2 {
+    text-align: center;
+}
+
 :root {
     /* ========== BASE COLORS ========== */
     --color-black: #0a0a0a;
