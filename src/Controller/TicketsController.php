@@ -68,7 +68,7 @@ final class TicketsController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $ticket->setUserId($this->getUser());
+            $ticket->setUser($this->getUser());
             $ticket->setStatus($openStatus);
             $ticket->setCreatedAt(new \DateTimeImmutable());
 
@@ -93,7 +93,7 @@ final class TicketsController extends AbstractController
                         // Créer une nouvelle entité Image et la lier au ticket
                         $image = new Images();
                         $image->setUrl('uploads/tickets/' . $newFilename);
-                        $image->setTicketId($ticket);
+                        $image->setTicket($ticket);
                         
                         $entityManager->persist($image);
                     } catch (FileException $e) {
@@ -128,7 +128,7 @@ final class TicketsController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             // Associer le commentaire au ticket et à l'utilisateur
             $comment->setTicket($ticket);
-            $comment->setUserId($this->getUser());
+            $comment->setUser($this->getUser());
             $comment->setCreatedAt(new \DateTimeImmutable());
 
             // Gérer l'upload des images du commentaire
@@ -152,7 +152,7 @@ final class TicketsController extends AbstractController
                         // Créer une nouvelle entité Image et la lier au commentaire
                         $image = new Images();
                         $image->setUrl('uploads/comments/' . $newFilename);
-                        $image->setCommentId($comment);
+                        $image->setComment($comment);
                         
                         $entityManager->persist($image);
                     } catch (FileException $e) {

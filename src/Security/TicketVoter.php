@@ -39,6 +39,6 @@ class TicketVoter extends Voter
       }
 
       // Users can delete only their own tickets
-      return $ticket->getUserId() === $user;
+      return $ticket->getUser() === $user;
    }
 }
