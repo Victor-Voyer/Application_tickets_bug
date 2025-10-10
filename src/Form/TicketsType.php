@@ -13,6 +13,8 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\NotBlank;
+use Symfony\Component\Validator\Constraints\All;
+use Symfony\Component\Validator\Constraints\File;
 
 class TicketsType extends AbstractType
 {
@@ -53,6 +55,28 @@ class TicketsType extends AbstractType
                 'attr' => [
                     'class' => 'js-ckeditor',
                     
+                ]
+            ])
+            ->add('imageFiles', FileType::class, [
+                'label' => 'Attach images (JPG, PNG, max 5MB) :',
+                'mapped' => false,
+                'required' => false,
+                'multiple' => true,
+                'constraints' => [
+                    new All([
+                        new File([
+                            'maxSize' => '5M',
+                            'mimeTypes' => [
+                                'image/jpeg',
+                                'image/png',
+                                'image/webp',
+                            ],
+                            'mimeTypesMessage' => 'Please upload a valid image (JPG, PNG or WebP)',
+                        ])
+                    ])
+                ],
+                'attr' => [
+                    'accept' => 'image/*'
                 ]
             ])
         ;

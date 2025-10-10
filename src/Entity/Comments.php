@@ -27,7 +27,7 @@ class Comments
 
     #[ORM\ManyToOne(inversedBy: 'comments')]
     #[ORM\JoinColumn(name: 'user_id', nullable: false)]
-    private ?Users $user_id = null;
+    private ?Users $user = null;
 
     #[ORM\ManyToOne(inversedBy: 'comments')]
     #[ORM\JoinColumn(name: 'ticket_id', referencedColumnName: 'id', nullable: false)]
@@ -36,7 +36,7 @@ class Comments
     /**
      * @var Collection<int, Images>
      */
-    #[ORM\OneToMany(targetEntity: Images::class, mappedBy: 'comment_id')]
+    #[ORM\OneToMany(targetEntity: Images::class, mappedBy: 'comment', cascade: ['persist', 'remove'], orphanRemoval: true)]
     private Collection $images;
 
     public function __construct()
@@ -85,14 +85,14 @@ class Comments
         return $this;
     }
 
-    public function getUserId(): ?Users
+    public function getUser(): ?Users
     {
-        return $this->user_id;
+        return $this->user;
     }
 
-    public function setUserId(?Users $user_id): static
+    public function setUser(?Users $user): static
     {
-        $this->user_id = $user_id;
+        $this->user = $user;
 
         return $this;
     }
@@ -109,7 +109,7 @@ class Comments
     {
         if (!$this->images->contains($image)) {
             $this->images->add($image);
-            $image->setCommentId($this);
+            $image->setComment($this);
         }
 
         return $this;
@@ -119,8 +119,8 @@ class Comments
     {
         if ($this->images->removeElement($image)) {
             // set the owning side to null (unless already changed)
-            if ($image->getCommentId() === $this) {
-                $image->setCommentId(null);
+            if ($image->getComment() === $this) {
+                $image->setComment(null);
             }
         }
 

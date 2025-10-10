@@ -43,13 +43,13 @@ class Users implements UserInterface, PasswordAuthenticatedUserInterface
     /**
      * @var Collection<int, Tickets>
      */
-    #[ORM\OneToMany(targetEntity: Tickets::class, mappedBy: 'user_id')]
+    #[ORM\OneToMany(targetEntity: Tickets::class, mappedBy: 'user')]
     private Collection $tickets;
 
     /**
      * @var Collection<int, Comments>
      */
-    #[ORM\OneToMany(targetEntity: Comments::class, mappedBy: 'user_id')]
+    #[ORM\OneToMany(targetEntity: Comments::class, mappedBy: 'user')]
     private Collection $comments;
 
     #[ORM\Column(length: 500, nullable: true)]
@@ -150,7 +150,7 @@ class Users implements UserInterface, PasswordAuthenticatedUserInterface
     {
         if (!$this->tickets->contains($ticket)) {
             $this->tickets->add($ticket);
-            $ticket->setUserId($this);
+            $ticket->setUser($this);
         }
 
         return $this;
@@ -160,8 +160,8 @@ class Users implements UserInterface, PasswordAuthenticatedUserInterface
     {
         if ($this->tickets->removeElement($ticket)) {
             // set the owning side to null (unless already changed)
-            if ($ticket->getUserId() === $this) {
-                $ticket->setUserId(null);
+            if ($ticket->getUser() === $this) {
+                $ticket->setUser(null);
             }
         }
 
@@ -180,7 +180,7 @@ class Users implements UserInterface, PasswordAuthenticatedUserInterface
     {
         if (!$this->comments->contains($comment)) {
             $this->comments->add($comment);
-            $comment->setUserId($this);
+            $comment->setUser($this);
         }
 
         return $this;
@@ -190,8 +190,8 @@ class Users implements UserInterface, PasswordAuthenticatedUserInterface
     {
         if ($this->comments->removeElement($comment)) {
             // set the owning side to null (unless already changed)
-            if ($comment->getUserId() === $this) {
-                $comment->setUserId(null);
+            if ($comment->getUser() === $this) {
+                $comment->setUser(null);
             }
         }
 

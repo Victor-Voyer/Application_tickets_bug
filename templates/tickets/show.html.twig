@@ -8,6 +8,7 @@
 
 {% block javascripts %}
     {{ parent() }}
+    <script src="{{ asset('upload_img.js') }}"></script>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             const form = document.querySelector('.add-comment-form form');
@@ -73,12 +74,12 @@
                     
                     <dt>Created by:</dt>
                     <dd>
-                        {{ ticket.userId.firstName }} {{ ticket.userId.lastName }} 
-                        ({{ ticket.userId.nickname }})
+                        {{ ticket.user.firstName }} {{ ticket.user.lastName }} 
+                        ({{ ticket.user.nickname }})
                     </dd>
                     
                     <dt>Email:</dt>
-                    <dd>{{ ticket.userId.email }}</dd>
+                    <dd>{{ ticket.user.email }}</dd>
                 </dl>
             </div>
         </div>
@@ -90,7 +91,7 @@
                 <div class="images-grid">
                     {% for image in ticket.images %}
                         <div class="image-item">
-                            <img src="{{ asset('uploads/' ~ image.url) }}" alt="Ticket image">
+                            <img src="{{ asset(image.url) }}" alt="Ticket image" class="clickable-image" title="Click to enlarge">
                         </div>
                     {% endfor %}
                 </div>
@@ -106,7 +107,7 @@
                     {% for comment in ticket.comments %}
                         <div class="comment-item">
                             <div class="comment-header">
-                                <strong>{{ comment.userId.firstName }} {{ comment.userId.lastName }}</strong>
+                                <strong>{{ comment.user.firstName }} {{ comment.user.lastName }}</strong>
                                 <span class="comment-date">{{ comment.createdAt|date('d/m/Y à H:i') }}</span>
                                 {% if comment.updatedAt %}
                                     <span class="comment-edited">(edited on {{ comment.updatedAt|date('d/m/Y à H:i') }})</span>
@@ -120,7 +121,7 @@
                             {% if comment.images|length > 0 %}
                                 <div class="comment-images">
                                     {% for image in comment.images %}
-                                        <img src="{{ asset('uploads/' ~ image.url) }}" alt="Comment image" style="max-width: 200px;">
+                                        <img src="{{ asset(image.url) }}" alt="Comment image" class="clickable-image" title="Click to enlarge" style="max-width: 200px; cursor: pointer;">
                                     {% endfor %}
                                 </div>
                             {% endif %}
@@ -135,9 +136,10 @@
             <div class="add-comment-form">
                 <h3>Add a comment</h3>
                 {# attr novalidate to disable HTML5 validation, it disables the validation of fields that are "required" by default #}
-                {{ form_start(commentForm, {'attr': {'novalidate': 'novalidate'}}) }}
+                {{ form_start(commentForm, {'attr': {'novalidate': 'novalidate', 'data-turbo': 'false'}}) }}
                     {{ form_errors(commentForm) }}
                     {{ form_row(commentForm.content) }}
+                    {{ form_row(commentForm.imageFiles) }}
                     <button type="submit" class="btn btn-primary">+ Add a comment</button>
                 {{ form_end(commentForm) }}
             </div>
@@ -148,5 +150,11 @@
             {{ include('tickets/_update_status.html.twig') }}
             {{ include('tickets/_delete_form.html.twig') }}
         </div>
+    </div>
+
+    {# Lightbox pour agrandir les images #}
+    <div id="image-lightbox" class="lightbox">
+        <span class="lightbox-close">&times;</span>
+        <img id="lightbox-image" class="lightbox-content" src="" alt="">
     </div>
 {% endblock %}

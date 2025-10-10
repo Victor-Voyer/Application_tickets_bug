@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Comments;
+use App\Entity\Images;
 use App\Entity\Tickets;
 use App\Enum\Stacks;
 use App\Enum\Status as StatusEnum;
@@ -13,10 +14,13 @@ use App\Repository\StatusRepository;
 use App\Repository\TicketsRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\File\Exception\FileException;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
+use Symfony\Component\String\Slugger\SluggerInterface;
 
 
 #[Route('/tickets')]
@@ -26,7 +30,7 @@ final class TicketsController extends AbstractController
     public function index(Request $request, TicketsRepository $ticketsRepository): Response
     {
         $page = $request->query->getInt('page', 1);
-        $limit = 10;
+        $limit = 15;
 
         $filters = [
             'type' => $request->query->get('type'),
@@ -52,21 +56,51 @@ final class TicketsController extends AbstractController
 
     #[Route('/new', name: 'app_tickets_new', methods: ['GET', 'POST'])]
     #[IsGranted('ROLE_USER')]
-    public function new(Request $request, EntityManagerInterface $entityManager, StatusRepository $statusRepo): Response
+    public function new(Request $request, EntityManagerInterface $entityManager, StatusRepository $statusRepo, SluggerInterface $slugger): Response
     {
         
         $ticket = new Tickets();
 
-        // status Open by defauly
+        // status Open by default
         $openStatus = $statusRepo->findOneBy(['status' => StatusEnum::OPEN]);
 
         $form = $this->createForm(TicketsType::class, $ticket);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $ticket->setUserId($this->getUser());
+            $ticket->setUser($this->getUser());
             $ticket->setStatus($openStatus);
             $ticket->setCreatedAt(new \DateTimeImmutable());
+
+            // Gérer l'upload des images
+            /** @var UploadedFile[] $imageFiles */
+            $imageFiles = $form->get('imageFiles')->getData();
+
+            if ($imageFiles) {
+                foreach ($imageFiles as $imageFile) {
+                    // Générer un nom de fichier unique
+                    $originalFilename = pathinfo($imageFile->getClientOriginalName(), PATHINFO_FILENAME);
+                    $safeFilename = $slugger->slug($originalFilename);
+                    $newFilename = $safeFilename.'-'.uniqid().'.'.$imageFile->guessExtension();
+
+                    // Déplacer le fichier dans le dossier d'upload
+                    try {
+                        $imageFile->move(
+                            $this->getParameter('kernel.project_dir').'/public/uploads/tickets',
+                            $newFilename
+                        );
+
+                        // Créer une nouvelle entité Image et la lier au ticket
+                        $image = new Images();
+                        $image->setUrl('uploads/tickets/' . $newFilename);
+                        $image->setTicket($ticket);
+                        
+                        $entityManager->persist($image);
+                    } catch (FileException $e) {
+                        $this->addFlash('error', 'Erreur lors de l\'upload de l\'image : ' . $e->getMessage());
+                    }
+                }
+            }
 
             $entityManager->persist($ticket);
             $entityManager->flush();
@@ -80,9 +114,9 @@ final class TicketsController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}', name: 'app_tickets_show', methods: ['GET'])]
+    #[Route('/{id}', name: 'app_tickets_show', methods: ['GET', 'POST'])]
     #[IsGranted('ROLE_USER')]
-    public function show(Request $request, Tickets $ticket, EntityManagerInterface $entityManager): Response
+    public function show(Request $request, Tickets $ticket, EntityManagerInterface $entityManager, SluggerInterface $slugger): Response
     {
         // Créer un nouveau commentaire
         $comment = new Comments();
@@ -92,8 +126,38 @@ final class TicketsController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             // Associer le commentaire au ticket et à l'utilisateur
             $comment->setTicket($ticket);
-            $comment->setUserId($this->getUser());
+            $comment->setUser($this->getUser());
             $comment->setCreatedAt(new \DateTimeImmutable());
+
+            // Gérer l'upload des images du commentaire
+            /** @var UploadedFile[] $imageFiles */
+            $imageFiles = $form->get('imageFiles')->getData();
+
+            if ($imageFiles) {
+                foreach ($imageFiles as $imageFile) {
+                    // Générer un nom de fichier unique
+                    $originalFilename = pathinfo($imageFile->getClientOriginalName(), PATHINFO_FILENAME);
+                    $safeFilename = $slugger->slug($originalFilename);
+                    $newFilename = $safeFilename.'-'.uniqid().'.'.$imageFile->guessExtension();
+
+                    // Déplacer le fichier dans le dossier d'upload
+                    try {
+                        $imageFile->move(
+                            $this->getParameter('kernel.project_dir').'/public/uploads/comments',
+                            $newFilename
+                        );
+
+                        // Créer une nouvelle entité Image et la lier au commentaire
+                        $image = new Images();
+                        $image->setUrl('uploads/comments/' . $newFilename);
+                        $image->setComment($comment);
+                        
+                        $entityManager->persist($image);
+                    } catch (FileException $e) {
+                        $this->addFlash('error', 'Erreur lors de l\'upload de l\'image : ' . $e->getMessage());
+                    }
+                }
+            }
 
             $entityManager->persist($comment);
             $entityManager->flush();
