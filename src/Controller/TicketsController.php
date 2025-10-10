@@ -30,7 +30,7 @@ final class TicketsController extends AbstractController
     public function index(Request $request, TicketsRepository $ticketsRepository): Response
     {
         $page = $request->query->getInt('page', 1);
-        $limit = 10;
+        $limit = 15;
 
         $filters = [
             'type' => $request->query->get('type'),

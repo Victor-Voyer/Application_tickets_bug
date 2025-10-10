@@ -41,7 +41,7 @@ class Tickets
 
     #[ORM\ManyToOne(inversedBy: 'tickets')]
     #[ORM\JoinColumn(name: 'user_id', nullable: false)]
-    private ?Users $user_id = null;
+    private ?Users $user = null;
 
     #[ORM\Column(enumType: Stacks::class)]
     private ?Stacks $stack = null;
@@ -62,7 +62,7 @@ class Tickets
     /**
      * @var Collection<int, Images>
      */
-    #[ORM\OneToMany(targetEntity: Images::class, mappedBy: 'ticket_id')]
+    #[ORM\OneToMany(targetEntity: Images::class, mappedBy: 'ticket', cascade: ['persist', 'remove'], orphanRemoval: true)]
     private Collection $images;
 
     public function __construct()
@@ -124,14 +124,14 @@ class Tickets
         return $this;
     }
 
-    public function getUserId(): ?Users
+    public function getUser(): ?Users
     {
-        return $this->user_id;
+        return $this->user;
     }
 
-    public function setUserId(?Users $user_id): static
+    public function setUser(?Users $user): static
     {
-        $this->user_id = $user_id;
+        $this->user = $user;
 
         return $this;
     }
@@ -172,8 +172,8 @@ class Tickets
     public function addComment(?Comments $comment): static
     {
         if (!$this->comments->contains($comment)) {
-            $this->comments->contains($comment);
-            $comment->setTicket(($this));
+            $this->comments->add($comment);
+            $comment->setTicket($this);
         }
         return $this;
     }
@@ -199,7 +199,7 @@ class Tickets
     {
         if (!$this->images->contains($image)) {
             $this->images->add($image);
-            $image->setTicketId($this);
+            $image->setTicket($this);
         }
 
         return $this;
@@ -209,8 +209,8 @@ class Tickets
     {
         if ($this->images->removeElement($image)) {
             // set the owning side to null (unless already changed)
-            if ($image->getTicketId() === $this) {
-                $image->setTicketId(null);
+            if ($image->getTicket() === $this) {
+                $image->setTicket(null);
             }
         }
 

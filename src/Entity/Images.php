@@ -17,10 +17,12 @@ class Images
     private ?string $url = null;
 
     #[ORM\ManyToOne(inversedBy: 'images')]
-    private ?Tickets $ticket_id = null;
+    #[ORM\JoinColumn(name: 'ticket_id', referencedColumnName: 'id', nullable: true, onDelete: 'CASCADE')]
+    private ?Tickets $ticket = null;
 
     #[ORM\ManyToOne(inversedBy: 'images')]
-    private ?Comments $comment_id = null;
+    #[ORM\JoinColumn(name: 'comment_id', referencedColumnName: 'id', nullable: true, onDelete: 'CASCADE')]
+    private ?Comments $comment = null;
 
     public function getId(): ?int
     {
@@ -39,26 +41,26 @@ class Images
         return $this;
     }
 
-    public function getTicketId(): ?Tickets
+    public function getTicket(): ?Tickets
     {
-        return $this->ticket_id;
+        return $this->ticket;
     }
 
-    public function setTicketId(?Tickets $ticket_id): static
+    public function setTicket(?Tickets $ticket): static
     {
-        $this->ticket_id = $ticket_id;
+        $this->ticket = $ticket;
 
         return $this;
     }
 
-    public function getCommentId(): ?Comments
+    public function getComment(): ?Comments
     {
-        return $this->comment_id;
+        return $this->comment;
     }
 
-    public function setCommentId(?Comments $comment_id): static
+    public function setComment(?Comments $comment): static
     {
-        $this->comment_id = $comment_id;
+        $this->comment = $comment;
 
         return $this;
     }

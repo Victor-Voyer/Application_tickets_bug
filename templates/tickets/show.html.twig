@@ -74,12 +74,12 @@
                     
                     <dt>Created by:</dt>
                     <dd>
-                        {{ ticket.userId.firstName }} {{ ticket.userId.lastName }} 
-                        ({{ ticket.userId.nickname }})
+                        {{ ticket.user.firstName }} {{ ticket.user.lastName }} 
+                        ({{ ticket.user.nickname }})
                     </dd>
                     
                     <dt>Email:</dt>
-                    <dd>{{ ticket.userId.email }}</dd>
+                    <dd>{{ ticket.user.email }}</dd>
                 </dl>
             </div>
         </div>
@@ -107,7 +107,7 @@
                     {% for comment in ticket.comments %}
                         <div class="comment-item">
                             <div class="comment-header">
-                                <strong>{{ comment.userId.firstName }} {{ comment.userId.lastName }}</strong>
+                                <strong>{{ comment.user.firstName }} {{ comment.user.lastName }}</strong>
                                 <span class="comment-date">{{ comment.createdAt|date('d/m/Y à H:i') }}</span>
                                 {% if comment.updatedAt %}
                                     <span class="comment-edited">(edited on {{ comment.updatedAt|date('d/m/Y à H:i') }})</span>
