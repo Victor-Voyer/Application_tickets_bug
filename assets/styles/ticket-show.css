@@ -260,12 +260,31 @@
     /* Actions */
     .ticket-actions {
         flex-direction: column;
-        gap: 0.75rem;
+        gap: 1rem;
         padding: 1.5rem 0;
     }
     
+    .update-status-form {
+        flex-direction: column;
+        width: 100%;
+        padding: 1.25rem;
+    }
+    
+    .status-select {
+        width: 100%;
+        min-width: auto;
+    }
+    
+    .btn-update-status {
+        width: 100%;
+    }
+    
+    .ticket-actions form:not(.update-status-form) {
+        margin-top: 1.5rem;
+    }
+    
     .ticket-actions .btn,
-    .ticket-actions form .btn {
+    .ticket-actions form:not(.update-status-form) .btn {
         width: 100%;
         min-width: auto;
     }
@@ -355,6 +374,19 @@
     /* Actions */
     .ticket-actions {
         padding: 1rem 0;
+    }
+    
+    .update-status-form {
+        padding: 1rem;
+    }
+    
+    .status-select,
+    .btn-update-status {
+        font-size: 0.95rem;
+    }
+    
+    .ticket-actions form:not(.update-status-form) {
+        margin-top: 1rem;
     }
 }
 
@@ -561,7 +593,8 @@
 /* Actions du ticket */
 .ticket-actions {
     display: flex;
-    gap: 1rem;
+    flex-direction: column;
+    gap: 1.5rem;
     justify-content: center;
     align-items: center;
     padding: 2rem 0;
@@ -583,17 +616,89 @@
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
 }
 
-.ticket-actions form {
-    margin: 0;
+/* Formulaire Update Status */
+.update-status-form {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+    background: #f8f9fa;
+    padding: 1.5rem 2rem;
+    border-radius: var(--border-radius);
+    border: 2px solid var(--color-green);
+    box-shadow: 0 4px 12px rgba(0, 128, 0, 0.15);
 }
 
-.ticket-actions form .btn {
+.status-select {
+    padding: 0.75rem 1.5rem;
+    border: 2px solid var(--color-green);
+    border-radius: var(--border-radius);
+    background-color: var(--color-white);
+    color: var(--color-black);
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: var(--transition-fast);
+    outline: none;
+    min-width: 200px;
+}
+
+.status-select:hover {
+    background-color: #f8f9fa;
+    border-color: #006600;
+}
+
+.status-select:focus {
+    border-color: var(--color-green);
+    box-shadow: 0 0 0 3px rgba(0, 128, 0, 0.2);
+}
+
+.status-select option {
+    background-color: var(--color-white);
+    color: var(--color-black);
+    padding: 0.5rem;
+}
+
+.btn-update-status {
+    background-color: var(--color-green);
+    color: var(--color-white);
+    padding: 0.75rem 1.5rem;
+    border: none;
+    border-radius: var(--border-radius);
+    font-weight: 600;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: var(--transition-fast);
+    box-shadow: 0 2px 6px rgba(0, 128, 0, 0.3);
+}
+
+.btn-update-status:hover {
+    background-color: #006600;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 128, 0, 0.4);
+}
+
+/* Formulaire Delete */
+.ticket-actions form:not(.update-status-form) {
+    margin-top: 2rem;
+}
+
+.ticket-actions form:not(.update-status-form) .btn {
     background-color: #dc3545;
     color: var(--color-white);
+    padding: 0.75rem 2rem;
+    border: none;
+    border-radius: var(--border-radius);
+    font-weight: 600;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: var(--transition-fast);
+    box-shadow: 0 2px 6px rgba(220, 53, 69, 0.3);
 }
 
-.ticket-actions form .btn:hover {
+.ticket-actions form:not(.update-status-form) .btn:hover {
     background-color: #c82333;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(220, 53, 69, 0.4);
 }
 
 /* État vide */

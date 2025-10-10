@@ -1,9 +1,9 @@
-<form action="{{ path('app_tickets_update_status', {'id': ticket.id}) }}" method="POST">
+<form action="{{ path('app_tickets_update_status', {'id': ticket.id}) }}" method="POST" class="update-status-form">
     <input type="hidden" name="_token" value="{{ csrf_token('update_status' ~ ticket.id) }}">
-    <select name="status" id="status">
+    <select name="status" id="status" class="status-select">
         <option value="Open">Open</option>
         <option value="In Progress">In Progress</option>
         <option value="Resolved">Closed</option>
     </select>
-    <button type="submit">Update Status</button>
+    <button type="submit" class="btn-update-status">Update Status</button>
 </form>
