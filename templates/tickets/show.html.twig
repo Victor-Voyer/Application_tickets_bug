@@ -136,7 +136,7 @@
             <div class="add-comment-form">
                 <h3>Add a comment</h3>
                 {# attr novalidate to disable HTML5 validation, it disables the validation of fields that are "required" by default #}
-                {{ form_start(commentForm, {'attr': {'novalidate': 'novalidate'}}) }}
+                {{ form_start(commentForm, {'attr': {'novalidate': 'novalidate', 'data-turbo': 'false'}}) }}
                     {{ form_errors(commentForm) }}
                     {{ form_row(commentForm.content) }}
                     {{ form_row(commentForm.imageFiles) }}
