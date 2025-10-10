@@ -25,15 +25,7 @@ class TicketsType extends AbstractType
                 'attr' => [
                     'placeholder' => 'Describe the subject of the ticket ...'
                 ]
-            ])
-            
-            // ->add('image', FileType::class, [
-            //     'label' => 'Image : ',
-            //     'required' => false,
-            //     'attr' => [
-            //         'placeholder' => 'Uploader une image ...'
-            //     ]
-            // ])
+            ])            
             ->add('stack', EnumType::class, [
                 'label' => 'Technology : ',
                 'required' => true,
