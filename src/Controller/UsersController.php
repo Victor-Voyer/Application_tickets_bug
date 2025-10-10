@@ -78,8 +78,8 @@ final class UsersController extends AbstractController
 
             $entityManager->persist($user);
             $entityManager->flush();
-            // Retourner sur la page de tous mes Pokémons
-            return $this->redirectToRoute('app_users_show', ['id' => $user->getId()], Response::HTTP_SEE_OTHER);
+            
+            return $this->redirectToRoute('app_login');
 
         }
 
