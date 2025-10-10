@@ -655,3 +655,70 @@
     box-shadow: 0 4px 12px rgba(0, 128, 0, 0.3);
 }
 
+/* Lightbox pour agrandir les images */
+.lightbox {
+    display: none;
+    position: fixed;
+    z-index: 9999;
+    padding: 50px;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.95);
+    justify-content: center;
+    align-items: center;
+    animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+.lightbox-content {
+    max-width: 90%;
+    max-height: 90%;
+    object-fit: contain;
+    animation: zoomIn 0.3s ease;
+}
+
+@keyframes zoomIn {
+    from {
+        transform: scale(0.7);
+        opacity: 0;
+    }
+    to {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+.lightbox-close {
+    position: absolute;
+    top: 20px;
+    right: 35px;
+    color: #fff;
+    font-size: 40px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: color 0.3s ease;
+}
+
+.lightbox-close:hover,
+.lightbox-close:focus {
+    color: #bbb;
+}
+
+/* Curseur pointer sur les images cliquables */
+.clickable-image {
+    cursor: pointer;
+    transition: transform 0.2s ease, opacity 0.2s ease;
+}
+
+.clickable-image:hover {
+    transform: scale(1.05);
+    opacity: 0.9;
+}
+

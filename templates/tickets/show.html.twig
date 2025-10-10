@@ -8,6 +8,7 @@
 
 {% block javascripts %}
     {{ parent() }}
+    <script src="{{ asset('upload_img.js') }}"></script>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             const form = document.querySelector('.add-comment-form form');
@@ -90,7 +91,7 @@
                 <div class="images-grid">
                     {% for image in ticket.images %}
                         <div class="image-item">
-                            <img src="{{ asset('uploads/' ~ image.url) }}" alt="Ticket image">
+                            <img src="{{ asset(image.url) }}" alt="Ticket image" class="clickable-image" title="Click to enlarge">
                         </div>
                     {% endfor %}
                 </div>
@@ -120,7 +121,7 @@
                             {% if comment.images|length > 0 %}
                                 <div class="comment-images">
                                     {% for image in comment.images %}
-                                        <img src="{{ asset('uploads/' ~ image.url) }}" alt="Comment image" style="max-width: 200px;">
+                                        <img src="{{ asset(image.url) }}" alt="Comment image" class="clickable-image" title="Click to enlarge" style="max-width: 200px; cursor: pointer;">
                                     {% endfor %}
                                 </div>
                             {% endif %}
@@ -138,6 +139,7 @@
                 {{ form_start(commentForm, {'attr': {'novalidate': 'novalidate'}}) }}
                     {{ form_errors(commentForm) }}
                     {{ form_row(commentForm.content) }}
+                    {{ form_row(commentForm.imageFiles) }}
                     <button type="submit" class="btn btn-primary">+ Add a comment</button>
                 {{ form_end(commentForm) }}
             </div>
@@ -148,5 +150,11 @@
             {{ include('tickets/_delete_form.html.twig') }}
             {{ include('tickets/_update_status.html.twig') }}
         </div>
+    </div>
+
+    {# Lightbox pour agrandir les images #}
+    <div id="image-lightbox" class="lightbox">
+        <span class="lightbox-close">&times;</span>
+        <img id="lightbox-image" class="lightbox-content" src="" alt="">
     </div>
 {% endblock %}
