@@ -581,6 +581,75 @@ footer a:hover {
 }
 
 /* ==========================================================================
+   FORM ERRORS
+   ========================================================================== */
+
+.form-error-container {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    margin: 0.75rem 0;
+    animation: slideDown 0.3s ease-out;
+}
+
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.form-error-item {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.75rem 1rem;
+    background: linear-gradient(135deg, #fff5f5 0%, #ffe5e5 100%);
+    border-left: 4px solid #dc3545;
+    border-radius: var(--border-radius);
+    box-shadow: 0 2px 6px rgba(220, 53, 69, 0.15);
+    transition: all var(--transition-fast);
+    font-size: 0.95rem;
+}
+
+.form-error-item:hover {
+    box-shadow: 0 4px 12px rgba(220, 53, 69, 0.25);
+    transform: translateX(3px);
+}
+
+.form-error-icon {
+    flex-shrink: 0;
+    color: #dc3545;
+    width: 20px;
+    height: 20px;
+}
+
+.form-error-message {
+    color: #721c24;
+    font-weight: 500;
+    line-height: 1.4;
+}
+
+/* Alternative style - Variante avec fond plus sombre (optionnel) */
+.form-error-item.dark-variant {
+    background: linear-gradient(135deg, #2a0a0a 0%, #4a1a1a 100%);
+    border-left: 4px solid #ff4757;
+    box-shadow: 0 2px 6px rgba(255, 71, 87, 0.3);
+}
+
+.form-error-item.dark-variant .form-error-icon {
+    color: #ff4757;
+}
+
+.form-error-item.dark-variant .form-error-message {
+    color: #ffcccb;
+}
+
+/* ==========================================================================
    RESPONSIVE - PAGINATION & BOUTONS
    ========================================================================== */
 
@@ -738,6 +807,18 @@ footer a:hover {
         padding: 1.5rem 1rem;
         font-size: 0.9rem;
     }
+
+    /* Form Errors - Mobile */
+    .form-error-item {
+        padding: 0.65rem 0.85rem;
+        font-size: 0.9rem;
+        gap: 0.6rem;
+    }
+
+    .form-error-icon {
+        width: 18px;
+        height: 18px;
+    }
 }
 
 /* Très petit mobile */
@@ -786,6 +867,23 @@ footer a:hover {
     select {
         font-size: 0.9rem;
         padding: 0.4rem 0.8rem;
+    }
+
+    /* Form Errors - Très petit mobile */
+    .form-error-item {
+        padding: 0.6rem 0.75rem;
+        font-size: 0.85rem;
+        gap: 0.5rem;
+        border-left-width: 3px;
+    }
+
+    .form-error-icon {
+        width: 16px;
+        height: 16px;
+    }
+
+    .form-error-container {
+        gap: 0.4rem;
     }
 }
 
