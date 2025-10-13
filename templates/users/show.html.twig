@@ -5,6 +5,14 @@
 {% block body %}
     <section class="form-section">
         <h2>Profile of {{ user.nickname }}</h2>
+
+        {% for label, messages in app.flashes %}
+            {% for message in messages %}
+                <div class="alert alert-{{ label }}">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endfor %}
         
         <div class="avatar-container">
             {% if user.avatar %}
@@ -30,7 +38,7 @@
 
                 <a href="{{ path('app_users_change_password', {'id': user.id}) }}" class="btn btn-warning">Change Password</a>
 
-                {{ include('users/_delete_form.html.twig') }}
+                {# {{ include('users/_delete_form.html.twig') }} #}
             
             {% endif %}            
         </div>

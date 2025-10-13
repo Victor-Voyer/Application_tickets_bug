@@ -165,7 +165,7 @@ final class UsersController extends AbstractController
     #[Route('/profile/edit/{id}', name: 'app_users_profile_edit', methods: ['GET', 'POST'])]
     public function editProfile(Request $request, Users $user, EntityManagerInterface $entityManager): Response
     {
-        $this->denyAccessUnlessGranted('ROLE_USER', $user);
+        $this->denyAccessUnlessGranted('EDIT_PROFILE', $user);
         $form = $this->createForm(ProfileEditType::class, $user);
         $form->handleRequest($request);
 
@@ -224,7 +224,7 @@ final class UsersController extends AbstractController
     #[Route('/change-password/{id}', name: 'app_users_change_password', methods: ['GET', 'POST'])]
     public function changePassword(Request $request, Users $user, EntityManagerInterface $entityManager, UserPasswordHasherInterface $passwordHasher): Response
     {
-        $this->denyAccessUnlessGranted('ROLE_USER', $user);
+        $this->denyAccessUnlessGranted('EDIT_PROFILE', $user);
         $form = $this->createForm(ChangePasswordType::class);
         $form->handleRequest($request);
 
@@ -245,8 +245,11 @@ final class UsersController extends AbstractController
             $user->setPassword($passwordHasher->hashPassword($user, $newPassword));
             $entityManager->flush();
 
-            $this->addFlash('success', 'Votre mot de passe a été modifié avec succès.');
-            return $this->redirectToRoute('app_users_show', ['id' => $user->getId()], Response::HTTP_SEE_OTHER);
+            // $this->addFlash('success', 'Votre mot de passe a été modifié avec succès.');
+            return $this->redirectToRoute('app_users_show', [
+                'id' => $user->getId(),
+                'flash' => $this->addFlash('success', 'Votre mot de passe a été modifié avec succès.')
+            ], Response::HTTP_SEE_OTHER);
         }
 
         return $this->render('users/change_password.html.twig', [
@@ -256,15 +259,15 @@ final class UsersController extends AbstractController
     }
 
     // Delete user
-    #[Route('/delete/{id}', name: 'app_users_delete', methods: ['POST'])]
-    public function delete(Request $request, Users $user, EntityManagerInterface $entityManager): Response
-    {
-        $this->denyAccessUnlessGranted('ROLE_USER', $user);
-        if ($this->isCsrfTokenValid('delete' . $user->getId(), $request->getPayload()->getString('_token'))) {
-            $entityManager->remove($user);
-            $entityManager->flush();
-        }
+    // #[Route('/delete/{id}', name: 'app_users_delete', methods: ['POST'])]
+    // public function delete(Request $request, Users $user, EntityManagerInterface $entityManager): Response
+    // {
+    //     $this->denyAccessUnlessGranted('ROLE_ADMIN', $user);
+    //     if ($this->isCsrfTokenValid('delete' . $user->getId(), $request->getPayload()->getString('_token'))) {
+    //         $entityManager->remove($user);
+    //         $entityManager->flush();
+    //     }
 
-        return $this->redirectToRoute('app_users_index', [], Response::HTTP_SEE_OTHER);
-    }
+    //     return $this->redirectToRoute('app_users_index', [], Response::HTTP_SEE_OTHER);
+    // }
 }
