@@ -6,18 +6,27 @@
 			{% block title %}BTCrack
 			{% endblock %}
 		</title>
+
 		<link rel="preconnect" href="https://fonts.googleapis.com">
 		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 		{% use "components/nav.html.twig" %}
 		<link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
-		<link rel="stylesheet" href="{{ asset('styles/ckeditor.css') }}">
-		 {% block stylesheets %}{% endblock %}
+
+
+		{# <link rel="stylesheet" href="{{ asset('styles/ckeditor.css') }}"> #}
+
+		{# Webpack Encore compiled CSS #}
+		{% block stylesheets %}
+			{{ encore_entry_link_tags('styles') }}
+		{% endblock %}
+
+		 {# {% block stylesheets %}{% endblock %}
 
 		{% block javascripts %}
 			{% block importmap %}
 				{{ importmap('app') }}
 			{% endblock %}
-		{% endblock %}
+		{% endblock %} #}
 		<script src="https://cdn.ckeditor.com/ckeditor5/41.4.2/classic/ckeditor.js"></script>
 		<script>
 		function initCkeditors() {
@@ -52,6 +61,10 @@
 
 	</head>
 	<body>
+		{# Webpack Encore compiled JS #}
+		{% block javascripts %}
+			{{ encore_entry_script_tags('app') }}
+		{% endblock %}
 		<header>
 			<h1>
 				<a href="{{ path('app_tickets_index') }}">BT<em>Crack</em>

@@ -1,0 +1,21 @@
+{
+  "name": "application_tickets_bug",
+  "version": "1.0.0",
+  "description": "Techno : Symfony + MySQL / phpMyAdmin",
+  "main": "index.js",
+  "directories": {
+    "test": "tests"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@symfony/webpack-encore": "^5.2.0",
+    "postcss-loader": "^8.2.0",
+    "webpack": "^5.102.1",
+    "webpack-cli": "^6.0.1"
+  }
+}

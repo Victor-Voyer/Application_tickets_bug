@@ -7,6 +7,7 @@ import "./bootstrap.js";
  */
 import "./styles/app.css";
 import "./burger-menu.js";
+import "./styles/ckeditor.css"; // add this line
 
 console.log("This log comes from assets/app.js - welcome to AssetMapper! 🎉");
 
