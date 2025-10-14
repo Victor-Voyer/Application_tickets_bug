@@ -17,12 +17,14 @@
 
 		{# Webpack Encore compiled CSS #}
 		{% block stylesheets %}
+            {{ encore_entry_link_tags('app') }}
 			{{ encore_entry_link_tags('styles') }}
 		{% endblock %}
 
 		 {# {% block stylesheets %}{% endblock %}
 
 		{% block javascripts %}
+            {{ encore_entry_script_tags('app') }}
 			{% block importmap %}
 				{{ importmap('app') }}
 			{% endblock %}
