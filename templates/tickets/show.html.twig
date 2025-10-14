@@ -3,7 +3,8 @@
 {% block title %}{{ ticket.title }} - Ticket #{{ ticket.id }}{% endblock %}
 
 {% block stylesheets %}
-    <link rel="stylesheet" href="{{ asset('styles/ticket-show.css') }}">
+    {{ parent() }}
+    {# <link rel="stylesheet" href="{{ asset('styles/ticket-show.css') }}"> #}
 {% endblock %}
 
 {% block javascripts %}
