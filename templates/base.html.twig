@@ -15,20 +15,14 @@
 
 		{# <link rel="stylesheet" href="{{ asset('styles/ckeditor.css') }}"> #}
 
-		{# Webpack Encore compiled CSS #}
 		{% block stylesheets %}
-            {{ encore_entry_link_tags('app') }}
-			{{ encore_entry_link_tags('styles') }}
+			{{ encore_entry_link_tags('app') }}
 		{% endblock %}
 
-		 {# {% block stylesheets %}{% endblock %}
-
 		{% block javascripts %}
-            {{ encore_entry_script_tags('app') }}
-			{% block importmap %}
-				{{ importmap('app') }}
-			{% endblock %}
-		{% endblock %} #}
+			{{ encore_entry_script_tags('app') }}
+		{% endblock %}
+
 		<script src="https://cdn.ckeditor.com/ckeditor5/41.4.2/classic/ckeditor.js"></script>
 		<script>
 		function initCkeditors() {
@@ -63,10 +57,6 @@
 
 	</head>
 	<body>
-		{# Webpack Encore compiled JS #}
-		{% block javascripts %}
-			{{ encore_entry_script_tags('app') }}
-		{% endblock %}
 		<header>
 			<h1>
 				<a href="{{ path('app_tickets_index') }}">BT<em>Crack</em>

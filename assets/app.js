@@ -6,8 +6,10 @@ import "./bootstrap.js";
  * which should already be in your base.html.twig.
  */
 import "./styles/app.css";
-import "./burger-menu.js";
 import "./styles/ckeditor.css"; // add this line
+
+import "./upload_img.js"
+import "./burger-menu.js"
 
 console.log("This log comes from assets/app.js - welcome to AssetMapper! 🎉");
 

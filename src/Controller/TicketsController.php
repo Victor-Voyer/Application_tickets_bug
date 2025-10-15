@@ -115,15 +115,22 @@ final class TicketsController extends AbstractController
     }
 
     #[Route('/{id}', name: 'app_tickets_show', methods: ['GET', 'POST'])]
-    #[IsGranted('ROLE_USER')]
+    // #[IsGranted('ROLE_USER')]
     public function show(Request $request, Tickets $ticket, EntityManagerInterface $entityManager, SluggerInterface $slugger): Response
     {
         // Créer un nouveau commentaire
+        
         $comment = new Comments();
         $form = $this->createForm(CommentsType::class, $comment);
         $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
+        if (!$this->getUser() && $form->isSubmitted()) {
+            $comment = null;
+            $this->addFlash('error', 'You must be logged in to comment.');
+            return $this->redirectToRoute('app_login');
+        }
+
+        if ($this->getUser() && $form->isSubmitted() && $form->isValid()) {
             // Associer le commentaire au ticket et à l'utilisateur
             $comment->setTicket($ticket);
             $comment->setUser($this->getUser());
