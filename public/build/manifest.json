@@ -1,7 +1,8 @@
 {
   "build/app.css": "/build/app.a5ef8259.css",
-  "build/app.js": "/build/app.b43e1b09.js",
-  "build/styles.css": "/build/styles.3f70d4a8.css",
-  "build/runtime.js": "/build/runtime.2a896dc8.js",
+  "build/app.js": "/build/app.a361bae0.js",
+  "build/runtime.js": "/build/runtime.42ade29c.js",
+  "build/images/icon-users.png": "/build/images/icon-users.png",
+  "build/images/tickets-png.webp": "/build/images/tickets-png.webp",
   "build/fonts/Kwark.ttf": "/build/fonts/Kwark.294c87bc.ttf"
 }
