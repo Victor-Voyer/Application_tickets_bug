@@ -38,7 +38,11 @@ class TicketVoter extends Voter
          return true;
       }
 
-      // Users can delete only their own tickets
-      return $ticket->getUser() === $user;
+      return match ($attribute) {
+         // user can only delete their own ticket, no status update
+         self::DELETE => $ticket->getUser() === $user,
+         self::UPDATE_STATUS => false,
+         default => false,
+      };
    }
 }
