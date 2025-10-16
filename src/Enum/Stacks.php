@@ -13,4 +13,7 @@ enum Stacks: string
     case HTLM = 'HTLM';
     case SASS = 'SASS';
     case MYSQL = 'MySQL';
+    case GIT_GITHUB = 'Git/Github';
+    case OTHER = 'Other';
+    
 }
