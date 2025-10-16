@@ -2,11 +2,11 @@
   "entrypoints": {
     "app": {
       "js": [
-        "/build/runtime.42ade29c.js",
-        "/build/app.a361bae0.js"
+        "/symfony-1/Application_tickets_bug/public/build/runtime.js",
+        "/symfony-1/Application_tickets_bug/public/build/app.js"
       ],
       "css": [
-        "/build/app.a5ef8259.css"
+        "/symfony-1/Application_tickets_bug/public/build/app.css"
       ]
     }
   }
