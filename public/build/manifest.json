@@ -1,9 +1,9 @@
 {
-  "build/app.css": "/symfony-1/Application_tickets_bug/public/build/app.css",
-  "build/app.js": "/symfony-1/Application_tickets_bug/public/build/app.js",
-  "build/runtime.js": "/symfony-1/Application_tickets_bug/public/build/runtime.js",
-  "build/images/logo_BT.png": "/symfony-1/Application_tickets_bug/public/build/images/logo_BT.png",
-  "build/images/icon-users.png": "/symfony-1/Application_tickets_bug/public/build/images/icon-users.png",
-  "build/images/tickets-png.webp": "/symfony-1/Application_tickets_bug/public/build/images/tickets-png.webp",
-  "build/fonts/Kwark.ttf": "/symfony-1/Application_tickets_bug/public/build/fonts/Kwark.294c87bc.ttf"
+  "build/app.css": "/build/app.a5ef8259.css",
+  "build/app.js": "/build/app.2a7e6677.js",
+  "build/runtime.js": "/build/runtime.42ade29c.js",
+  "build/images/logo_BT.png": "/build/images/logo_BT.png",
+  "build/images/icon-users.png": "/build/images/icon-users.png",
+  "build/images/tickets-png.webp": "/build/images/tickets-png.webp",
+  "build/fonts/Kwark.ttf": "/build/fonts/Kwark.294c87bc.ttf"
 }
