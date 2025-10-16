@@ -11,7 +11,7 @@
     "dev": "encore dev",
     "watch": "encore dev --watch",
     "dev-server": "encore dev-server",
-    "build": "encore production"
+    "build": "rimraf public/build && encore production"
   },
   "keywords": [],
   "author": "",
@@ -20,6 +20,7 @@
     "@symfony/webpack-encore": "^5.2.0",
     "file-loader": "^6.2.0",
     "postcss-loader": "^8.2.0",
+    "rimraf": "^6.0.1",
     "webpack": "^5.102.1",
     "webpack-cli": "^6.0.1"
   }
