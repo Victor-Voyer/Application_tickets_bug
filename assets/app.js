@@ -1,4 +1,4 @@
-import "./bootstrap.js";
+// import "./bootstrap.js";
 /*
  * Welcome to your app's main JavaScript file!
  *
@@ -11,7 +11,7 @@ import "./styles/ckeditor.css"; // add this line
 import "./upload_img.js"
 import "./burger-menu.js"
 
-console.log("This log comes from assets/app.js - welcome to AssetMapper! 🎉");
+// console.log("This log comes from assets/app.js - welcome to AssetMapper! 🎉");
 
 // Wait 5 seconds (5000 ms), then fade out and remove messages
 function fadeFlashes() {
