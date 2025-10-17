@@ -1,0 +1,19 @@
+{% extends 'error/base.html.twig' %}
+
+{% block title %}Délai d'attente dépassé - BTCrack{% endblock %}
+
+{% block error_class %}408{% endblock %}
+
+{% block error_code %}408{% endblock %}
+
+{% block error_title %}Délai d'attente dépassé{% endblock %}
+
+{% block error_description %}
+    Le serveur a mis trop de temps à répondre à votre requête. 
+    Cela peut être dû à une surcharge temporaire ou à des problèmes de réseau.
+{% endblock %}
+
+{% block error_actions %}
+    <a href="{{ path('app_tickets_index') }}" class="btn btn-primary">Retour à l'accueil</a>
+    <a href="javascript:location.reload()" class="btn">Réessayer</a>
+{% endblock %}

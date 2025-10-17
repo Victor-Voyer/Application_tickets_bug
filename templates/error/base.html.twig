@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}Erreur - BTCrack{% endblock %}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <link rel="icon" href="{{ asset('build/images/logo_BT.png') }}" type="image/png">
+    
+    {% block stylesheets %}
+        {{ encore_entry_link_tags('app') }}
+    {% endblock %}
+</head>
+<body>
+    <div class="error-container error-{% block error_class %}500{% endblock %}">
+        <div class="error-content">
+            <div class="logo">
+                <img src="{{ asset('build/images/logo_BT.png') }}" alt="BTCrack Logo">
+            </div>
+            
+            {% block error_content %}
+                <h1 class="error-code">{% block error_code %}500{% endblock %}</h1>
+                <h2 class="error-title">{% block error_title %}Erreur du serveur{% endblock %}</h2>
+                <p class="error-description">
+                    {% block error_description %}
+                        Une erreur interne s'est produite. Notre équipe technique a été notifiée et travaille à résoudre le problème.
+                    {% endblock %}
+                </p>
+                
+                <div class="error-actions">
+                    {% block error_actions %}
+                        <a href="{{ path('app_tickets_index') }}" class="btn btn-primary">Retour à l'accueil</a>
+                        <a href="javascript:history.back()" class="btn">Page précédente</a>
+                    {% endblock %}
+                </div>
+            {% endblock %}
+        </div>
+    </div>
+</body>
+</html>

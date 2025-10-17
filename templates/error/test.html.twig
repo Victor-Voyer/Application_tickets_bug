@@ -1,0 +1,80 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Test des pages d'erreur - BTCrack{% endblock %}
+
+{% block body %}
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-12">
+            <h1 class="mb-4">Test des pages d'erreur</h1>
+            <p class="lead mb-4">Cette page vous permet de tester toutes les pages d'erreur personnalisées de l'application.</p>
+            
+            <div class="row">
+                <div class="col-md-6 col-lg-4 mb-3">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">Erreur 404</h5>
+                            <p class="card-text">Page non trouvée</p>
+                            <a href="{{ path('app_error_404') }}" class="btn btn-primary">Tester</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-md-6 col-lg-4 mb-3">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">Erreur 500</h5>
+                            <p class="card-text">Erreur interne du serveur</p>
+                            <a href="{{ path('app_error_500') }}" class="btn btn-primary">Tester</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-md-6 col-lg-4 mb-3">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">Erreur 403</h5>
+                            <p class="card-text">Accès refusé</p>
+                            <a href="{{ path('app_error_403') }}" class="btn btn-primary">Tester</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-md-6 col-lg-4 mb-3">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">Erreur 400</h5>
+                            <p class="card-text">Requête invalide</p>
+                            <a href="{{ path('app_error_400') }}" class="btn btn-primary">Tester</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-md-6 col-lg-4 mb-3">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">Erreur 503</h5>
+                            <p class="card-text">Service indisponible</p>
+                            <a href="{{ path('app_error_503') }}" class="btn btn-primary">Tester</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-md-6 col-lg-4 mb-3">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">Erreur 408</h5>
+                            <p class="card-text">Délai d'attente dépassé</p>
+                            <a href="{{ path('app_error_408') }}" class="btn btn-primary">Tester</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="mt-4">
+                <a href="{{ path('app_tickets_index') }}" class="btn btn-secondary">Retour à l'accueil</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,20 @@
+{% extends 'error/base.html.twig' %}
+
+{% block title %}Page non trouvée - BTCrack{% endblock %}
+
+{% block error_class %}404{% endblock %}
+
+{% block error_code %}404{% endblock %}
+
+{% block error_title %}Page non trouvée{% endblock %}
+
+{% block error_description %}
+    La page que vous recherchez n'existe pas ou a été déplacée. 
+    Vérifiez l'URL ou utilisez les liens de navigation pour trouver ce que vous cherchez.
+{% endblock %}
+
+{% block error_actions %}
+    <a href="{{ path('app_tickets_index') }}" class="btn btn-primary">Retour à l'accueil</a>
+    <a href="javascript:history.back()" class="btn">Page précédente</a>
+    <a href="{{ path('app_tickets_index') }}" class="btn">Voir les tickets</a>
+{% endblock %}

@@ -1,0 +1,20 @@
+{% extends 'error/base.html.twig' %}
+
+{% block title %}Requête invalide - BTCrack{% endblock %}
+
+{% block error_class %}400{% endblock %}
+
+{% block error_code %}400{% endblock %}
+
+{% block error_title %}Requête invalide{% endblock %}
+
+{% block error_description %}
+    La requête envoyée au serveur est malformée ou contient des données invalides. 
+    Vérifiez vos données et réessayez.
+{% endblock %}
+
+{% block error_actions %}
+    <a href="{{ path('app_tickets_index') }}" class="btn btn-primary">Retour à l'accueil</a>
+    <a href="javascript:history.back()" class="btn">Page précédente</a>
+    <a href="javascript:location.reload()" class="btn">Recharger la page</a>
+{% endblock %}

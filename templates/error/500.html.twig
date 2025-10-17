@@ -1,0 +1,20 @@
+{% extends 'error/base.html.twig' %}
+
+{% block title %}Erreur du serveur - BTCrack{% endblock %}
+
+{% block error_class %}500{% endblock %}
+
+{% block error_code %}500{% endblock %}
+
+{% block error_title %}Erreur interne du serveur{% endblock %}
+
+{% block error_description %}
+    Une erreur interne s'est produite sur le serveur. Notre équipe technique a été automatiquement notifiée 
+    et travaille à résoudre le problème. Veuillez réessayer dans quelques minutes.
+{% endblock %}
+
+{% block error_actions %}
+    <a href="{{ path('app_tickets_index') }}" class="btn btn-primary">Retour à l'accueil</a>
+    <a href="javascript:history.back()" class="btn">Page précédente</a>
+    <a href="javascript:location.reload()" class="btn">Recharger la page</a>
+{% endblock %}
