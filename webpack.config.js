@@ -5,7 +5,7 @@ Encore
   // directory where compiled assets will be stored
   .setOutputPath("public/build/")
   // public path used by the web server
-  .setPublicPath(!Encore.isProduction() ? "/symfony-1/Application_tickets_bug/public/build" : "/build")
+  .setPublicPath(!Encore.isProduction() ? "/Application_tickets_bug/public/build" : "/build")
   // only needed for CDN or subdirectory deploys
   .setManifestKeyPrefix('build/')
 

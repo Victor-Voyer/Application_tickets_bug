@@ -1,9 +1,9 @@
 {
-  "build/app.css": "/build/app.a5ef8259.css",
-  "build/app.js": "/build/app.2a7e6677.js",
-  "build/runtime.js": "/build/runtime.42ade29c.js",
-  "build/images/logo_BT.png": "/build/images/logo_BT.png",
-  "build/images/icon-users.png": "/build/images/icon-users.png",
-  "build/images/tickets-png.webp": "/build/images/tickets-png.webp",
-  "build/fonts/Kwark.ttf": "/build/fonts/Kwark.294c87bc.ttf"
+  "build/app.css": "/Application_tickets_bug/public/build/app.css",
+  "build/app.js": "/Application_tickets_bug/public/build/app.js",
+  "build/runtime.js": "/Application_tickets_bug/public/build/runtime.js",
+  "build/images/logo_BT.png": "/Application_tickets_bug/public/build/images/logo_BT.png",
+  "build/images/icon-users.png": "/Application_tickets_bug/public/build/images/icon-users.png",
+  "build/images/tickets-png.webp": "/Application_tickets_bug/public/build/images/tickets-png.webp",
+  "build/fonts/Kwark.ttf": "/Application_tickets_bug/public/build/fonts/Kwark.294c87bc.ttf"
 }
