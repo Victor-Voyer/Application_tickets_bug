@@ -1,19 +1,27 @@
 {% extends 'error/base.html.twig' %}
 
-{% block title %}Délai d'attente dépassé - BTCrack{% endblock %}
+{% block title %}Request Timeout - BTCrack{% endblock %}
 
 {% block error_class %}408{% endblock %}
 
 {% block error_code %}408{% endblock %}
 
-{% block error_title %}Délai d'attente dépassé{% endblock %}
+{% block error_title %}Request Timeout{% endblock %}
 
 {% block error_description %}
-    Le serveur a mis trop de temps à répondre à votre requête. 
-    Cela peut être dû à une surcharge temporaire ou à des problèmes de réseau.
+    The server took too long to respond to your request. 
+    This may be due to temporary overload or network issues.
+{% endblock %}
+
+{% block error_help %}
+    <h3>What does 408 Request Timeout mean?</h3>
+    <p>
+        The server did not receive a complete request in time. This often happens with unstable networks or
+        very slow connections. Try again or check your connection.
+    </p>
 {% endblock %}
 
 {% block error_actions %}
-    <a href="{{ path('app_tickets_index') }}" class="btn btn-primary">Retour à l'accueil</a>
-    <a href="javascript:location.reload()" class="btn">Réessayer</a>
+    <a href="{{ path('app_tickets_index') }}" class="btn btn-primary">Back to home</a>
+    <a href="javascript:location.reload()" class="btn">Try again</a>
 {% endblock %}

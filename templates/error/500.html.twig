@@ -1,20 +1,28 @@
 {% extends 'error/base.html.twig' %}
 
-{% block title %}Erreur du serveur - BTCrack{% endblock %}
+{% block title %}Server error - BTCrack{% endblock %}
 
 {% block error_class %}500{% endblock %}
 
 {% block error_code %}500{% endblock %}
 
-{% block error_title %}Erreur interne du serveur{% endblock %}
+{% block error_title %}Internal Server Error{% endblock %}
 
 {% block error_description %}
-    Une erreur interne s'est produite sur le serveur. Notre équipe technique a été automatiquement notifiée 
-    et travaille à résoudre le problème. Veuillez réessayer dans quelques minutes.
+    An internal error occurred on the server. Our technical team has been notified 
+    and is working to resolve the issue. Please try again in a few minutes.
+{% endblock %}
+
+{% block error_help %}
+    <h3>What does 500 Internal Server Error mean?</h3>
+    <p>
+        The server encountered an unexpected condition that prevented it from fulfilling the request. This is
+        usually a bug or an unhandled exception on the server side.
+    </p>
 {% endblock %}
 
 {% block error_actions %}
-    <a href="{{ path('app_tickets_index') }}" class="btn btn-primary">Retour à l'accueil</a>
-    <a href="javascript:history.back()" class="btn">Page précédente</a>
-    <a href="javascript:location.reload()" class="btn">Recharger la page</a>
+    <a href="{{ path('app_tickets_index') }}" class="btn btn-primary">Back to home</a>
+    <a href="javascript:history.back()" class="btn">Previous page</a>
+    <a href="javascript:location.reload()" class="btn">Reload page</a>
 {% endblock %}

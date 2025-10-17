@@ -28,6 +28,9 @@
                         Une erreur interne s'est produite. Notre équipe technique a été notifiée et travaille à résoudre le problème.
                     {% endblock %}
                 </p>
+                <div class="error-help">
+                    {% block error_help %}{% endblock %}
+                </div>
                 
                 <div class="error-actions">
                     {% block error_actions %}

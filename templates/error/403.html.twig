@@ -1,20 +1,28 @@
 {% extends 'error/base.html.twig' %}
 
-{% block title %}Accès refusé - BTCrack{% endblock %}
+{% block title %}Access Denied - BTCrack{% endblock %}
 
 {% block error_class %}403{% endblock %}
 
 {% block error_code %}403{% endblock %}
 
-{% block error_title %}Accès refusé{% endblock %}
+{% block error_title %}Access Denied{% endblock %}
 
 {% block error_description %}
-    Vous n'avez pas les permissions nécessaires pour accéder à cette ressource. 
-    Contactez votre administrateur si vous pensez qu'il s'agit d'une erreur.
+    You do not have the necessary permissions to access this resource. 
+    Contact your administrator if you believe this is a mistake.
+{% endblock %}
+
+{% block error_help %}
+    <h3>What does 403 Access Denied mean?</h3>
+    <p>
+        Your identity is known, but you are not allowed to access this resource. This can happen if your
+        account lacks the required role or the resource is restricted. Ask an admin for access.
+    </p>
 {% endblock %}
 
 {% block error_actions %}
-    <a href="{{ path('app_tickets_index') }}" class="btn btn-primary">Retour à l'accueil</a>
-    <a href="javascript:history.back()" class="btn">Page précédente</a>
-    <a href="{{ path('app_login') }}" class="btn">Se connecter</a>
+    <a href="{{ path('app_tickets_index') }}" class="btn btn-primary">Back to home</a>
+    <a href="javascript:history.back()" class="btn">Previous page</a>
+    <a href="{{ path('app_login') }}" class="btn">Sign in</a>
 {% endblock %}

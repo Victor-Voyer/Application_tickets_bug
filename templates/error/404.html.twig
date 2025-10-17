@@ -1,20 +1,28 @@
 {% extends 'error/base.html.twig' %}
 
-{% block title %}Page non trouvée - BTCrack{% endblock %}
+{% block title %}Page not found - BTCrack{% endblock %}
 
 {% block error_class %}404{% endblock %}
 
 {% block error_code %}404{% endblock %}
 
-{% block error_title %}Page non trouvée{% endblock %}
+{% block error_title %}Page not found{% endblock %}
 
 {% block error_description %}
-    La page que vous recherchez n'existe pas ou a été déplacée. 
-    Vérifiez l'URL ou utilisez les liens de navigation pour trouver ce que vous cherchez.
+    The page you are looking for does not exist or has been moved. 
+    Check the URL or use the navigation links to find what you are looking for.
+{% endblock %}
+
+{% block error_help %}
+    <h3>What does 404 Not Found mean?</h3>
+    <p>
+        The server is reachable but the requested resource does not exist at this address. The URL may be
+        incorrect, expired, or the resource was removed.
+    </p>
 {% endblock %}
 
 {% block error_actions %}
-    <a href="{{ path('app_tickets_index') }}" class="btn btn-primary">Retour à l'accueil</a>
-    <a href="javascript:history.back()" class="btn">Page précédente</a>
-    <a href="{{ path('app_tickets_index') }}" class="btn">Voir les tickets</a>
+    <a href="{{ path('app_tickets_index') }}" class="btn btn-primary">Back to home</a>
+    <a href="javascript:history.back()" class="btn">Previous page</a>
+    <a href="{{ path('app_tickets_index') }}" class="btn">View tickets</a>
 {% endblock %}

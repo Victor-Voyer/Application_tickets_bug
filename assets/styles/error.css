@@ -93,6 +93,31 @@ html, body {
     margin-right: auto;
 }
 
+/* Bloc d'aide pédagogique */
+.error-help {
+    margin: 10px auto 0;
+    max-width: 600px;
+    text-align: left;
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: var(--border-radius, 6px);
+    padding: 16px 18px;
+    color: rgba(255, 255, 255, 0.9);
+}
+
+.error-help h3 {
+    font-size: 16px;
+    margin-bottom: 8px;
+    color: var(--color-white, #ffffff);
+}
+
+.error-help p {
+    font-size: 14px;
+    line-height: 1.6;
+    color: rgba(255, 255, 255, 0.85);
+    margin: 0;
+}
+
 /* Actions - Centrées */
 .error-actions {
     margin-top: 40px;

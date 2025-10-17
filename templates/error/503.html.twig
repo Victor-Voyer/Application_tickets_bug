@@ -1,19 +1,27 @@
 {% extends 'error/base.html.twig' %}
 
-{% block title %}Service indisponible - BTCrack{% endblock %}
+{% block title %}Service Unavailable - BTCrack{% endblock %}
 
 {% block error_class %}503{% endblock %}
 
 {% block error_code %}503{% endblock %}
 
-{% block error_title %}Service temporairement indisponible{% endblock %}
+{% block error_title %}Service temporarily unavailable{% endblock %}
 
 {% block error_description %}
-    Le service est temporairement indisponible en raison d'une maintenance programmée 
-    ou d'une surcharge du serveur. Veuillez réessayer dans quelques minutes.
+    The service is temporarily unavailable due to scheduled maintenance 
+    or server overload. Please try again in a few minutes.
+{% endblock %}
+
+{% block error_help %}
+    <h3>What does 503 Service Unavailable mean?</h3>
+    <p>
+        The server is up but cannot handle the request right now. Common causes include maintenance windows or
+        temporary overload. Retry later; the issue is typically temporary.
+    </p>
 {% endblock %}
 
 {% block error_actions %}
-    <a href="{{ path('app_tickets_index') }}" class="btn btn-primary">Retour à l'accueil</a>
-    <a href="javascript:location.reload()" class="btn">Réessayer</a>
+    <a href="{{ path('app_tickets_index') }}" class="btn btn-primary">Back to home</a>
+    <a href="javascript:location.reload()" class="btn">Try again</a>
 {% endblock %}

@@ -1,20 +1,28 @@
 {% extends 'error/base.html.twig' %}
 
-{% block title %}Requête invalide - BTCrack{% endblock %}
+{% block title %}Bad Request - BTCrack{% endblock %}
 
 {% block error_class %}400{% endblock %}
 
 {% block error_code %}400{% endblock %}
 
-{% block error_title %}Requête invalide{% endblock %}
+{% block error_title %}Bad Request{% endblock %}
 
 {% block error_description %}
-    La requête envoyée au serveur est malformée ou contient des données invalides. 
-    Vérifiez vos données et réessayez.
+    The request sent to the server is malformed or contains invalid data. 
+    Please check your data and try again.
+{% endblock %}
+
+{% block error_help %}
+    <h3>What does 400 Bad Request mean?</h3>
+    <p>
+        The server could not understand the request due to invalid syntax (for example, missing fields,
+        wrong JSON format, or an invalid URL). Fix the request and try again.
+    </p>
 {% endblock %}
 
 {% block error_actions %}
-    <a href="{{ path('app_tickets_index') }}" class="btn btn-primary">Retour à l'accueil</a>
-    <a href="javascript:history.back()" class="btn">Page précédente</a>
-    <a href="javascript:location.reload()" class="btn">Recharger la page</a>
+    <a href="{{ path('app_tickets_index') }}" class="btn btn-primary">Back to home</a>
+    <a href="javascript:history.back()" class="btn">Previous page</a>
+    <a href="javascript:location.reload()" class="btn">Reload page</a>
 {% endblock %}
