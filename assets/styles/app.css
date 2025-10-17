@@ -7,6 +7,7 @@
 @import './terms.css';
 @import './about.css';
 @import './admin.css';
+@import './error.css';
 
 *{
     margin: 0;
